@@ -257,8 +257,7 @@
         { nameof(_DocumentFormDialog.model),command },
             };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
-        var dialog = DialogService.Show<_DocumentFormDialog>
-        (string.Format(ConstantString.CREATEAITEM, L["Document"]), parameters, options);
+        var dialog = DialogService.Show<_DocumentFormDialog>(string.Format(ConstantString.CREATEAITEM, L["Document"]), parameters, options);
         var state = await dialog.Result;
         if (!state.Canceled)
         {
