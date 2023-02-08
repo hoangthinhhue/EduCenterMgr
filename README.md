@@ -76,3 +76,7 @@ Coming up.
 
 ## License
 MIT License
+
+
+## run
+dotnet restore

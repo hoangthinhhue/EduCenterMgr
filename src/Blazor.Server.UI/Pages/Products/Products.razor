@@ -1,4 +1,4 @@
-@page "/pages/products"
+ @page "/pages/products"
 
 @using AutoMapper
 @using BlazorDownloadFile
@@ -17,7 +17,6 @@
     .mud-table-toolbar {
         height: 84px !important;
     }
-   
 </style>
 <ErrorBoundary>
     <ChildContent>
@@ -68,20 +67,20 @@
                         {
                             <MudLoadingButton @bind-Loading="_exporting" DisableElevation Variant="Variant.Outlined" Color="Color.Primary"
                                           Label="@ConstantString.EXPORT"
-                                   StartIcon="@Icons.Custom.FileFormats.FileExcel"
-                                   Size="Size.Small"
-                                   Style="margin-right: 4px; margin-bottom:4px"
-                                   OnClick="OnExport"
-                                   IconColor="Color.Surface">
+                                          StartIcon="@Icons.Custom.FileFormats.FileExcel"
+                                          Size="Size.Small"
+                                          Style="margin-right: 4px; margin-bottom:4px"
+                                          OnClick="OnExport"
+                                          IconColor="Color.Surface">
                                 @ConstantString.EXPORT
                             </MudLoadingButton>
                             <MudLoadingButton @bind-Loading="_pdfexporting" DisableElevation Variant="Variant.Outlined" Color="Color.Primary"
                                           Label="@ConstantString.EXPORTPDF"
-                                   StartIcon="@Icons.Material.Filled.PictureAsPdf"
-                                   Size="Size.Small"
-                                   Style="margin-right: 4px; margin-bottom:4px"
-                                   OnClick="OnExportPDF"
-                                   IconColor="Color.Surface">
+                                          StartIcon="@Icons.Material.Filled.PictureAsPdf"
+                                          Size="Size.Small"
+                                          Style="margin-right: 4px; margin-bottom:4px"
+                                          OnClick="OnExportPDF"
+                                          IconColor="Color.Surface">
                                 @ConstantString.EXPORTPDF
                             </MudLoadingButton>
                         }
