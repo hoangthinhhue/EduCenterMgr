@@ -35,6 +35,9 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Product> Products { get; set; }
 
+    public DbSet<ClassType> ClassTypes { get; set; }
+
+
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         return base.SaveChangesAsync(cancellationToken);

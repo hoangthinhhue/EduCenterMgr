@@ -138,6 +138,9 @@
   <data name="Booking" xml:space="preserve">
     <value>Đặt hàng</value>
   </data>
+  <data name="Class Type" xml:space="preserve">
+    <value>Loại lớp</value>
+  </data>
   <data name="Customers" xml:space="preserve">
     <value>Khách hàng</value>
   </data>
@@ -162,6 +165,9 @@
   <data name="MANAGEMENT" xml:space="preserve">
     <value>QUẢN LÝ</value>
   </data>
+  <data name="MASTER DATA" xml:space="preserve">
+    <value>DANH MỤC</value>
+  </data>
   <data name="Multi-Tenant" xml:space="preserve">
     <value>Multi-Tenant</value>
   </data>
@@ -169,7 +175,7 @@
     <value>Picklist</value>
   </data>
   <data name="Products" xml:space="preserve">
-    <value>Sản phẩn</value>
+    <value>Sản phẩm</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>

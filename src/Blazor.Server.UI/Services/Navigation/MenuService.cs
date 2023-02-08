@@ -65,7 +65,22 @@ public class MenuService : IMenuService
                 }
             }
         },
-
+            new MenuSectionModel
+        {
+            Title = "MASTER DATA",
+            Roles=new string[]{ RoleNameConstants.Administrator,RoleNameConstants.Users },
+            SectionItems = new List<MenuSectionItemModel>
+            {
+                new()
+                {
+                    Title = "Class Type",
+                    Roles=new string[]{ RoleNameConstants.Administrator,RoleNameConstants.Users },
+                    Icon = Icons.Material.Filled.Class,
+                    Href = "pages/classtype",
+                    PageStatus = PageStatus.Completed
+                }
+            }
+        },
         new MenuSectionModel
         {
             Title = "MANAGEMENT",

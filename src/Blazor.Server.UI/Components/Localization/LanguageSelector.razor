@@ -25,7 +25,7 @@
 </MudTooltip>
 
 @code {
-    public string? CurrentLanguage { get; set; } = "en-US";
+    public string? CurrentLanguage { get; set; } = "vi-VN";
     public List<CultureInfo>? SupportedLanguages { get; set; } = new();
     [Inject] private NavigationManager _navigation { get; set; } = null!;
     [Inject] private IOptions<RequestLocalizationOptions> localizationOptions { get; set; } = null!;
