@@ -4,6 +4,8 @@
 using System.Reflection;
 using CleanArchitecture.Blazor.Infrastructure.Extensions;
 using CleanArchitecture.Blazor.Infrastructure.Persistence.Interceptors;
+using CleanArchitecture.Core.Entities.Log;
+using CleanArchitecture.Core.Entities.Log.Audit;
 using MediatR;
 
 namespace CleanArchitecture.Blazor.Infrastructure.Persistence;

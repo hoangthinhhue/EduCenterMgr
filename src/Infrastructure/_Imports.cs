@@ -1,6 +1,13 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+
+//Reference core
+global using CleanArchitecture.Core.Common;
+global using CleanArchitecture.Core.Entities;
+global using CleanArchitecture.Core.Entities.Log.Audit;
+global using CleanArchitecture.Core.Enums;
+
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 global using System.Security.Claims;
@@ -10,10 +17,7 @@ global using Microsoft.Extensions.Logging;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore;
 global using CleanArchitecture.Blazor.Domain;
-global using CleanArchitecture.Blazor.Domain.Common;
 global using CleanArchitecture.Blazor.Domain.Entities;
-global using CleanArchitecture.Blazor.Domain.Entities.Audit;
-global using CleanArchitecture.Blazor.Domain.Entities.Log;
 global using CleanArchitecture.Blazor.Infrastructure.Persistence.Extensions;
 global using CleanArchitecture.Blazor.Application.Common.Exceptions;
 global using CleanArchitecture.Blazor.Application.Common.Models;

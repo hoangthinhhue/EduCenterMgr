@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using CleanArchitecture.Blazor.Application.Common.Interfaces.Serialization;
+using CleanArchitecture.Core.Entities.Log.Audit;
 
 namespace CleanArchitecture.Blazor.Application.Features.AuditTrails.DTOs;
 

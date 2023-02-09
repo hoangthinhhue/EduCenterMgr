@@ -3,6 +3,8 @@
 
 
 
+using CleanArchitecture.Core.Entities.Log;
+using CleanArchitecture.Core.Entities.Log.Audit;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CleanArchitecture.Blazor.Application.Common.Interfaces;

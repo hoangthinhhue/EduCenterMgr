@@ -13,7 +13,7 @@ public class DashboardSettings
     public string AppFlavor { get; set; } = String.Empty;
     public string AppFlavorSubscript { get; set; } = String.Empty;
 
-    public string Company { get; set; } = "Company";
+    public string Company { get; set; } = "BrightFuture";
     public string Copyright { get; set; } = "@2022 Copyright";
  
 }

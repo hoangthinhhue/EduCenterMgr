@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
+
 namespace CleanArchitecture.Blazor.Application.Features.ClassTypes.EventHandlers;
 
     public class ClassTypeCreatedEventHandler : INotificationHandler<CreatedEvent<ClassType>>
