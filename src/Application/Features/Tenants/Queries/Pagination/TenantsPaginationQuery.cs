@@ -15,12 +15,12 @@ namespace CleanArchitecture.Blazor.Application.Features.Tenants.Queries.Paginati
     public class TenantsWithPaginationQueryHandler :
          IRequestHandler<TenantsWithPaginationQuery, PaginatedData<TenantDto>>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<TenantsWithPaginationQueryHandler> _localizer;
 
         public TenantsWithPaginationQueryHandler(
-            IApplicationDbContext context,
+            ApplicationDbContext context,
             IMapper mapper,
             IStringLocalizer<TenantsWithPaginationQueryHandler> localizer
             )

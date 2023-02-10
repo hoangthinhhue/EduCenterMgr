@@ -15,12 +15,12 @@ public class GetAllClassTypesQuery : ICacheableRequest<IEnumerable<ClassTypeDto>
 public class GetAllClassTypesQueryHandler :
      IRequestHandler<GetAllClassTypesQuery, IEnumerable<ClassTypeDto>>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IStringLocalizer<GetAllClassTypesQueryHandler> _localizer;
 
     public GetAllClassTypesQueryHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper,
         IStringLocalizer<GetAllClassTypesQueryHandler> localizer
         )

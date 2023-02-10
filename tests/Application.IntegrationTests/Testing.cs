@@ -1,6 +1,5 @@
 using CleanArchitecture.Blazor.Application;
 using CleanArchitecture.Blazor.Application.Common.Interfaces;
-using CleanArchitecture.Blazor.Application.Common.Interfaces.MultiTenant;
 using CleanArchitecture.Blazor.Infrastructure;
 using CleanArchitecture.Blazor.Infrastructure.Extensions;
 using CleanArchitecture.Blazor.Domain.Identity;
@@ -19,6 +18,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CleanArchitecture.Blazor.Application.Interfaces.MultiTenant;
 
 [SetUpFixture]
 public class Testing

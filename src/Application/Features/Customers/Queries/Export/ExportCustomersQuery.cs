@@ -16,13 +16,13 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Queries.Export
     public class ExportCustomersQueryHandler :
          IRequestHandler<ExportCustomersQuery, byte[]>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IExcelService _excelService;
         private readonly IStringLocalizer<ExportCustomersQueryHandler> _localizer;
         private readonly CustomerDto _dto = new();
         public ExportCustomersQueryHandler(
-            IApplicationDbContext context,
+            ApplicationDbContext context,
             IMapper mapper,
             IExcelService excelService,
             IStringLocalizer<ExportCustomersQueryHandler> localizer

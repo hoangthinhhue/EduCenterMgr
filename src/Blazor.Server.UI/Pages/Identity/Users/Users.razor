@@ -5,9 +5,10 @@
 @using Blazor.Server.UI.Pages.Identity.Roles;
 @using BlazorDownloadFile;
 @using CleanArchitecture.Blazor.Application.Common.Interfaces.Identity
-@using CleanArchitecture.Blazor.Application.Common.Interfaces.MultiTenant
 @using CleanArchitecture.Blazor.Application.Features.Identity.Profile;
-@using CleanArchitecture.Blazor.Infrastructure.Services
+@using CleanArchitecture.Blazor.Domain.Constants;
+@using CleanArchitecture.Blazor.Infrastructure.Interfaces.MultiTenant;
+@using CleanArchitecture.Core.Constants;
 @using Duende.IdentityServer.Events
 @using LazyCache;
 @using Microsoft.AspNetCore.Components.Server.Circuits
@@ -16,6 +17,7 @@
 @using System.ComponentModel;
 @using System.Reflection;
 @using System.Security.Claims;
+@using CleanArchitecture.Blazor.Application.Interfaces.MultiTenant;
 @inject IStringLocalizer<Users> L
 @attribute [Authorize(Policy = Permissions.Users.View)]
 <PageTitle>@Title</PageTitle>

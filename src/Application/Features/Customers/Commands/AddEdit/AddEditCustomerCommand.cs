@@ -6,7 +6,7 @@ using CleanArchitecture.Blazor.Application.Features.Customers.DTOs;
 using CleanArchitecture.Blazor.Application.Features.Customers.Caching;
 namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.AddEdit;
 
-public class AddEditCustomerCommand : IMapFrom<CustomerDto>, ICacheInvalidatorRequest<Result<int>>
+public class AddEditCustomerCommand : IMapFrom<CustomerDto>, ICacheInvalidatorRequest<MethodResult<int>>
 {
     [Description("Id")]
     public int Id { get; set; }
@@ -19,13 +19,13 @@ public class AddEditCustomerCommand : IMapFrom<CustomerDto>, ICacheInvalidatorRe
     public CancellationTokenSource? SharedExpiryTokenSource => CustomerCacheKey.SharedExpiryTokenSource();
 }
 
-public class AddEditCustomerCommandHandler : IRequestHandler<AddEditCustomerCommand, Result<int>>
+public class AddEditCustomerCommandHandler : IRequestHandler<AddEditCustomerCommand, MethodResult<int>>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IStringLocalizer<AddEditCustomerCommandHandler> _localizer;
     public AddEditCustomerCommandHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IStringLocalizer<AddEditCustomerCommandHandler> localizer,
         IMapper mapper
         )
@@ -34,7 +34,7 @@ public class AddEditCustomerCommandHandler : IRequestHandler<AddEditCustomerComm
         _localizer = localizer;
         _mapper = mapper;
     }
-    public async Task<Result<int>> Handle(AddEditCustomerCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult<int>> Handle(AddEditCustomerCommand request, CancellationToken cancellationToken)
     {
         // TODO: Implement AddEditCustomerCommandHandler method 
         var dto = _mapper.Map<CustomerDto>(request);
@@ -45,7 +45,7 @@ public class AddEditCustomerCommandHandler : IRequestHandler<AddEditCustomerComm
             // raise a update domain event
             item.AddDomainEvent(new UpdatedEvent<Customer>(item));
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result<int>.SuccessAsync(item.Id);
+            return await MethodResult<int>.SuccessAsync(item.Id);
         }
         else
         {
@@ -54,7 +54,7 @@ public class AddEditCustomerCommandHandler : IRequestHandler<AddEditCustomerComm
             item.AddDomainEvent(new CreatedEvent<Customer>(item));
             _context.Customers.Add(item);
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result<int>.SuccessAsync(item.Id);
+            return await MethodResult<int>.SuccessAsync(item.Id);
         }
 
     }

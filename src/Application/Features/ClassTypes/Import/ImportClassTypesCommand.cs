@@ -7,7 +7,7 @@ using CleanArchitecture.Blazor.Application.Features.ClassTypes.DTOs;
 
 namespace CleanArchitecture.Blazor.Application.Features.ClassTypes.Commands.Import;
 
-public class ImportClassTypesCommand : ICacheInvalidatorRequest<Result>
+public class ImportClassTypesCommand : ICacheInvalidatorRequest<MethodResult>
 {
     public string CacheKey => ClassTypeCacheKey.GetAllCacheKey;
     public CancellationTokenSource? SharedExpiryTokenSource => ClassTypeCacheKey.SharedExpiryTokenSource();
@@ -27,15 +27,15 @@ public record CreateClassTypesTemplateCommand : IRequest<byte[]>
 
 public class ImportClassTypesCommandHandler :
              IRequestHandler<CreateClassTypesTemplateCommand, byte[]>,
-             IRequestHandler<ImportClassTypesCommand, Result>
+             IRequestHandler<ImportClassTypesCommand, MethodResult>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IStringLocalizer<ImportClassTypesCommandHandler> _localizer;
     private readonly IExcelService _excelService;
 
     public ImportClassTypesCommandHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IExcelService excelService,
         IStringLocalizer<ImportClassTypesCommandHandler> localizer,
         IMapper mapper
@@ -46,7 +46,7 @@ public class ImportClassTypesCommandHandler :
         _excelService = excelService;
         _mapper = mapper;
     }
-    public async Task<Result> Handle(ImportClassTypesCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult> Handle(ImportClassTypesCommand request, CancellationToken cancellationToken)
     {
 
         var result = await _excelService.ImportAsync(request.Data, mappers: new Dictionary<string, Func<DataRow, ClassTypeDto, object?>>
@@ -64,11 +64,11 @@ public class ImportClassTypesCommandHandler :
                 await _context.ClassTypes.AddAsync(item, cancellationToken);
             }
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result.SuccessAsync();
+            return await MethodResult.SuccessAsync();
         }
         else
         {
-            return Result.Failure(result.Errors);
+            return MethodResult.Failure(result.Errors);
         }
     }
     public async Task<byte[]> Handle(CreateClassTypesTemplateCommand request, CancellationToken cancellationToken)

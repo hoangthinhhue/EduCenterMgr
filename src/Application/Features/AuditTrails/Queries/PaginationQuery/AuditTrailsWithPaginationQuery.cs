@@ -14,12 +14,12 @@ public class AuditTrailsWithPaginationQuery : PaginationFilter, ICacheableReques
 public class AuditTrailsQueryHandler : IRequestHandler<AuditTrailsWithPaginationQuery, PaginatedData<AuditTrailDto>>
 {
     private readonly ICurrentUserService _currentUserService;
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
 
     public AuditTrailsQueryHandler(
         ICurrentUserService currentUserService,
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper
         )
     {

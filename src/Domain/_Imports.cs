@@ -3,6 +3,7 @@
 
 
 //Reference core
+global using CleanArchitecture.Core.Enums;
 global using CleanArchitecture.Core.Common;
 global using CleanArchitecture.Core.Entities;
 global using CleanArchitecture.Core.Events;

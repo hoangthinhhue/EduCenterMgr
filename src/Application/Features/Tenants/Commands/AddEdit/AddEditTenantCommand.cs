@@ -6,7 +6,7 @@ using CleanArchitecture.Blazor.Application.Features.Tenants.DTOs;
 using CleanArchitecture.Blazor.Application.Features.Tenants.Caching;
 namespace CleanArchitecture.Blazor.Application.Features.Tenants.Commands.AddEdit;
 
-public class AddEditTenantCommand : IMapFrom<TenantDto>, ICacheInvalidatorRequest<Result<string>>
+public class AddEditTenantCommand : IMapFrom<TenantDto>, ICacheInvalidatorRequest<MethodResult<string>>
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
     public string? Name { get; set; }
@@ -15,13 +15,13 @@ public class AddEditTenantCommand : IMapFrom<TenantDto>, ICacheInvalidatorReques
     public CancellationTokenSource? SharedExpiryTokenSource => TenantCacheKey.SharedExpiryTokenSource();
 }
 
-public class AddEditTenantCommandHandler : IRequestHandler<AddEditTenantCommand, Result<string>>
+public class AddEditTenantCommandHandler : IRequestHandler<AddEditTenantCommand, MethodResult<string>>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IStringLocalizer<AddEditTenantCommandHandler> _localizer;
     public AddEditTenantCommandHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IStringLocalizer<AddEditTenantCommandHandler> localizer,
         IMapper mapper
         )
@@ -30,7 +30,7 @@ public class AddEditTenantCommandHandler : IRequestHandler<AddEditTenantCommand,
         _localizer = localizer;
         _mapper = mapper;
     }
-    public async Task<Result<string>> Handle(AddEditTenantCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult<string>> Handle(AddEditTenantCommand request, CancellationToken cancellationToken)
     {
         var dto= _mapper.Map<TenantDto>(request);
         var item = await _context.Tenants.FindAsync(new object[] { request.Id }, cancellationToken);
@@ -45,7 +45,7 @@ public class AddEditTenantCommandHandler : IRequestHandler<AddEditTenantCommand,
         }
         item.AddDomainEvent(new UpdatedEvent<Tenant>(item));
         await _context.SaveChangesAsync(cancellationToken);
-        return Result<string>.Success(item.Id);
+        return MethodResult<string>.Success(item.Id);
 
 
     }

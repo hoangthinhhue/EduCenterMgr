@@ -16,12 +16,12 @@ public class LogsWithPaginationQuery : PaginationFilter, ICacheableRequest<Pagin
 public class LogsQueryHandler : IRequestHandler<LogsWithPaginationQuery, PaginatedData<LogDto>>
 {
     private readonly ICurrentUserService _currentUserService;
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
 
     public LogsQueryHandler(
         ICurrentUserService currentUserService,
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper
         )
     {

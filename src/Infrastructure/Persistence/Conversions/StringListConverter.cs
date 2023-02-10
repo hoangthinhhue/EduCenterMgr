@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Text.Json;
-using CleanArchitecture.Blazor.Application.Common.Interfaces.Serialization;
+using Core.Common;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CleanArchitecture.Blazor.Infrastructure.Persistence.Conversions;

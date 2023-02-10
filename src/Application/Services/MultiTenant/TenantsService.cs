@@ -1,6 +1,7 @@
-using CleanArchitecture.Blazor.Application.Common.Interfaces.MultiTenant;
 using CleanArchitecture.Blazor.Application.Features.Tenants.Caching;
 using CleanArchitecture.Blazor.Application.Features.Tenants.DTOs;
+using CleanArchitecture.Blazor.Application.Interfaces.MultiTenant;
+using CleanArchitecture.Blazor.Infrastructure.Persistence;
 using LazyCache;
 
 namespace CleanArchitecture.Blazor.Application.Services.MultiTenant;
@@ -9,7 +10,7 @@ public class TenantsService : ITenantsService
 {
     private readonly SemaphoreSlim _semaphore = new(1, 1);
     private readonly IAppCache _cache;
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
    
     public event Action? OnChange;
@@ -17,7 +18,7 @@ public class TenantsService : ITenantsService
 
     public TenantsService(
       IAppCache  cache,  
-      IApplicationDbContext context, IMapper mapper)
+      ApplicationDbContext context, IMapper mapper)
     {
         _cache = cache;
         _context = context;

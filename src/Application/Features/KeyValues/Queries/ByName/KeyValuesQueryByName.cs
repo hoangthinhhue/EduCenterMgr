@@ -21,11 +21,11 @@ public class KeyValuesQueryByName : ICacheableRequest<IEnumerable<KeyValueDto>>
 public class KeyValuesQueryByNameHandler : IRequestHandler<KeyValuesQueryByName, IEnumerable<KeyValueDto>>
 {
 
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
 
     public KeyValuesQueryByNameHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper
         )
     {

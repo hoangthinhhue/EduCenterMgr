@@ -24,14 +24,14 @@ public class ExportClassTypesQuery : IRequest<byte[]>
 public class ExportClassTypesQueryHandler :
      IRequestHandler<ExportClassTypesQuery, byte[]>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IExcelService _excelService;
     private readonly IPDFService _pdfService;
     private readonly IStringLocalizer<ExportClassTypesQueryHandler> _localizer;
 
     public ExportClassTypesQueryHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper,
         IExcelService excelService,
         IPDFService pdfService,

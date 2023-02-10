@@ -25,12 +25,12 @@ public class ProductsWithPaginationQuery : PaginationFilter, ICacheableRequest<P
 public class ProductsWithPaginationQueryHandler :
          IRequestHandler<ProductsWithPaginationQuery, PaginatedData<ProductDto>>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IStringLocalizer<ProductsWithPaginationQueryHandler> _localizer;
 
     public ProductsWithPaginationQueryHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper,
         IStringLocalizer<ProductsWithPaginationQueryHandler> localizer
         )

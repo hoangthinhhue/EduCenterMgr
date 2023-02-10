@@ -17,11 +17,11 @@ public class LogsChatDataQueryHandler :
      IRequestHandler<LogsTimeLineChatDataQuery, List<LogTimeLineDto>>
 
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IStringLocalizer<LogsChatDataQueryHandler> _localizer;
 
     public LogsChatDataQueryHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IStringLocalizer<LogsChatDataQueryHandler> localizer
         )
     {

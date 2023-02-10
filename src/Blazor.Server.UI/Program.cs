@@ -4,11 +4,11 @@ using CleanArchitecture.Blazor.Infrastructure.Persistence;
 using CleanArchitecture.Blazor.Domain.Identity;
 using CleanArchitecture.Blazor.Infrastructure;
 using CleanArchitecture.Blazor.Application;
-using CleanArchitecture.Blazor.Infrastructure.Extensions;
 using Serilog;
 using Serilog.Events;
 using Blazor.Server.UI;
 using Blazor.Server.UI.Services.Notifications;
+using CleanArchitecture.Blazor.Application.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

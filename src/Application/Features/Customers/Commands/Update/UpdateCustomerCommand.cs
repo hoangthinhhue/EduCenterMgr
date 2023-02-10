@@ -7,7 +7,7 @@ using CleanArchitecture.Blazor.Application.Features.Customers.Caching;
 
 namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Update;
 
-    public class UpdateCustomerCommand: ICacheInvalidatorRequest<Result>
+    public class UpdateCustomerCommand: ICacheInvalidatorRequest<MethodResult>
     {
             [Description("Id")]
     public int Id {get;set;} 
@@ -20,13 +20,13 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Updat
         public CancellationTokenSource? SharedExpiryTokenSource => CustomerCacheKey.SharedExpiryTokenSource();
     }
 
-    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, Result>
+    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, MethodResult>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<UpdateCustomerCommandHandler> _localizer;
         public UpdateCustomerCommandHandler(
-            IApplicationDbContext context,
+            ApplicationDbContext context,
             IStringLocalizer<UpdateCustomerCommandHandler> localizer,
              IMapper mapper
             )
@@ -35,7 +35,7 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Updat
             _localizer = localizer;
             _mapper = mapper;
         }
-        public async Task<Result> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<MethodResult> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
            // TODO: Implement UpdateCustomerCommandHandler method 
            var item =await _context.Customers.FindAsync( new object[] { request.Id }, cancellationToken);
@@ -47,7 +47,7 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Updat
 				item.AddDomainEvent(new UpdatedEvent<Customer>(item));
                 await _context.SaveChangesAsync(cancellationToken);
            }
-           return await Result.SuccessAsync();
+           return await MethodResult.SuccessAsync();
         }
     }
 

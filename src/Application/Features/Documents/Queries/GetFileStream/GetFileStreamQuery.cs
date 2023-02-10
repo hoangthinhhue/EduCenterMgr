@@ -3,7 +3,8 @@
 
 using CleanArchitecture.Blazor.Application.Features.Documents.DTOs;
 using CleanArchitecture.Blazor.Application.Features.Documents.Caching;
-using CleanArchitecture.Blazor.Application.Common.Interfaces.MultiTenant;
+using CleanArchitecture.Core.Specification;
+using CleanArchitecture.Blazor.Infrastructure.Persistence;
 
 namespace CleanArchitecture.Blazor.Application.Features.Documents.Queries.PaginationQuery;
 
@@ -24,14 +25,14 @@ public class GetFileStreamQueryHandler : IRequestHandler<GetFileStreamQuery, (st
 {
     private readonly ILogger<GetFileStreamQueryHandler> _logger;
     private readonly ICurrentUserService _currentUserService;
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
  
 
     public GetFileStreamQueryHandler(
         ILogger<GetFileStreamQueryHandler> logger,
         ICurrentUserService currentUserService,
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper
         )
     {

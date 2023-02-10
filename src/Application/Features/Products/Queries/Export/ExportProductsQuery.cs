@@ -24,14 +24,14 @@ public class ExportProductsQuery : IRequest<byte[]>
 public class ExportProductsQueryHandler :
      IRequestHandler<ExportProductsQuery, byte[]>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IExcelService _excelService;
     private readonly IPDFService _pdfService;
     private readonly IStringLocalizer<ExportProductsQueryHandler> _localizer;
 
     public ExportProductsQueryHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper,
         IExcelService excelService,
         IPDFService pdfService,

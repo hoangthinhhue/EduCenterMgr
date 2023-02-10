@@ -15,13 +15,13 @@ public class ExportKeyValuesQuery : IRequest<byte[]>
 public class ExportKeyValuesQueryHandler :
      IRequestHandler<ExportKeyValuesQuery, byte[]>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IExcelService _excelService;
     private readonly IStringLocalizer<ExportKeyValuesQueryHandler> _localizer;
 
     public ExportKeyValuesQueryHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper,
         IExcelService excelService,
         IStringLocalizer<ExportKeyValuesQueryHandler> localizer

@@ -15,12 +15,12 @@ public class GetAllProductsQuery : ICacheableRequest<IEnumerable<ProductDto>>
 public class GetAllProductsQueryHandler :
      IRequestHandler<GetAllProductsQuery, IEnumerable<ProductDto>>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IStringLocalizer<GetAllProductsQueryHandler> _localizer;
 
     public GetAllProductsQueryHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper,
         IStringLocalizer<GetAllProductsQueryHandler> localizer
         )

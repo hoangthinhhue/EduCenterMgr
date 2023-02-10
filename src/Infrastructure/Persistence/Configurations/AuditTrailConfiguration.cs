@@ -4,8 +4,7 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
-using CleanArchitecture.Blazor.Application.Common.Interfaces.Serialization;
-using CleanArchitecture.Blazor.Infrastructure.Services.Serialization;
+using Core.Common;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -15,13 +15,13 @@ public class ExportLogsQuery : IRequest<byte[]>
 public class ExportLogsQueryHandler :
      IRequestHandler<ExportLogsQuery, byte[]>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IExcelService _excelService;
     private readonly IStringLocalizer<ExportLogsQueryHandler> _localizer;
 
     public ExportLogsQueryHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper,
         IExcelService excelService,
         IStringLocalizer<ExportLogsQueryHandler> localizer

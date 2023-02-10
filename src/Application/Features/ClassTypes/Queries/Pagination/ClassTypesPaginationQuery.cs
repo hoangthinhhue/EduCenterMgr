@@ -24,12 +24,12 @@ public class ClassTypesWithPaginationQuery : PaginationFilter, ICacheableRequest
 public class ClassTypesWithPaginationQueryHandler :
          IRequestHandler<ClassTypesWithPaginationQuery, PaginatedData<ClassTypeDto>>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IStringLocalizer<ClassTypesWithPaginationQueryHandler> _localizer;
 
     public ClassTypesWithPaginationQueryHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper,
         IStringLocalizer<ClassTypesWithPaginationQueryHandler> localizer
         )

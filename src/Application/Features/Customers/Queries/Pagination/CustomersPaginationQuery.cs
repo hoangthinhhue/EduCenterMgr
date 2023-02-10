@@ -15,12 +15,12 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Queries.Pagina
     public class CustomersWithPaginationQueryHandler :
          IRequestHandler<CustomersWithPaginationQuery, PaginatedData<CustomerDto>>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<CustomersWithPaginationQueryHandler> _localizer;
 
         public CustomersWithPaginationQueryHandler(
-            IApplicationDbContext context,
+            ApplicationDbContext context,
             IMapper mapper,
             IStringLocalizer<CustomersWithPaginationQueryHandler> localizer
             )

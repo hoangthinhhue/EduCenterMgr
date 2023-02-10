@@ -15,12 +15,12 @@ public class KeyValuesWithPaginationQuery : PaginationFilter, ICacheableRequest<
 public class KeyValuesQueryHandler : IRequestHandler<KeyValuesWithPaginationQuery, PaginatedData<KeyValueDto>>
 {
 
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
 
     public KeyValuesQueryHandler(
 
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper
         )
     {

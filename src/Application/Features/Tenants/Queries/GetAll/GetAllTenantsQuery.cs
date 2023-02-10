@@ -15,12 +15,12 @@ namespace CleanArchitecture.Blazor.Application.Features.Tenants.Queries.GetAll;
     public class GetAllTenantsQueryHandler :
          IRequestHandler<GetAllTenantsQuery, IEnumerable<TenantDto>>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<GetAllTenantsQueryHandler> _localizer;
 
         public GetAllTenantsQueryHandler(
-            IApplicationDbContext context,
+            ApplicationDbContext context,
             IMapper mapper,
             IStringLocalizer<GetAllTenantsQueryHandler> localizer
             )

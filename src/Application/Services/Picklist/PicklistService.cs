@@ -11,7 +11,7 @@ public class PicklistService: IPicklistService
    
     private readonly SemaphoreSlim _semaphore = new(1, 1);
     private readonly IAppCache _cache;
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
    
     public event Action? OnChange;
@@ -19,7 +19,7 @@ public class PicklistService: IPicklistService
 
     public PicklistService(
       IAppCache  cache,  
-    IApplicationDbContext context, IMapper mapper)
+    ApplicationDbContext context, IMapper mapper)
     {
         _cache = cache;
         _context = context;

@@ -6,7 +6,7 @@ using CleanArchitecture.Blazor.Application.Features.Customers.Caching;
 
 namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Create;
 
-    public class CreateCustomerCommand: IMapFrom<CustomerDto>, ICacheInvalidatorRequest<Result<int>>
+    public class CreateCustomerCommand: IMapFrom<CustomerDto>, ICacheInvalidatorRequest<MethodResult<int>>
     {
           [Description("Id")]
     public int Id {get;set;} 
@@ -19,13 +19,13 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Creat
       public CancellationTokenSource? SharedExpiryTokenSource => CustomerCacheKey.SharedExpiryTokenSource();
     }
     
-    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, Result<int>>
+    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, MethodResult<int>>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<CreateCustomerCommand> _localizer;
         public CreateCustomerCommandHandler(
-            IApplicationDbContext context,
+            ApplicationDbContext context,
             IStringLocalizer<CreateCustomerCommand> localizer,
             IMapper mapper
             )
@@ -34,7 +34,7 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Creat
             _localizer = localizer;
             _mapper = mapper;
         }
-        public async Task<Result<int>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<MethodResult<int>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
            // TODO: Implement CreateCustomerCommandHandler method 
            var dto = _mapper.Map<CustomerDto>(request);
@@ -43,7 +43,7 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Creat
 	       item.AddDomainEvent(new CreatedEvent<Customer>(item));
            _context.Customers.Add(item);
            await _context.SaveChangesAsync(cancellationToken);
-           return  await Result<int>.SuccessAsync(item.Id);
+           return  await MethodResult<int>.SuccessAsync(item.Id);
         }
     }
 

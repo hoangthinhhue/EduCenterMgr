@@ -5,7 +5,7 @@ using CleanArchitecture.Blazor.Application.Features.KeyValues.Caching;
 
 namespace CleanArchitecture.Blazor.Application.Features.KeyValues.Commands.Delete;
 
-public class DeleteKeyValueCommand : ICacheInvalidatorRequest<Result>
+public class DeleteKeyValueCommand : ICacheInvalidatorRequest<MethodResult>
 {
     public int[] Id { get; }
     public string CacheKey => KeyValueCacheKey.GetAllCacheKey;
@@ -17,18 +17,18 @@ public class DeleteKeyValueCommand : ICacheInvalidatorRequest<Result>
 }
 
 
-public class DeleteKeyValueCommandHandler : IRequestHandler<DeleteKeyValueCommand, Result>
+public class DeleteKeyValueCommandHandler : IRequestHandler<DeleteKeyValueCommand, MethodResult>
    
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
 
     public DeleteKeyValueCommandHandler(
-        IApplicationDbContext context
+        ApplicationDbContext context
         )
     {
         _context = context;
     }
-    public async Task<Result> Handle(DeleteKeyValueCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult> Handle(DeleteKeyValueCommand request, CancellationToken cancellationToken)
     {
         var items = await _context.KeyValues.Where(x => request.Id.Contains(x.Id)).ToListAsync(cancellationToken);
         foreach (var item in items)
@@ -38,6 +38,6 @@ public class DeleteKeyValueCommandHandler : IRequestHandler<DeleteKeyValueComman
             _context.KeyValues.Remove(item);
         }
         await _context.SaveChangesAsync(cancellationToken);
-        return await Result.SuccessAsync();
+        return await MethodResult.SuccessAsync();
     }
 }

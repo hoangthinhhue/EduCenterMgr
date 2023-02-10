@@ -15,12 +15,12 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Queries.GetAll
     public class GetAllCustomersQueryHandler :
          IRequestHandler<GetAllCustomersQuery, IEnumerable<CustomerDto>>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<GetAllCustomersQueryHandler> _localizer;
 
         public GetAllCustomersQueryHandler(
-            IApplicationDbContext context,
+            ApplicationDbContext context,
             IMapper mapper,
             IStringLocalizer<GetAllCustomersQueryHandler> localizer
             )

@@ -3,11 +3,10 @@ using MudBlazor;
 using Blazor.Server.UI.Models.SideMenu;
 using Blazor.Server.UI.Services;
 using Blazor.Server.UI.Services.Navigation;
-using CleanArchitecture.Blazor.Application.Common.Models;
 using Microsoft.AspNetCore.Components.Authorization;
-using CleanArchitecture.Blazor.Infrastructure.Extensions;
 using BlazorState;
 using CleanArchitecture.Blazor.Application.Features.Identity.Profile;
+using CleanArchitecture.Core.Models;
 
 namespace Blazor.Server.UI.Components.Shared;
 

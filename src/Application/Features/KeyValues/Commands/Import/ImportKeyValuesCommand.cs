@@ -7,7 +7,7 @@ using CleanArchitecture.Blazor.Application.Features.KeyValues.DTOs;
 
 namespace CleanArchitecture.Blazor.Application.Features.KeyValues.Commands.Import;
 
-public class ImportKeyValuesCommand : ICacheInvalidatorRequest<Result>
+public class ImportKeyValuesCommand : ICacheInvalidatorRequest<MethodResult>
 {
     public string FileName { get; set; }
     public byte[] Data { get; set; }
@@ -24,16 +24,16 @@ public record CreateKeyValueTemplateCommand : IRequest<byte[]>
 }
 public class ImportKeyValuesCommandHandler :
     IRequestHandler<CreateKeyValueTemplateCommand, byte[]>,
-    IRequestHandler<ImportKeyValuesCommand, Result>
+    IRequestHandler<ImportKeyValuesCommand, MethodResult>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IExcelService _excelService;
     private readonly IStringLocalizer<ImportKeyValuesCommandHandler> _localizer;
     private readonly IValidator<AddEditKeyValueCommand> _addValidator;
 
     public ImportKeyValuesCommandHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper,
         IExcelService excelService,
         IStringLocalizer<ImportKeyValuesCommandHandler> localizer,
@@ -46,7 +46,7 @@ public class ImportKeyValuesCommandHandler :
         _localizer = localizer;
         _addValidator = addValidator;
     }
-    public async Task<Result> Handle(ImportKeyValuesCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult> Handle(ImportKeyValuesCommand request, CancellationToken cancellationToken)
     {
         var result = await _excelService.ImportAsync(request.Data, mappers: new Dictionary<string, Func<DataRow, KeyValue, object?>>
             {
@@ -82,15 +82,15 @@ public class ImportKeyValuesCommandHandler :
 
             if (errorsOccurred)
             {
-                return await Result.FailureAsync(errors);
+                return await MethodResult.FailureAsync(errors);
             }
 
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result.SuccessAsync();
+            return await MethodResult.SuccessAsync();
         }
         else
         {
-            return await Result.FailureAsync(result.Errors);
+            return await MethodResult.FailureAsync(result.Errors);
         }
     }
 

@@ -5,11 +5,10 @@
 
 using CleanArchitecture.Blazor.Application.Common.Interfaces;
 using CleanArchitecture.Blazor.Application.Features.Loggers.Caching;
-using static CleanArchitecture.Blazor.Application.Constants.Permissions;
 
 namespace CleanArchitecture.Blazor.Application.Features.Loggers.Commands.Delete;
 
-public class ClearLogsCommand : ICacheInvalidatorRequest<Result>
+public class ClearLogsCommand : ICacheInvalidatorRequest<MethodResult>
 {
 
     public string CacheKey => LogsCacheKey.GetAllCacheKey;
@@ -18,16 +17,16 @@ public class ClearLogsCommand : ICacheInvalidatorRequest<Result>
 }
 
 public class ClearLogsCommandHandler :
-             IRequestHandler<ClearLogsCommand, Result>
+             IRequestHandler<ClearLogsCommand, MethodResult>
 
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IStringLocalizer<ClearLogsCommandHandler> _localizer;
     private readonly ILogger<ClearLogsCommandHandler> _logger;
 
     public ClearLogsCommandHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IStringLocalizer<ClearLogsCommandHandler> localizer,
         ILogger<ClearLogsCommandHandler> logger,
          IMapper mapper
@@ -38,12 +37,12 @@ public class ClearLogsCommandHandler :
         _logger = logger;
         _mapper = mapper;
     }
-    public async Task<Result> Handle(ClearLogsCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult> Handle(ClearLogsCommand request, CancellationToken cancellationToken)
     {
         _context.Loggers.RemoveRange(_context.Loggers);
         await _context.SaveChangesAsync(cancellationToken);
         _logger.LogInformation("Logs was erased");
-        return await Result.SuccessAsync();
+        return await MethodResult.SuccessAsync();
     }
 
 }

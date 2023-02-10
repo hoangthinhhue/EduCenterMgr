@@ -1,4 +1,5 @@
 using CleanArchitecture.Blazor.Application.Features.ClassTypes.Queries.Pagination;
+using CleanArchitecture.Core.Specification;
 
 namespace CleanArchitecture.Blazor.Application.Features.ClassTypes.Queries.Specification;
 

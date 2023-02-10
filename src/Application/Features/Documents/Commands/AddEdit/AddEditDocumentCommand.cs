@@ -3,10 +3,11 @@
 
 using CleanArchitecture.Blazor.Application.Features.Documents.DTOs;
 using CleanArchitecture.Blazor.Application.Features.Documents.Caching;
+using CleanArchitecture.Core.Mappings;
 
 namespace CleanArchitecture.Blazor.Application.Features.Documents.Commands.AddEdit;
 
-public class AddEditDocumentCommand :IMapFrom<DocumentDto>, ICacheInvalidatorRequest<Result<int>>
+public class AddEditDocumentCommand :IMapFrom<DocumentDto>, ICacheInvalidatorRequest<MethodResult<int>>
 {
     public int Id { get; set; }
     public string? Title { get; set; }
@@ -21,14 +22,14 @@ public class AddEditDocumentCommand :IMapFrom<DocumentDto>, ICacheInvalidatorReq
   
 }
 
-public class AddEditDocumentCommandHandler : IRequestHandler<AddEditDocumentCommand, Result<int>>
+public class AddEditDocumentCommandHandler : IRequestHandler<AddEditDocumentCommand, MethodResult<int>>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IUploadService _uploadService;
 
     public AddEditDocumentCommandHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
          IMapper mapper,
          IUploadService uploadService
         )
@@ -37,7 +38,7 @@ public class AddEditDocumentCommandHandler : IRequestHandler<AddEditDocumentComm
         _mapper = mapper;
         _uploadService = uploadService;
     }
-    public async Task<Result<int>> Handle(AddEditDocumentCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult<int>> Handle(AddEditDocumentCommand request, CancellationToken cancellationToken)
     {
         var dto = _mapper.Map<DocumentDto>(request);
         if (request.Id > 0)
@@ -54,7 +55,7 @@ public class AddEditDocumentCommandHandler : IRequestHandler<AddEditDocumentComm
             document.IsPublic = request.IsPublic;
             document.DocumentType = request.DocumentType;
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result<int>.SuccessAsync(document.Id);
+            return await MethodResult<int>.SuccessAsync(document.Id);
         }
         else
         {
@@ -66,7 +67,7 @@ public class AddEditDocumentCommandHandler : IRequestHandler<AddEditDocumentComm
              document.AddDomainEvent(new CreatedEvent<Document>(document));
             _context.Documents.Add(document);
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result<int>.SuccessAsync(document.Id);
+            return await MethodResult<int>.SuccessAsync(document.Id);
         }
 
 

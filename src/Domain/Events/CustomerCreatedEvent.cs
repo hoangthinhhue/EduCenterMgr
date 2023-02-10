@@ -3,7 +3,7 @@
 
 using CleanArchitecture.Blazor.Domain.Entities;
 
-namespace CleanArchitecture.Blazor.Domain.Events;
+namespace CleanArchitecture.Core.Events;
 
     public class CustomerCreatedEvent : DomainEvent
     {

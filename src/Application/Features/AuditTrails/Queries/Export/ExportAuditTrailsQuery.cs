@@ -15,13 +15,13 @@ public class ExportAuditTrailsQuery : IRequest<byte[]>
 public class ExportAuditTrailsQueryHandler :
      IRequestHandler<ExportAuditTrailsQuery, byte[]>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IExcelService _excelService;
     private readonly IStringLocalizer<ExportAuditTrailsQueryHandler> _localizer;
 
     public ExportAuditTrailsQueryHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper,
         IExcelService excelService,
         IStringLocalizer<ExportAuditTrailsQueryHandler> localizer

@@ -7,12 +7,12 @@ namespace CleanArchitecture.Blazor.Application.Features.Documents.EventHandlers;
 
 public class DocumentCreatedEventHandler : INotificationHandler<CreatedEvent<Document>>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly ILogger<DocumentCreatedEventHandler> _logger;
 
 
     public DocumentCreatedEventHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         ILogger<DocumentCreatedEventHandler> logger
 
         )

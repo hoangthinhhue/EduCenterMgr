@@ -7,7 +7,7 @@ using CleanArchitecture.Blazor.Application.Features.Customers.Caching;
 
 namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Delete;
 
-    public class DeleteCustomerCommand: ICacheInvalidatorRequest<Result>
+    public class DeleteCustomerCommand: ICacheInvalidatorRequest<MethodResult>
     {
       public int[] Id {  get; }
       public string CacheKey => CustomerCacheKey.GetAllCacheKey;
@@ -19,14 +19,14 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Delet
     }
 
     public class DeleteCustomerCommandHandler : 
-                 IRequestHandler<DeleteCustomerCommand, Result>
+                 IRequestHandler<DeleteCustomerCommand, MethodResult>
 
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<DeleteCustomerCommandHandler> _localizer;
         public DeleteCustomerCommandHandler(
-            IApplicationDbContext context,
+            ApplicationDbContext context,
             IStringLocalizer<DeleteCustomerCommandHandler> localizer,
              IMapper mapper
             )
@@ -35,7 +35,7 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Delet
             _localizer = localizer;
             _mapper = mapper;
         }
-        public async Task<Result> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<MethodResult> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
             // TODO: Implement DeleteCheckedCustomersCommandHandler method 
             var items = await _context.Customers.Where(x => request.Id.Contains(x.Id)).ToListAsync(cancellationToken);
@@ -46,7 +46,7 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Delet
                 _context.Customers.Remove(item);
             }
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result.SuccessAsync();
+            return await MethodResult.SuccessAsync();
         }
 
     }

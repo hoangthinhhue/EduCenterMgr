@@ -16,11 +16,11 @@ public class GetAllKeyValuesQuery : ICacheableRequest<IEnumerable<KeyValueDto>>
 public class GetAllKeyValuesQueryHandler : IRequestHandler<GetAllKeyValuesQuery, IEnumerable<KeyValueDto>>
 {
 
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
 
     public GetAllKeyValuesQueryHandler(
-        IApplicationDbContext context,
+        ApplicationDbContext context,
         IMapper mapper
         )
     {

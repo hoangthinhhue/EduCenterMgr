@@ -5,7 +5,7 @@ using Microsoft.Extensions.Localization;
 
 namespace CleanArchitecture.Blazor.Infrastructure.Middlewares;
 
-internal class ExceptionHandlingMiddleware : IMiddleware
+public class ExceptionHandlingMiddleware : IMiddleware
 {
     private readonly ICurrentUserService _currentUserService;
     private readonly ILogger<ExceptionHandlingMiddleware> _logger;
@@ -31,7 +31,7 @@ internal class ExceptionHandlingMiddleware : IMiddleware
         catch (Exception exception)
         {
             var userId = _currentUserService.UserId;
-            var responseModel = await Result.FailureAsync(new string[] { exception.Message });
+            var responseModel = await MethodResult.FailureAsync(new string[] { exception.Message });
             var response = context.Response;
             response.ContentType = "application/json";
             if (exception is not CustomException && exception.InnerException != null)
