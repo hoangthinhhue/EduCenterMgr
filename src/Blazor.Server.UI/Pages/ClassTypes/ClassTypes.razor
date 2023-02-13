@@ -27,6 +27,7 @@
                   @bind-RowsPerPage="_defaultPageSize"
                   Height="calc(100vh - 330px)"
                   Loading="@_loading"
+                  LoadingProgressColor="Color.Info"
                   SortLabel="@ConstantString.ORDERBY"
                   MultiSelection="true"
                   @bind-SelectedItems="_selectedItems"
@@ -203,7 +204,7 @@
     private MudTable<ClassTypeDto> _table = default!;
     private ClassTypeDto _selectItem = new();
     private string _searchString = string.Empty;
-    private bool _loading;
+    private bool _loading = true;
     private bool _uploading;
     private bool _exporting;
     private bool _pdfexporting;
