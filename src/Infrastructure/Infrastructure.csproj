@@ -47,6 +47,7 @@
 
   <ItemGroup>
     <Folder Include="Common\Commands\" />
+    <Folder Include="Constants\Localization\" />
     <Folder Include="Persistence\Migrations\" />
   </ItemGroup>
 

@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mgr.Core.Constants;
+namespace CleanArchitecture.Domain.Constants;
+
 public static class ConstantString
 {
     //==========================================================//
     //for button text
-    public static string REFRESH => Mgr.Core.Helper.ConstantStringLocalizer.Localize("Refresh");
     public static string EDIT => Localize("Edit");
     public static string DELETE => Localize("Delete");
     public static string ADD => Localize("Add");
