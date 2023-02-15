@@ -3,7 +3,8 @@
 
 
 using System.Reflection.Metadata;
-using CleanArchitecture.Blazor.Application.Features.ClassTypes.DTOs;
+using CleanArchitecture.Blazor.Domain.DTOs.ClassTypes.DTOs;
+using CleanArchitecture.Blazor.Domain.Interfaces;
 
 namespace CleanArchitecture.Blazor.Application.Features.ClassTypes.Queries.Export;
 

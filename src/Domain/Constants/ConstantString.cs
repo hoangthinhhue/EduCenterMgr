@@ -13,6 +13,12 @@ public static class ConstantString
     //==========================================================//
     //for button text
     public static string EDIT => Localize("Edit");
+
+    private static string Localize(string v)
+    {
+        throw new NotImplementedException();
+    }
+
     public static string DELETE => Localize("Delete");
     public static string ADD => Localize("Add");
     public static string CREATE => Localize("Create");

@@ -3,8 +3,10 @@
 
 
 using CleanArchitecture.Blazor.Application.Features.ClassTypes.Caching;
-using CleanArchitecture.Blazor.Application.Features.ClassTypes.DTOs;
-using Mgr.Core.Models;
+using CleanArchitecture.Blazor.Domain.DTOs.ClassTypes.DTOs;
+using CleanArchitecture.Blazor.Domain.Interfaces;
+using Mgr.Core.Entities;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace CleanArchitecture.Blazor.Application.Features.ClassTypes.Commands.Import;
 
@@ -13,9 +15,9 @@ public class ImportClassTypesCommand : ICacheInvalidatorRequest<MethodResult>
     public string CacheKey => ClassTypeCacheKey.GetAllCacheKey;
     public CancellationTokenSource? SharedExpiryTokenSource => ClassTypeCacheKey.SharedExpiryTokenSource();
 
-    public string FileName { get;  }
-    public byte[] Data { get;  }
-    public ImportClassTypesCommand(string fileName,byte[] data)
+    public string FileName { get; }
+    public byte[] Data { get; }
+    public ImportClassTypesCommand(string fileName, byte[] data)
     {
         FileName = fileName;
         Data = data;
@@ -57,7 +59,7 @@ public class ImportClassTypesCommandHandler :
               { _localizer["Description"], (row,item) => item.Description = row[_localizer["Description"]].ToString() },
               { _localizer["Duration"], (row,item) => item.Duration = (int)row[_localizer["Duration"]] },
             }, _localizer["ClassTypes"]);
-        if (result.Succeeded)
+        if (result.Success)
         {
             foreach (var dto in result.Data!)
             {
@@ -65,16 +67,16 @@ public class ImportClassTypesCommandHandler :
                 await _context.ClassTypes.AddAsync(item, cancellationToken);
             }
             await _context.SaveChangesAsync(cancellationToken);
-            return await MethodResult.SuccessAsync();
+            return MethodResult.ResultWithSuccess();
         }
         else
         {
-            return MethodResult.Failure(result.Errors);
+            return MethodResult.ResultWithError(result.Message);
         }
     }
     public async Task<byte[]> Handle(CreateClassTypesTemplateCommand request, CancellationToken cancellationToken)
     {
-        var fields = 
+        var fields = new string[] {
                    _localizer["Code"],
                    _localizer["Name"],
                    _localizer["Description"],

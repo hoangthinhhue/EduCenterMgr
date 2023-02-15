@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlazorState;
-using CleanArchitecture.Blazor.Application.Features.Identity.Dto;
+using CleanArchitecture.Blazor.Domain.DTOs.Identity.Dto;
 using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.Identity.Profile;

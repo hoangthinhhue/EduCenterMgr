@@ -4,6 +4,9 @@
 
 
 using CleanArchitecture.Blazor.Application.Features.ClassTypes.Caching;
+using CleanArchitecture.Blazor.Domain.Interfaces;
+using Mgr.Core.Entities;
+using Mgr.Core.Events;
 using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.ClassTypes.Commands.Delete;
@@ -47,7 +50,7 @@ public class DeleteClassTypeCommandHandler :
             _context.ClassTypes.Remove(item);
         }
         await _context.SaveChangesAsync(cancellationToken);
-        return await MethodResult.SuccessAsync();
+        return  MethodResult.ResultWithSuccess();
     }
 }
 

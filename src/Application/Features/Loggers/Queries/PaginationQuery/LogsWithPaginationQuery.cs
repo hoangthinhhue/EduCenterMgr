@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using CleanArchitecture.Blazor.Application.Features.AuditTrails.Caching;
-using CleanArchitecture.Blazor.Application.Features.Documents.Caching;
 using CleanArchitecture.Blazor.Application.Features.Loggers.Caching;
 using CleanArchitecture.Blazor.Domain.DTOs.Loggers.DTOs;
 using CleanArchitecture.Blazor.Domain.Interfaces;

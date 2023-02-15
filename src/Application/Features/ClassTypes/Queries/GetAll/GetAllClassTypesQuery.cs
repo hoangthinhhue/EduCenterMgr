@@ -2,7 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using CleanArchitecture.Blazor.Application.Features.ClassTypes.Caching;
-using CleanArchitecture.Blazor.Application.Features.ClassTypes.DTOs;
+using CleanArchitecture.Blazor.Domain.DTOs.ClassTypes.DTOs;
+using CleanArchitecture.Blazor.Domain.Interfaces;
 
 namespace CleanArchitecture.Blazor.Application.Features.ClassTypes.Queries.GetAll;
 

@@ -5,8 +5,9 @@
 
 using CleanArchitecture.Blazor.Application.Common.Interfaces;
 using CleanArchitecture.Blazor.Application.Features.Loggers.Caching;
+using CleanArchitecture.Blazor.Domain.Interfaces;
+using Mgr.Core.Entities;
 using Mgr.Core.Models;
-using static CleanArchitecture.Blazor.Application.Constants.Permissions;
 
 namespace CleanArchitecture.Blazor.Application.Features.Loggers.Commands.Delete;
 
@@ -44,7 +45,7 @@ public class ClearLogsCommandHandler :
         _context.Loggers.RemoveRange(_context.Loggers);
         await _context.SaveChangesAsync(cancellationToken);
         _logger.LogInformation("Logs was erased");
-        return await MethodResult.SuccessAsync();
+        return MethodResult.ResultWithSuccess();
     }
 
 }

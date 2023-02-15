@@ -2,13 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using CleanArchitecture.Blazor.Application.Features.ClassTypes.Caching;
-using CleanArchitecture.Blazor.Application.Features.ClassTypes.DTOs;
-using CleanArchitecture.Blazor.Application.Features.ClassTypes.Queries.Specification;
+using CleanArchitecture.Blazor.Domain.DTOs.ClassTypes.DTOs;
+using CleanArchitecture.Blazor.Domain.Interfaces;
+using Mgr.Core.Extensions;
 using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.ClassTypes.Queries.Pagination;
 
-public class ClassTypesWithPaginationQuery : PaginationFilter, ICacheableRequest<PaginatedData<ClassTypeDto>>
+public class ClassTypesWithPaginationQuery : PaginationRequest, ICacheableRequest<PaginatedData<ClassTypeDto>>
 {
     public string? Name { get; set; }
     public string? Code { get; set; }
@@ -42,10 +43,9 @@ public class ClassTypesWithPaginationQueryHandler :
 
     public async Task<PaginatedData<ClassTypeDto>> Handle(ClassTypesWithPaginationQuery request, CancellationToken cancellationToken)
     {
-        var data = await _context.ClassTypes.Specify(new SearchClassTypeSpecification(request))
-             .OrderBy($"{request.OrderBy} {request.SortDirection}")
+        var data = await _context.ClassTypes
              .ProjectTo<ClassTypeDto>(_mapper.ConfigurationProvider)
-             .PaginatedDataAsync(request.PageNumber, request.PageSize);
+             .ToPageListAsync(request);
         return data;
     }
 }

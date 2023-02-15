@@ -25,6 +25,7 @@ global using CleanArchitecture.Blazor.Application.Common.Specification;
 global using CleanArchitecture.Blazor.Application.Common.Exceptions;
 global using Microsoft.AspNetCore.Components;
 global using MudBlazor;
-global using static CleanArchitecture.Blazor.Application.Common.Helper.ConstantStringLocalizer;
+global using static CleanArchitecture.Blazor.Application.Constants.ConstantStringLocalizer;
 global using FluentValidationSeverity = FluentValidation.Severity;
 global using Severity = MudBlazor.Severity;
+
