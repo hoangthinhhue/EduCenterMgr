@@ -4,6 +4,10 @@
 using Microsoft.Extensions.Localization;
 using System.Data;
 using ClosedXML.Excel;
+using Mgr.Core.Models;
+using CleanArchitecture.Blazor.Domain.Interfaces;
+using Mgr.Core.Interfaces;
+using Mgr.Core.Entities;
 
 namespace CleanArchitecture.Blazor.Infrastructure.Services;
 
@@ -100,14 +104,14 @@ public class ExcelService : IExcelService
         }
     }
 
-    public async Task<IResult<IEnumerable<TEntity>>> ImportAsync<TEntity>(byte[] data, Dictionary<string, Func<DataRow, TEntity, object?>> mappers, string sheetName = "Sheet1")
+    public async Task<MethodResult<IEnumerable<TEntity>>> ImportAsync<TEntity>(byte[] data, Dictionary<string, Func<DataRow, TEntity, object?>> mappers, string sheetName = "Sheet1")
     {
 
         using (var workbook = new XLWorkbook(new MemoryStream(data)))
         {
             if (!workbook.Worksheets.Contains(sheetName))
             {
-                return await Result<IEnumerable<TEntity>>.FailureAsync(new string[] { string.Format(_localizer["Sheet with name {0} does not exist!"], sheetName) });
+                return MethodResult<IEnumerable<TEntity>>.ErrorBussiness(string.Format(_localizer["Sheet with name {0} does not exist!"], sheetName));
             }
             var ws = workbook.Worksheet(sheetName);
             var dt = new DataTable();
@@ -129,7 +133,7 @@ public class ExcelService : IExcelService
             }
             if (errors.Any())
             {
-                return await Result<IEnumerable<TEntity>>.FailureAsync(errors);
+                return MethodResult<IEnumerable<TEntity>>.ErrorBussiness(errors.ToArray());
             }
             var lastrow = ws.LastRowUsed();
             var list = new List<TEntity>();
@@ -155,12 +159,13 @@ public class ExcelService : IExcelService
                 }
                 catch (Exception e)
                 {
-                    return await Result<IEnumerable<TEntity>>.FailureAsync(new string[] { string.Format(_localizer["Sheet name {0}:{1}"], sheetName, e.Message) });
+                    return MethodResult<IEnumerable<TEntity>>.ErrorBussiness(new string[] { string.Format(_localizer["Sheet name {0}:{1}"], sheetName, e.Message) });
                 }
             }
 
 
-            return await Result<IEnumerable<TEntity>>.SuccessAsync(list);
+            return MethodResult<IEnumerable<TEntity>>.ResultWithData(list);
         }
     }
+
 }

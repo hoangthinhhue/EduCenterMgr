@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mgr.Core.Entity;
 
 namespace CleanArchitecture.Blazor.Domain.Entities;
 public class Tenant : BaseAuditableEntity

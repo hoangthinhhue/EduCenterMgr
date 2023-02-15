@@ -3,10 +3,11 @@
 
 using CleanArchitecture.Blazor.Application.Features.Customers.DTOs;
 using CleanArchitecture.Blazor.Application.Features.Customers.Caching;
+using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.Customers.Queries.Pagination;
 
-    public class CustomersWithPaginationQuery : PaginationFilter, ICacheableRequest<PaginatedData<CustomerDto>>
+public class CustomersWithPaginationQuery : PaginationFilter, ICacheableRequest<PaginatedData<CustomerDto>>
     {
         public string CacheKey => CustomerCacheKey.GetPaginationCacheKey($"{this}");
         public MemoryCacheEntryOptions? Options => CustomerCacheKey.MemoryCacheEntryOptions;

@@ -4,6 +4,7 @@
 using CleanArchitecture.Blazor.Application.Features.ClassTypes.Caching;
 using CleanArchitecture.Blazor.Application.Features.ClassTypes.DTOs;
 using CleanArchitecture.Blazor.Application.Features.ClassTypes.Queries.Specification;
+using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.ClassTypes.Queries.Pagination;
 

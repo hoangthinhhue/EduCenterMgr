@@ -1,3 +1,4 @@
+using CleanArchitecture.Blazor.Domain.Configurations;
 using Microsoft.Extensions.Configuration;
 
 namespace CleanArchitecture.Blazor.Infrastructure.Extensions;

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BlazorState;
 using CleanArchitecture.Blazor.Application.Features.Identity.Dto;
+using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.Identity.Profile;
 public partial class UserProfileState

@@ -1,12 +1,21 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using CleanArchitecture.Blazor.Application.Features.Documents.DTOs;
 using CleanArchitecture.Blazor.Application.Features.Documents.Caching;
+using Mgr.Core.Models;
+using Mgr.Core.Entities;
+using Mgr.Core.EnumType;
+using Uni.Core.Commands;
+using Azure.Core;
+using Mgr.Core.Events;
+using CleanArchitecture.Blazor.Infrastructure.Persistence;
+using CleanArchitecture.Blazor.Domain.Interfaces;
+using CleanArchitecture.Blazor.Domain.DTOs.Documents.DTOs;
+using CleanArchitecture.Domain.Interfaces.Mappings;
 
 namespace CleanArchitecture.Blazor.Application.Features.Documents.Commands.AddEdit;
 
-public class AddEditDocumentCommand :IMapFrom<DocumentDto>, ICacheInvalidatorRequest<Result<int>>
+public class AddEditDocumentCommand :IMapFrom<DocumentDto>, ICacheInvalidatorRequest<MethodResult<int>>
 {
     public int Id { get; set; }
     public string? Title { get; set; }
@@ -21,28 +30,22 @@ public class AddEditDocumentCommand :IMapFrom<DocumentDto>, ICacheInvalidatorReq
   
 }
 
-public class AddEditDocumentCommandHandler : IRequestHandler<AddEditDocumentCommand, Result<int>>
+public class AddEditDocumentCommandHandler : BaseCommand<ApplicationDbContext,Document,int>,IRequestHandler<AddEditDocumentCommand, MethodResult<int>>
 {
-    private readonly IApplicationDbContext _context;
-    private readonly IMapper _mapper;
     private readonly IUploadService _uploadService;
 
     public AddEditDocumentCommandHandler(
-        IApplicationDbContext context,
          IMapper mapper,
          IUploadService uploadService
-        )
+        ) : base()
     {
-        _context = context;
-        _mapper = mapper;
-        _uploadService = uploadService;
     }
-    public async Task<Result<int>> Handle(AddEditDocumentCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult<int>> Handle(AddEditDocumentCommand request, CancellationToken cancellationToken)
     {
-        var dto = _mapper.Map<DocumentDto>(request);
+        var dto = _Mapper.Map<DocumentDto>(request);
         if (request.Id > 0)
         {
-            var document = await _context.Documents.FindAsync(new object[] { request.Id }, cancellationToken);
+            var document = await _Repos.FindAsync(q=>q.Id == request.Id);
             _ = document ?? throw new NotFoundException($"Document {request.Id} Not Found.");
             document.AddDomainEvent(new UpdatedEvent<Document>(document));
             if (request.UploadRequest != null)
@@ -53,22 +56,20 @@ public class AddEditDocumentCommandHandler : IRequestHandler<AddEditDocumentComm
             document.Description = request.Description;
             document.IsPublic = request.IsPublic;
             document.DocumentType = request.DocumentType;
-            await _context.SaveChangesAsync(cancellationToken);
-            return await Result<int>.SuccessAsync(document.Id);
+            await _UnitOfWork.SaveChangesAsync(cancellationToken);
+            return  MethodResult<int>.ResultWithData(document.Id);
         }
         else
         {
-            var document = _mapper.Map<Document>(dto);
+            var document = _Mapper.Map<Document>(dto);
             if (request.UploadRequest != null)
             {
                 document.URL = await _uploadService.UploadAsync(request.UploadRequest); ;
             }
              document.AddDomainEvent(new CreatedEvent<Document>(document));
-            _context.Documents.Add(document);
-            await _context.SaveChangesAsync(cancellationToken);
-            return await Result<int>.SuccessAsync(document.Id);
+            _Repos.Insert(document);
+            await _UnitOfWork.SaveChangesAsync(cancellationToken);
+            return  MethodResult<int>.ResultWithData(document.Id);
         }
-
-
     }
 }

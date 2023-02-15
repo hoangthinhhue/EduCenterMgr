@@ -1,4 +1,6 @@
 
+using Mgr.Core.Service;
+
 namespace CleanArchitecture.Blazor.Infrastructure.Extensions;
 public static class ServicesCollectionExtensions
 {

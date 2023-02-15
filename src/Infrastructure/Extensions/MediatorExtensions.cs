@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using Mgr.Core.Abstracts;
+using Mgr.Core.Entity;
 
 namespace CleanArchitecture.Blazor.Infrastructure.Extensions;
 public static class MediatorExtensions

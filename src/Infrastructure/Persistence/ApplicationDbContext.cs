@@ -2,9 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Reflection;
+using CleanArchitecture.Blazor.Domain.Interfaces;
 using CleanArchitecture.Blazor.Infrastructure.Extensions;
 using CleanArchitecture.Blazor.Infrastructure.Persistence.Interceptors;
 using MediatR;
+using Mgr.Core.Interface;
 
 namespace CleanArchitecture.Blazor.Infrastructure.Persistence;
 
@@ -12,10 +14,9 @@ namespace CleanArchitecture.Blazor.Infrastructure.Persistence;
 public class ApplicationDbContext : IdentityDbContext<
     ApplicationUser, ApplicationRole, string,
     ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin,
-    ApplicationRoleClaim, ApplicationUserToken>, IApplicationDbContext
+    ApplicationRoleClaim, ApplicationUserToken>,
+    IApplicationDbContext
 {
-
-
     private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 
     public ApplicationDbContext(
@@ -56,5 +57,4 @@ public class ApplicationDbContext : IdentityDbContext<
     {
         optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
     }
-
 }

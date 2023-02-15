@@ -3,10 +3,11 @@
 
 using CleanArchitecture.Blazor.Application.Features.Customers.DTOs;
 using CleanArchitecture.Blazor.Application.Features.Customers.Caching;
+using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Import;
 
-    public class ImportCustomersCommand: ICacheInvalidatorRequest<Result>
+public class ImportCustomersCommand: ICacheInvalidatorRequest<MethodResult>
     {
         public string FileName { get; set; }
         public byte[] Data { get; set; }
@@ -25,7 +26,7 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Impor
 
     public class ImportCustomersCommandHandler : 
                  IRequestHandler<CreateCustomersTemplateCommand, byte[]>,
-                 IRequestHandler<ImportCustomersCommand, Result>
+                 IRequestHandler<ImportCustomersCommand, MethodResult>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -45,7 +46,7 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Impor
             _excelService = excelService;
             _mapper = mapper;
         }
-        public async Task<Result> Handle(ImportCustomersCommand request, CancellationToken cancellationToken)
+        public async Task<MethodResult> Handle(ImportCustomersCommand request, CancellationToken cancellationToken)
         {
            // TODO: Implement ImportCustomersCommandHandler method
            var result = await _excelService.ImportAsync(request.Data, mappers: new Dictionary<string, Func<DataRow, CustomerDto, object?>>
@@ -69,17 +70,17 @@ namespace CleanArchitecture.Blazor.Application.Features.Customers.Commands.Impor
                     }
                  }
                  await _context.SaveChangesAsync(cancellationToken);
-                 return await Result.SuccessAsync();
+                 return await MethodResult.SuccessAsync();
            }
            else
            {
-               return await Result.FailureAsync(result.Errors);
+               return await MethodResult.ErrorBussiness(result.Errors);
            }
         }
         public async Task<byte[]> Handle(CreateCustomersTemplateCommand request, CancellationToken cancellationToken)
         {
             // TODO: Implement ImportCustomersCommandHandler method 
-            var fields = new string[] {
+            var fields = 
                    // TODO: Define the fields that should be generate in the template, for example:
                    _localizer[_dto.GetMemberDescription("Name")], 
 _localizer[_dto.GetMemberDescription("Description")], 

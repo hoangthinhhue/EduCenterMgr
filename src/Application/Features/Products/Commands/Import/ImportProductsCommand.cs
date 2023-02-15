@@ -4,10 +4,11 @@
 
 using CleanArchitecture.Blazor.Application.Features.Products.Caching;
 using CleanArchitecture.Blazor.Application.Features.Products.DTOs;
+using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.Products.Commands.Import;
 
-public class ImportProductsCommand : ICacheInvalidatorRequest<Result>
+public class ImportProductsCommand : ICacheInvalidatorRequest<MethodResult>
 {
     public string CacheKey => ProductCacheKey.GetAllCacheKey;
     public CancellationTokenSource? SharedExpiryTokenSource => ProductCacheKey.SharedExpiryTokenSource();
@@ -27,7 +28,7 @@ public record CreateProductsTemplateCommand : IRequest<byte[]>
 
 public class ImportProductsCommandHandler :
              IRequestHandler<CreateProductsTemplateCommand, byte[]>,
-             IRequestHandler<ImportProductsCommand, Result>
+             IRequestHandler<ImportProductsCommand, MethodResult>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -46,7 +47,7 @@ public class ImportProductsCommandHandler :
         _excelService = excelService;
         _mapper = mapper;
     }
-    public async Task<Result> Handle(ImportProductsCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult> Handle(ImportProductsCommand request, CancellationToken cancellationToken)
     {
 
         var result = await _excelService.ImportAsync(request.Data, mappers: new Dictionary<string, Func<DataRow, ProductDto, object?>>
@@ -66,16 +67,16 @@ public class ImportProductsCommandHandler :
                 await _context.Products.AddAsync(item, cancellationToken);
             }
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result.SuccessAsync();
+            return await MethodResult.SuccessAsync();
         }
         else
         {
-            return Result.Failure(result.Errors);
+            return MethodResult.Failure(result.Errors);
         }
     }
     public async Task<byte[]> Handle(CreateProductsTemplateCommand request, CancellationToken cancellationToken)
     {
-        var fields = new string[] {
+        var fields = 
                    _localizer["Brand Name"],
                    _localizer["Product Name"],
                    _localizer["Description"],

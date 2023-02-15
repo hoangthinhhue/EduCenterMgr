@@ -2,10 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using CleanArchitecture.Blazor.Application.Features.Documents.Caching;
+using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.Documents.Commands.Delete;
 
-public class DeleteDocumentCommand : ICacheInvalidatorRequest<Result>
+public class DeleteDocumentCommand : ICacheInvalidatorRequest<MethodResult>
 {
     public CancellationTokenSource? SharedExpiryTokenSource => DocumentCacheKey.SharedExpiryTokenSource();
     public int[] Id { get; set; }
@@ -16,7 +17,7 @@ public class DeleteDocumentCommand : ICacheInvalidatorRequest<Result>
 }
 
 
-public class DeleteDocumentCommandHandler : IRequestHandler<DeleteDocumentCommand, Result>
+public class DeleteDocumentCommandHandler : IRequestHandler<DeleteDocumentCommand, MethodResult>
 
 {
     private readonly IApplicationDbContext _context;
@@ -27,7 +28,7 @@ public class DeleteDocumentCommandHandler : IRequestHandler<DeleteDocumentComman
     {
         _context = context;
     }
-    public async Task<Result> Handle(DeleteDocumentCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult> Handle(DeleteDocumentCommand request, CancellationToken cancellationToken)
     {
         var items = await _context.Documents.Where(x => request.Id.Contains(x.Id)).ToListAsync(cancellationToken);
         foreach (var item in items)
@@ -36,6 +37,6 @@ public class DeleteDocumentCommandHandler : IRequestHandler<DeleteDocumentComman
             _context.Documents.Remove(item);
         }
         await _context.SaveChangesAsync(cancellationToken);
-        return await Result.SuccessAsync();
+        return await MethodResult.SuccessAsync();
     }
 }

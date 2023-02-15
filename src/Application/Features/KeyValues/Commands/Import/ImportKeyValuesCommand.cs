@@ -4,10 +4,11 @@
 using CleanArchitecture.Blazor.Application.Features.KeyValues.Caching;
 using CleanArchitecture.Blazor.Application.Features.KeyValues.Commands.AddEdit;
 using CleanArchitecture.Blazor.Application.Features.KeyValues.DTOs;
+using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.KeyValues.Commands.Import;
 
-public class ImportKeyValuesCommand : ICacheInvalidatorRequest<Result>
+public class ImportKeyValuesCommand : ICacheInvalidatorRequest<MethodResult>
 {
     public string FileName { get; set; }
     public byte[] Data { get; set; }
@@ -24,7 +25,7 @@ public record CreateKeyValueTemplateCommand : IRequest<byte[]>
 }
 public class ImportKeyValuesCommandHandler :
     IRequestHandler<CreateKeyValueTemplateCommand, byte[]>,
-    IRequestHandler<ImportKeyValuesCommand, Result>
+    IRequestHandler<ImportKeyValuesCommand, MethodResult>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -46,7 +47,7 @@ public class ImportKeyValuesCommandHandler :
         _localizer = localizer;
         _addValidator = addValidator;
     }
-    public async Task<Result> Handle(ImportKeyValuesCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult> Handle(ImportKeyValuesCommand request, CancellationToken cancellationToken)
     {
         var result = await _excelService.ImportAsync(request.Data, mappers: new Dictionary<string, Func<DataRow, KeyValue, object?>>
             {
@@ -63,8 +64,8 @@ public class ImportKeyValuesCommandHandler :
             var errorsOccurred = false;
             foreach (var item in importItems)
             {
-                var validationResult = await _addValidator.ValidateAsync(new AddEditKeyValueCommand() { Name = item.Name, Value = item.Value, Description = item.Description, Text = item.Text }, cancellationToken);
-                if (validationResult.IsValid)
+                var validationMethodResult = await _addValidator.ValidateAsync(new AddEditKeyValueCommand() { Name = item.Name, Value = item.Value, Description = item.Description, Text = item.Text }, cancellationToken);
+                if (validationMethodResult.IsValid)
                 {
                     var exist = await _context.KeyValues.AnyAsync(x => x.Name == item.Name && x.Value == item.Value, cancellationToken);
                     if (!exist)
@@ -76,27 +77,27 @@ public class ImportKeyValuesCommandHandler :
                 else
                 {
                     errorsOccurred = true;
-                    errors.AddRange(validationResult.Errors.Select(e => $"{(!string.IsNullOrWhiteSpace(item.Name.ToString()) ? $"{item.Name} - " : string.Empty)}{e.ErrorMessage}"));
+                    errors.AddRange(validationMethodResult.Errors.Select(e => $"{(!string.IsNullOrWhiteSpace(item.Name.ToString()) ? $"{item.Name} - " : string.Empty)}{e.ErrorMessage}"));
                 }
             }
 
             if (errorsOccurred)
             {
-                return await Result.FailureAsync(errors);
+                return await MethodResult.ErrorBussiness(errors);
             }
 
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result.SuccessAsync();
+            return await MethodResult.SuccessAsync();
         }
         else
         {
-            return await Result.FailureAsync(result.Errors);
+            return await MethodResult.ErrorBussiness(result.Errors);
         }
     }
 
     public async Task<byte[]> Handle(CreateKeyValueTemplateCommand request, CancellationToken cancellationToken)
     {
-        var fields = new string[] {
+        var fields = 
                 _localizer["Name"],
                 _localizer["Value"],
                 _localizer["Text"],

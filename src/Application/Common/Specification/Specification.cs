@@ -3,6 +3,8 @@
 
 using System.Linq.Expressions;
 using CleanArchitecture.Blazor.Domain.Common;
+using CleanArchitecture.Blazor.Domain.Interfaces;
+using Mgr.Core.Interface;
 
 namespace CleanArchitecture.Blazor.Application.Common.Specification;
 #nullable disable

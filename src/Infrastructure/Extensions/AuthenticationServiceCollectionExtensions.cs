@@ -1,4 +1,6 @@
 using System.Reflection;
+using CleanArchitecture.Blazor.Application.Common.Interfaces.Identity;
+using Mgr.Core.Constants;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -40,7 +42,7 @@ public static class AuthenticationServiceCollectionExtensions
         });
         services
                  .AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationClaimsIdentityFactory>()
-                 .AddTransient<IIdentityService, IdentityService>()
+                 .AddTransient<IIdentityService, IIdentityService>()
                  .AddAuthorization(options =>
                  {
                      options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator"));

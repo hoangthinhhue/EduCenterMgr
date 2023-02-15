@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Blazor.Server.UI.Components.Dialogs;
-using CleanArchitecture.Blazor.Application.Common.Models;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using CleanArchitecture.Blazor.Application.Constants;
 using BlazorState;
 using CleanArchitecture.Blazor.Application.Features.Identity.Profile;
 using System.Security.Cryptography;
+using Mgr.Core.Models;
 
 namespace Blazor.Server.UI.Components.Shared;
 

@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
+using Mgr.Core.EnumType;
 
 namespace CleanArchitecture.Blazor.Application.Common.Extensions;
 #nullable disable
@@ -152,6 +153,7 @@ public static class PredicateBuilder
 
 
     #endregion
+
     #region -- Private methods --
 
     private static string GetOperand<T>(Expression<Func<T, object>> exp)
@@ -385,18 +387,4 @@ internal sealed class AutoNumberToStringConverter : JsonConverter<object>
     }
 }
 
-internal enum OperationExpression
-{
-    equal,
-    notequal,
-    less,
-    lessorequal,
-    greater,
-    greaterorequal,
-    contains,
-    beginwith,
-    endwith,
-    includes,
-    between,
-    any
-}
+

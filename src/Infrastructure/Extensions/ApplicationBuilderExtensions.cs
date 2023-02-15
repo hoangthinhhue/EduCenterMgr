@@ -1,5 +1,5 @@
-using CleanArchitecture.Blazor.Infrastructure.Constants;
 using CleanArchitecture.Blazor.Infrastructure.Hubs;
+using Mgr.Core.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;

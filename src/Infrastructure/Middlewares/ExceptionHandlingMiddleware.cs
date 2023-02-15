@@ -1,4 +1,7 @@
 using System.Net;
+using Mgr.Core.Entities;
+using Mgr.Core.Exceptions;
+using Mgr.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 
@@ -31,7 +34,7 @@ internal class ExceptionHandlingMiddleware : IMiddleware
         catch (Exception exception)
         {
             var userId = _currentUserService.UserId;
-            var responseModel = await Result.FailureAsync(new string[] { exception.Message });
+            var responseModel = MethodResult.ResultWithError(exception.Message);
             var response = context.Response;
             response.ContentType = "application/json";
             if (exception is not CustomException && exception.InnerException != null)
@@ -43,7 +46,7 @@ internal class ExceptionHandlingMiddleware : IMiddleware
             }
             if (!string.IsNullOrEmpty(exception.Message))
             {
-                responseModel.Errors=new string[] { exception.Message };
+                responseModel.Message= exception.Message;
             }
             switch (exception)
             {
@@ -51,7 +54,7 @@ internal class ExceptionHandlingMiddleware : IMiddleware
                     response.StatusCode = (int)e.StatusCode;
                     if (e.ErrorMessages is not null)
                     {
-                        responseModel.Errors = e.ErrorMessages.ToArray();
+                        responseModel.Message = string.Join("; ",e.ErrorMessages);
                     }
                     break;
                 case KeyNotFoundException:

@@ -23,5 +23,5 @@ global using CleanArchitecture.Blazor.Application.Common.Interfaces.Caching;
 global using CleanArchitecture.Blazor.Domain.Entities.Audit;
 global using CleanArchitecture.Blazor.Domain.Entities.Log;
 global using CleanArchitecture.Blazor.Application.Common.Specification;
-global using CleanArchitecture.Blazor.Application.Common.Exceptions;
-global using static CleanArchitecture.Blazor.Application.Common.Helper.ConstantStringLocalizer;
+global using Mgr.Core;
+global using Mgr.Core.Exceptions;

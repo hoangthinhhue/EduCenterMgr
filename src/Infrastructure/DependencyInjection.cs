@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using CleanArchitecture.Blazor.Infrastructure.Extensions;
 using CleanArchitecture.Blazor.Infrastructure.Persistence.Interceptors;
 using Microsoft.Extensions.DependencyInjection;
+using CleanArchitecture.Blazor.Domain.Configurations;
 
 namespace CleanArchitecture.Blazor.Infrastructure;
 

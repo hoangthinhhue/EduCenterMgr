@@ -4,11 +4,14 @@
 using CleanArchitecture.Blazor.Application.Features.AuditTrails.Caching;
 using CleanArchitecture.Blazor.Application.Features.Documents.Caching;
 using CleanArchitecture.Blazor.Application.Features.Loggers.Caching;
-using CleanArchitecture.Blazor.Application.Features.Loggers.DTOs;
+using CleanArchitecture.Blazor.Domain.DTOs.Loggers.DTOs;
+using CleanArchitecture.Blazor.Domain.Interfaces;
+using Mgr.Core.Extensions;
+using Mgr.Core.Interface;
+using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Logs.Queries.PaginationQuery;
-
-public class LogsWithPaginationQuery : PaginationFilter, ICacheableRequest<PaginatedData<LogDto>>
+public class LogsWithPaginationQuery : PaginationRequest, ICacheableRequest<PaginatedData<LogDto>>
 {
     public string CacheKey => LogsCacheKey.GetPaginationCacheKey($"{this}");
     public MemoryCacheEntryOptions? Options => LogsCacheKey.MemoryCacheEntryOptions;
@@ -31,14 +34,9 @@ public class LogsQueryHandler : IRequestHandler<LogsWithPaginationQuery, Paginat
     }
     public async Task<PaginatedData<LogDto>> Handle(LogsWithPaginationQuery request, CancellationToken cancellationToken)
     {
-   
-
         var data = await _context.Loggers
-            .Where(x=>x.Message!.Contains(request.Keyword) || x.Exception!.Contains(request.Keyword))
-            .OrderBy($"{request.OrderBy} {request.SortDirection}")
                 .ProjectTo<LogDto>(_mapper.ConfigurationProvider)
-                .PaginatedDataAsync(request.PageNumber, request.PageSize);
-
+                .ToPageListAsync(request);
         return data;
     }
 

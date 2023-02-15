@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using CleanArchitecture.Blazor.Application.Common.Interfaces.MultiTenant;
 using CleanArchitecture.Blazor.Infrastructure.Extensions;
 using MediatR;
+using Mgr.Core.Abstracts;
+using Mgr.Core.Entity;
+using Mgr.Core.EnumType;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 

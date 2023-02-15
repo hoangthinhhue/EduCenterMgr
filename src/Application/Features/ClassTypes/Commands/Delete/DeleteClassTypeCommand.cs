@@ -4,10 +4,11 @@
 
 
 using CleanArchitecture.Blazor.Application.Features.ClassTypes.Caching;
+using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.ClassTypes.Commands.Delete;
 
-public class DeleteClassTypeCommand : ICacheInvalidatorRequest<Result>
+public class DeleteClassTypeCommand : ICacheInvalidatorRequest<MethodResult>
 
 {
     public int[] Id { get; }
@@ -21,7 +22,7 @@ public class DeleteClassTypeCommand : ICacheInvalidatorRequest<Result>
 
 
 public class DeleteClassTypeCommandHandler :
-             IRequestHandler<DeleteClassTypeCommand, Result>
+             IRequestHandler<DeleteClassTypeCommand, MethodResult>
     {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -36,7 +37,7 @@ public class DeleteClassTypeCommandHandler :
         _localizer = localizer;
         _mapper = mapper;
     }
-    public async Task<Result> Handle(DeleteClassTypeCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult> Handle(DeleteClassTypeCommand request, CancellationToken cancellationToken)
     {
 
         var items = await _context.ClassTypes.Where(x => request.Id.Contains(x.Id)).ToListAsync(cancellationToken);
@@ -46,7 +47,7 @@ public class DeleteClassTypeCommandHandler :
             _context.ClassTypes.Remove(item);
         }
         await _context.SaveChangesAsync(cancellationToken);
-        return await Result.SuccessAsync();
+        return await MethodResult.SuccessAsync();
     }
 }
 

@@ -4,10 +4,11 @@
 
 using CleanArchitecture.Blazor.Application.Features.ClassTypes.Caching;
 using CleanArchitecture.Blazor.Application.Features.ClassTypes.DTOs;
+using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.ClassTypes.Commands.Import;
 
-public class ImportClassTypesCommand : ICacheInvalidatorRequest<Result>
+public class ImportClassTypesCommand : ICacheInvalidatorRequest<MethodResult>
 {
     public string CacheKey => ClassTypeCacheKey.GetAllCacheKey;
     public CancellationTokenSource? SharedExpiryTokenSource => ClassTypeCacheKey.SharedExpiryTokenSource();
@@ -27,7 +28,7 @@ public record CreateClassTypesTemplateCommand : IRequest<byte[]>
 
 public class ImportClassTypesCommandHandler :
              IRequestHandler<CreateClassTypesTemplateCommand, byte[]>,
-             IRequestHandler<ImportClassTypesCommand, Result>
+             IRequestHandler<ImportClassTypesCommand, MethodResult>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -46,7 +47,7 @@ public class ImportClassTypesCommandHandler :
         _excelService = excelService;
         _mapper = mapper;
     }
-    public async Task<Result> Handle(ImportClassTypesCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult> Handle(ImportClassTypesCommand request, CancellationToken cancellationToken)
     {
 
         var result = await _excelService.ImportAsync(request.Data, mappers: new Dictionary<string, Func<DataRow, ClassTypeDto, object?>>
@@ -64,16 +65,16 @@ public class ImportClassTypesCommandHandler :
                 await _context.ClassTypes.AddAsync(item, cancellationToken);
             }
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result.SuccessAsync();
+            return await MethodResult.SuccessAsync();
         }
         else
         {
-            return Result.Failure(result.Errors);
+            return MethodResult.Failure(result.Errors);
         }
     }
     public async Task<byte[]> Handle(CreateClassTypesTemplateCommand request, CancellationToken cancellationToken)
     {
-        var fields = new string[] {
+        var fields = 
                    _localizer["Code"],
                    _localizer["Name"],
                    _localizer["Description"],

@@ -3,10 +3,11 @@
 
 using CleanArchitecture.Blazor.Application.Features.KeyValues.Caching;
 using CleanArchitecture.Blazor.Application.Features.KeyValues.DTOs;
+using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.KeyValues.Commands.AddEdit;
 
-public class AddEditKeyValueCommand : IMapFrom<KeyValueDto>, ICacheInvalidatorRequest<Result<int>>
+public class AddEditKeyValueCommand : IMapFrom<KeyValueDto>, ICacheInvalidatorRequest<MethodResult<int>>
 {
     public int Id { get; set; }
     public Picklist Name { get; set; }
@@ -18,7 +19,7 @@ public class AddEditKeyValueCommand : IMapFrom<KeyValueDto>, ICacheInvalidatorRe
     public CancellationTokenSource? SharedExpiryTokenSource => KeyValueCacheKey.SharedExpiryTokenSource();
 }
 
-public class AddEditKeyValueCommandHandler : IRequestHandler<AddEditKeyValueCommand, Result<int>>
+public class AddEditKeyValueCommandHandler : IRequestHandler<AddEditKeyValueCommand, MethodResult<int>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -31,7 +32,7 @@ public class AddEditKeyValueCommandHandler : IRequestHandler<AddEditKeyValueComm
         _context = context;
         _mapper = mapper;
     }
-    public async Task<Result<int>> Handle(AddEditKeyValueCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult<int>> Handle(AddEditKeyValueCommand request, CancellationToken cancellationToken)
     {
         var dto = _mapper.Map<KeyValueDto>(request);
 
@@ -42,7 +43,7 @@ public class AddEditKeyValueCommandHandler : IRequestHandler<AddEditKeyValueComm
             keyValue = _mapper.Map(dto, keyValue);
             keyValue.AddDomainEvent(new UpdatedEvent<KeyValue>(keyValue));
             await _context.SaveChangesAsync(cancellationToken);
-            return Result<int>.Success(keyValue.Id);
+            return MethodResult<int>.Success(keyValue.Id);
         }
         else
         {
@@ -50,7 +51,7 @@ public class AddEditKeyValueCommandHandler : IRequestHandler<AddEditKeyValueComm
             keyValue.AddDomainEvent(new UpdatedEvent<KeyValue>(keyValue));
             _context.KeyValues.Add(keyValue);
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result<int>.SuccessAsync(keyValue.Id);
+            return await MethodResult<int>.SuccessAsync(keyValue.Id);
         }
 
 

@@ -1,5 +1,7 @@
 ﻿
 using BlazorState;
+using Mgr.Core.Models;
+
 namespace CleanArchitecture.Blazor.Application.Features.Identity.Profile;
 
 

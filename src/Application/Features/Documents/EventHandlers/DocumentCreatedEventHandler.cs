@@ -3,6 +3,9 @@
 
 
 
+using CleanArchitecture.Blazor.Domain.Interfaces;
+using Mgr.Core.Events;
+
 namespace CleanArchitecture.Blazor.Application.Features.Documents.EventHandlers;
 
 public class DocumentCreatedEventHandler : INotificationHandler<CreatedEvent<Document>>

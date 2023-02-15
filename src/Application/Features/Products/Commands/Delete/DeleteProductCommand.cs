@@ -4,10 +4,11 @@
 
 
 using CleanArchitecture.Blazor.Application.Features.Products.Caching;
+using Mgr.Core.Models;
 
 namespace CleanArchitecture.Blazor.Application.Features.Products.Commands.Delete;
 
-public class DeleteProductCommand : ICacheInvalidatorRequest<Result>
+public class DeleteProductCommand : ICacheInvalidatorRequest<MethodResult>
 
 {
     public int[] Id { get; }
@@ -21,7 +22,7 @@ public class DeleteProductCommand : ICacheInvalidatorRequest<Result>
 
 
 public class DeleteProductCommandHandler :
-             IRequestHandler<DeleteProductCommand, Result>
+             IRequestHandler<DeleteProductCommand, MethodResult>
     {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -36,7 +37,7 @@ public class DeleteProductCommandHandler :
         _localizer = localizer;
         _mapper = mapper;
     }
-    public async Task<Result> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
 
         var items = await _context.Products.Where(x => request.Id.Contains(x.Id)).ToListAsync(cancellationToken);
@@ -46,7 +47,7 @@ public class DeleteProductCommandHandler :
             _context.Products.Remove(item);
         }
         await _context.SaveChangesAsync(cancellationToken);
-        return await Result.SuccessAsync();
+        return await MethodResult.SuccessAsync();
     }
 
 

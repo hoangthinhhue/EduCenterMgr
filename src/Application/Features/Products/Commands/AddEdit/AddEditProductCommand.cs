@@ -5,11 +5,12 @@
 using CleanArchitecture.Blazor.Application.Features.Documents.DTOs;
 using CleanArchitecture.Blazor.Application.Features.Products.Caching;
 using CleanArchitecture.Blazor.Application.Features.Products.DTOs;
+using Mgr.Core.Models;
 using Microsoft.AspNetCore.Components.Forms;
 
 namespace CleanArchitecture.Blazor.Application.Features.Products.Commands.AddEdit;
 
-public class AddEditProductCommand : IMapFrom<ProductDto>, ICacheInvalidatorRequest<Result<int>>
+public class AddEditProductCommand : IMapFrom<ProductDto>, ICacheInvalidatorRequest<MethodResult<int>>
 {
 
     public int Id { get; set; }
@@ -25,7 +26,7 @@ public class AddEditProductCommand : IMapFrom<ProductDto>, ICacheInvalidatorRequ
     public CancellationTokenSource? SharedExpiryTokenSource => ProductCacheKey.SharedExpiryTokenSource();
 }
 
-public class AddEditProductCommandHandler : IRequestHandler<AddEditProductCommand, Result<int>>
+public class AddEditProductCommandHandler : IRequestHandler<AddEditProductCommand, MethodResult<int>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -37,7 +38,7 @@ public class AddEditProductCommandHandler : IRequestHandler<AddEditProductComman
         _context = context;
         _mapper = mapper;
     }
-    public async Task<Result<int>> Handle(AddEditProductCommand request, CancellationToken cancellationToken)
+    public async Task<MethodResult<int>> Handle(AddEditProductCommand request, CancellationToken cancellationToken)
     {
         var dto = _mapper.Map<ProductDto>(request);
         if (request.Id > 0)
@@ -46,7 +47,7 @@ public class AddEditProductCommandHandler : IRequestHandler<AddEditProductComman
             item = _mapper.Map(dto, item);
             item.AddDomainEvent(new UpdatedEvent<Product>(item));
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result<int>.SuccessAsync(item.Id);
+            return MethodResult<int>.ResultWithData(item.Id);
         }
         else
         {
@@ -54,7 +55,7 @@ public class AddEditProductCommandHandler : IRequestHandler<AddEditProductComman
             item.AddDomainEvent(new CreatedEvent<Product>(item));
             _context.Products.Add(item);
             await _context.SaveChangesAsync(cancellationToken);
-            return await Result<int>.SuccessAsync(item.Id);
+            return MethodResult<int>.ResultWithData(item.Id);
         }
 
     }

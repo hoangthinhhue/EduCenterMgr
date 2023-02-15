@@ -1,3 +1,4 @@
+using Mgr.Core.Constants;
 using Microsoft.AspNetCore.Builder;
 
 namespace CleanArchitecture.Blazor.Infrastructure.Extensions;
