@@ -7,6 +7,11 @@
       <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Features\Tenants\**" />
+    <EmbeddedResource Remove="Features\Tenants\**" />
+    <None Remove="Features\Tenants\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Blazor-State" Version="7.0.0" />
@@ -29,14 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\Models\" />
-    <Folder Include="Features\AuditTrails\DTOs\" />
     <Folder Include="Features\ClassTypes\DTOs\" />
-    <Folder Include="Features\Customers\DTOs\" />
-    <Folder Include="Features\Documents\DTOs\" />
     <Folder Include="Features\Identity\Dto\" />
-    <Folder Include="Features\KeyValues\DTOs\" />
-    <Folder Include="Features\Loggers\DTOs\" />
-    <Folder Include="Features\Products\DTOs\" />
-    <Folder Include="Features\Tenants\DTOs\" />
   </ItemGroup>
 </Project>

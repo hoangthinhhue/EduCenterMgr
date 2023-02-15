@@ -29,3 +29,4 @@ global using static CleanArchitecture.Blazor.Application.Constants.ConstantStrin
 global using FluentValidationSeverity = FluentValidation.Severity;
 global using Severity = MudBlazor.Severity;
 
+g

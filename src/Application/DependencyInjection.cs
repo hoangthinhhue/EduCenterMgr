@@ -5,8 +5,7 @@ using BlazorState;
 using CleanArchitecture.Blazor.Application.Common.Behaviours;
 using CleanArchitecture.Blazor.Application.Common.Interfaces.MultiTenant;
 using CleanArchitecture.Blazor.Application.Common.Security;
-using CleanArchitecture.Blazor.Application.Services.MultiTenant;
-using CleanArchitecture.Blazor.Application.Services.Picklist;
+
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -29,8 +28,6 @@ public static class DependencyInjection
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CacheInvalidationBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
         services.AddLazyCache();
-        services.AddScoped<IPicklistService, PicklistService>();
-        services.AddScoped<ITenantsService, TenantsService>();
         services.AddScoped<RegisterFormModelFluentValidator>();
         return services;
     }
