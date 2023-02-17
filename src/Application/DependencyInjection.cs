@@ -9,7 +9,6 @@ using MediatR;
 using Mgr.Core.Abstracts;
 using Mgr.Core.Interface;
 using Mgr.Core.Interfaces.Data;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Uni.Core.Commands;
@@ -21,10 +20,12 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        services.AddBlazorState((options) => options.Assemblies = new Assembly[] {
-            Assembly.GetExecutingAssembly(),
-        });
+        //services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+        //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        //services.AddBlazorState((options) => options.Assemblies = new Assembly[] {
+        //    Assembly.GetExecutingAssembly(),
+        //});
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
@@ -32,9 +33,8 @@ public static class DependencyInjection
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CacheInvalidationBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
         //add base
+        services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
         services.AddScoped(typeof(IBaseRepository<,,>), typeof(BaseRepository<,,>));
-        services.AddScoped(typeof(IBaseServervice<,,>), typeof(IBaseServervice<,,>));
-        services.AddScoped(typeof(IBaseCommand<>), typeof(BaseCommand<,,>));
 
         services.AddLazyCache();
         services.AddScoped<RegisterFormModelFluentValidator>();

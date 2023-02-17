@@ -1,4 +1,5 @@
 using CleanArchitecture.Blazor.Infrastructure.Extensions;
+using Mgr.Core.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;

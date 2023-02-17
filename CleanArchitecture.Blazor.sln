@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.UnitTests", "tests\D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{F917B725-EFAA-49ED-B7E6-2A70B06B1667}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mgr.Core", "..\Mgr.Core\Mgr.Core.csproj", "{7DCCDF59-06F2-4515-A9B2-51E36AC1795B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mgr.Core", "..\Mgr.Core\Mgr.Core.csproj", "{7DCCDF59-06F2-4515-A9B2-51E36AC1795B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

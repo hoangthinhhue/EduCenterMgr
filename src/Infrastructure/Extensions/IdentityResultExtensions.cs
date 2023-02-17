@@ -12,6 +12,6 @@ public static class IdentityResultExtensions
     {
         return result.Succeeded
             ? MethodResult.ResultWithSuccess()
-            : MethodResult.ResultWithError(result.Errors.Select(e => e.Description).ToString());
+            : MethodResult.ResultWithError(result.Errors.Select(e => e.Description).ToArray());
     }
 }

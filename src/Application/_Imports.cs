@@ -25,4 +25,4 @@ global using CleanArchitecture.Blazor.Domain.Entities.Log;
 global using CleanArchitecture.Blazor.Application.Common.Specification;
 global using Mgr.Core;
 global using Mgr.Core.Exceptions;
-global using Mgr.Core.Interface;
+global using Mgr.Core.Interfaces;

@@ -1,13 +1,13 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Mgr.Core.Entity;
+using Mgr.Core.Entities;
 
 namespace CleanArchitecture.Blazor.Domain.Entities;
 /// <summary>
 /// Loại lớp (loại đào tạo)
 /// </summary>
-public class ClassType : BaseAuditableEntity
+public class ClassType : BaseEntity
 {
     public int Id { get; set; }
     public string? Code { get; set; }

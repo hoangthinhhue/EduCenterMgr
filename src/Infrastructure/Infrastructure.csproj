@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Constants\**" />
+    <EmbeddedResource Remove="Constants\**" />
+    <None Remove="Constants\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.100.3" />
     <PackageReference Include="EFCore.BulkExtensions" Version="7.0.1" />
 
@@ -46,13 +52,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Commands\" />
-    <Folder Include="Constants\Localization\" />
     <Folder Include="Persistence\Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Application\Application.csproj" />
   </ItemGroup>
 
 </Project>

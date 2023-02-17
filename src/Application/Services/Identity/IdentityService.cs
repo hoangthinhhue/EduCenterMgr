@@ -6,7 +6,6 @@ using CleanArchitecture.Blazor.Application.Common.Interfaces.Identity.DTOs;
 using CleanArchitecture.Blazor.Domain.Configurations;
 using CleanArchitecture.Blazor.Domain.DTOs.Identity.Dto;
 using CleanArchitecture.Blazor.Domain.Identity;
-using CleanArchitecture.Blazor.Infrastructure.Extensions;
 using LazyCache;
 using Mgr.Core.Entities;
 using Mgr.Core.Models;
@@ -81,11 +80,11 @@ public class IdentityService : IIdentityService
 
     }
 
-    public async Task<MethodResult> DeleteUserAsync(string userId, CancellationToken cancellation = default)
+    public async Task<IdentityResult> DeleteUserAsync(string userId, CancellationToken cancellation = default)
     {
         var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellation) ?? throw new NotFoundException(_localizer["User Not Found."]);
         var result = await _userManager.DeleteAsync(user);
-        return result.ToApplicationResult();
+        return result;
     }
 
     public async Task<IDictionary<string, string?>> FetchUsers(string roleName, CancellationToken cancellation = default)

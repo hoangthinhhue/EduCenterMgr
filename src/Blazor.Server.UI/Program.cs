@@ -29,7 +29,6 @@ builder.Host.UseSerilog((context, configuration) =>
           .Enrich.WithClientAgent()
           .WriteTo.Console()
     );
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddBlazorUIServices();
 builder.Services.AddInfrastructureServices(builder.Configuration)

@@ -1,6 +1,7 @@
 using System.Net;
 using Mgr.Core.Entities;
 using Mgr.Core.Exceptions;
+using Mgr.Core.Interfaces;
 using Mgr.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;

@@ -17,7 +17,7 @@ public interface IIdentityService : IService
     
     Task<bool> IsInRoleAsync(string userId, string role, CancellationToken cancellation = default);
     Task<bool> AuthorizeAsync(string userId, string policyName, CancellationToken cancellation = default);
-    Task<MethodResult> DeleteUserAsync(string userId, CancellationToken cancellation = default);
+    Task<IdentityResult> DeleteUserAsync(string userId, CancellationToken cancellation = default);
     Task<IDictionary<string, string?>> FetchUsers(string roleName, CancellationToken cancellation = default);
     Task UpdateLiveStatus(string userId, bool isLive, CancellationToken cancellation = default);
     Task<UserDto> GetUserDto(string userId,CancellationToken cancellation=default);

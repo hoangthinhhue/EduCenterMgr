@@ -7,8 +7,9 @@ using CleanArchitecture.Blazor.Application.Common.Interfaces.MultiTenant;
 using CleanArchitecture.Blazor.Infrastructure.Extensions;
 using MediatR;
 using Mgr.Core.Abstracts;
-using Mgr.Core.Entity;
+using Mgr.Core.Entities;
 using Mgr.Core.EnumType;
+using Mgr.Core.Interfaces;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -36,7 +37,6 @@ public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
     public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
     {
 
-        await updateEntities(eventData.Context);
         _temporaryAuditTrailList = await TryInsertTemporaryAuditTrail(eventData.Context, cancellationToken);
         _deletingDomainEvents = await TryGetDeletingDomainEvents(eventData.Context, cancellationToken);
         return await base.SavingChangesAsync(eventData, result, cancellationToken);
@@ -47,50 +47,6 @@ public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
         await TryUpdateTemporaryPropertiesForAuditTrail(eventData.Context, cancellationToken);
         await _mediator.DispatchDomainEvents(eventData.Context!, _deletingDomainEvents);
         return resultvalueTask;
-    }
-    private Task updateEntities(DbContext? context)
-    {
-        var userId = _currentUserService.UserId;
-        var tenantId = _tenantProvider.TenantId;
-        foreach (var entry in context!.ChangeTracker.Entries<BaseAuditableEntity>())
-        {
-            switch (entry.State)
-            {
-                case EntityState.Added:
-                    entry.Entity.CreatedBy = userId;
-                    entry.Entity.Created = _dateTime.Now;
-                    if (entry.Entity is IMustHaveTenant mustenant)
-                    {
-                        mustenant.TenantId = tenantId;
-                    }
-                    if (entry.Entity is IMayHaveTenant maytenant && !string.IsNullOrEmpty(tenantId))
-                    {
-                        maytenant.TenantId = tenantId;
-                    }
-                    break;
-
-                case EntityState.Modified:
-                    entry.Entity.LastModifiedBy = userId;
-                    entry.Entity.LastModified = _dateTime.Now;
-                    break;
-                case EntityState.Deleted:
-                    if (entry.Entity is ISoftDelete softDelete)
-                    {
-                        softDelete.DeletedBy = userId;
-                        softDelete.Deleted = _dateTime.Now;
-                        entry.State = EntityState.Modified;
-                    }
-                    break;
-                case EntityState.Unchanged:
-                    if (entry.HasChangedOwnedEntities())
-                    {
-                        entry.Entity.LastModifiedBy = userId;
-                        entry.Entity.LastModified = _dateTime.Now;
-                    }
-                    break;
-            }
-        }
-        return Task.CompletedTask;
     }
 
     private Task<List<AuditTrail>> TryInsertTemporaryAuditTrail(DbContext? context, CancellationToken cancellationToken = default)
