@@ -11,6 +11,7 @@ public static class ConstantString
 {
     //==========================================================//
     //for button text
+    public static string REFRESH => CleanArchitecture.Blazor.Application.Constants.ConstantStringLocalizer.Localize("Refresh");
     public static string EDIT => CleanArchitecture.Blazor.Application.Constants.ConstantStringLocalizer.Localize("Edit");
     public static string DELETE => CleanArchitecture.Blazor.Application.Constants.ConstantStringLocalizer.Localize("Delete");
     public static string ADD => CleanArchitecture.Blazor.Application.Constants.ConstantStringLocalizer.Localize("Add");

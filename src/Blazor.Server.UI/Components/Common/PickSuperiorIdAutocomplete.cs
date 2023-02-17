@@ -1,6 +1,6 @@
 using CleanArchitecture.Blazor.Application.Common.Interfaces.Identity;
 using CleanArchitecture.Blazor.Application.Common.Interfaces.Identity.DTOs;
-using CleanArchitecture.Blazor.Application.Features.Identity.Dto;
+using CleanArchitecture.Blazor.Domain.DTOs.Identity.Dto;
 using IdentityModel.Client;
 
 namespace Blazor.Server.UI.Components.Common;

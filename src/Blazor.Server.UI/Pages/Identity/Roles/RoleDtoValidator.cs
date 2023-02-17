@@ -1,4 +1,4 @@
-using CleanArchitecture.Blazor.Application.Features.Identity.Dto;
+using CleanArchitecture.Blazor.Domain.DTOs.Identity.Dto;
 using FluentValidation;
 
 namespace Blazor.Server.UI.Pages.Identity.Roles;

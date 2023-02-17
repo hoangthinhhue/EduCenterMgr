@@ -9,6 +9,9 @@ using Serilog;
 using Serilog.Events;
 using Blazor.Server.UI;
 using Blazor.Server.UI.Services.Notifications;
+using BlazorState;
+using static CleanArchitecture.Blazor.Application.Features.Identity.Profile.UserProfileState;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +29,7 @@ builder.Host.UseSerilog((context, configuration) =>
           .Enrich.WithClientAgent()
           .WriteTo.Console()
     );
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddBlazorUIServices();
 builder.Services.AddInfrastructureServices(builder.Configuration)

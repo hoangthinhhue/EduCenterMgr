@@ -3,11 +3,11 @@
 @using AutoMapper
 @using BlazorDownloadFile
 @using CleanArchitecture.Blazor.Application.Features.ClassTypes.Commands.Delete
-@using CleanArchitecture.Blazor.Application.Features.ClassTypes.Commands.Import
-@using CleanArchitecture.Blazor.Application.Features.ClassTypes.DTOs
 @using CleanArchitecture.Blazor.Application.Features.ClassTypes.Queries.Export
 @using CleanArchitecture.Blazor.Application.Features.ClassTypes.Queries.Pagination
 @using CleanArchitecture.Blazor.Application.Features.ClassTypes.Commands.AddEdit
+@using CleanArchitecture.Blazor.Domain.DTOs.ClassTypes.DTOs;
+@using CleanArchitecture.Domain.Constants;
 
 @inject IJSRuntime JS
 @inject IStringLocalizer<ClassTypes> L
@@ -241,13 +241,13 @@
         try
         {
             _loading = true;
-            _query.Keyword = _searchString;
-            _query.OrderBy = string.IsNullOrEmpty(state.SortLabel) ? "Id" : state.SortLabel;
-            _query.SortDirection = (state.SortDirection == SortDirection.None ? SortDirection.Descending.ToString() : state.SortDirection.ToString());
-            _query.PageNumber = state.Page + 1;
+            _query.AddFilter("Name", _searchString);
+            if (state.SortDirection == SortDirection.None)
+                state.SortDirection = SortDirection.Ascending;
+            _query.PageIndex = state.Page + 1;
             _query.PageSize = state.PageSize;
             var result = await _mediator.Send(_query).ConfigureAwait(false);
-            return new TableData<ClassTypeDto>() { TotalItems = result.TotalItems, Items = result.Items };
+            return new TableData<ClassTypeDto>() { TotalItems = result.TotalItems, Items = result.Data.AsEnumerable() };
         }
         finally
         {
@@ -385,24 +385,6 @@
     }
     private async Task OnImportData(IBrowserFile file)
     {
-        _uploading = true;
-        var stream = new MemoryStream();
-        await file.OpenReadStream().CopyToAsync(stream);
-        var command = new ImportClassTypesCommand(file.Name, stream.ToArray());
-
-        var result = await _mediator.Send(command);
-        if (result.Succeeded)
-        {
-            await _table.ReloadServerData();
-            Snackbar.Add($"{ConstantString.IMPORTSUCCESS}", MudBlazor.Severity.Info);
-        }
-        else
-        {
-            foreach (var msg in result.Errors)
-            {
-                Snackbar.Add($"{msg}", MudBlazor.Severity.Error);
-            }
-        }
-        _uploading = false;
+            //TO-DOING
     }
 }

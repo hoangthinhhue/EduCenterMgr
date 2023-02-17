@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using CleanArchitecture.Domain.Constants;
 using Mgr.Core.Constants;
 using Mgr.Core.EnumType;
 

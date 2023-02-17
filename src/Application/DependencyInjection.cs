@@ -5,9 +5,15 @@ using BlazorState;
 using CleanArchitecture.Blazor.Application.Common.Behaviours;
 using CleanArchitecture.Blazor.Application.Common.Interfaces.MultiTenant;
 using CleanArchitecture.Blazor.Application.Common.Security;
-
+using MediatR;
+using Mgr.Core.Abstracts;
+using Mgr.Core.Interface;
+using Mgr.Core.Interfaces.Data;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Uni.Core.Commands;
+using static CleanArchitecture.Blazor.Application.Features.Identity.Profile.UserProfileState;
 
 namespace CleanArchitecture.Blazor.Application;
 
@@ -15,9 +21,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        services.AddMediatR(Assembly.GetExecutingAssembly());
         services.AddBlazorState((options) => options.Assemblies = new Assembly[] {
             Assembly.GetExecutingAssembly(),
         });
@@ -27,6 +31,11 @@ public static class DependencyInjection
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(MemoryCacheBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CacheInvalidationBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
+        //add base
+        services.AddScoped(typeof(IBaseRepository<,,>), typeof(BaseRepository<,,>));
+        services.AddScoped(typeof(IBaseServervice<,,>), typeof(IBaseServervice<,,>));
+        services.AddScoped(typeof(IBaseCommand<>), typeof(BaseCommand<,,>));
+
         services.AddLazyCache();
         services.AddScoped<RegisterFormModelFluentValidator>();
         return services;

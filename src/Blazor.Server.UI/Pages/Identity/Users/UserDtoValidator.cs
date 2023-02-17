@@ -1,5 +1,5 @@
 using FluentValidation;
-using CleanArchitecture.Blazor.Application.Features.Identity.Dto;
+using CleanArchitecture.Blazor.Domain.DTOs.Identity.Dto;
 
 namespace Blazor.Server.UI.Pages.Identity.Users;
 public class UserDtoValidator : AbstractValidator<UserDto>

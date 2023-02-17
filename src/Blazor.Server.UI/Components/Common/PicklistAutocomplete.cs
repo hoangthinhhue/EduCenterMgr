@@ -1,4 +1,6 @@
 using CleanArchitecture.Blazor.Application.Common.Interfaces;
+using CleanArchitecture.Blazor.Domain.Interfaces;
+using Mgr.Core.EnumType;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
