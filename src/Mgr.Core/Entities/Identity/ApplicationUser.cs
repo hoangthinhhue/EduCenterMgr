@@ -11,7 +11,7 @@ public class ApplicationUser : IdentityUser<Guid>
 {
     public string? DisplayName { get; set; }
     public string? Provider { get; set; } = "Local";
-    public string? TenantId { get; set; }
+    public Guid? TenantId { get; set; }
     public string? TenantName { get; set; }
     [Column(TypeName = "text")]
     public string? ProfilePictureDataUrl { get; set; }

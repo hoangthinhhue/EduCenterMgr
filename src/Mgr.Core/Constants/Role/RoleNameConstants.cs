@@ -6,6 +6,5 @@ namespace Mgr.Core.Constants;
 public static class RoleNameConstants
 {
     public const string Administrator = "Admin";
-    public const string Basic = "Basic";
     public const string Users = "Users";
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Mgr.Core.Entities.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Mgr.Core.Entities;
 
 namespace UnitMgr.Infrastructure.Configs;
 public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>

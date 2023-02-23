@@ -52,6 +52,16 @@ namespace Mgr.Core.Entities
                 Status = (int)HttpStatusCode.Conflict
             };
         }
+        public static MethodResult<T> ResultWithErrors(
+           string[] messages)
+        {
+            return new MethodResult<T>()
+            {
+                Success = false,
+                Message = string.Join(System.Environment.NewLine, messages),
+                Status = (int)HttpStatusCode.Conflict
+            };
+        }
         public static MethodResult<T> ErrorBussiness(string message="")
         {
             if (string.IsNullOrEmpty(message))
@@ -92,6 +102,17 @@ namespace Mgr.Core.Entities
             {
                 Success = false,
                 Message = message,
+                Status = status
+            };
+        }
+        public static MethodResult ResultWithErrors(
+       string[] messages,
+          int? status = (int)HttpStatusCode.BadRequest)
+        {
+            return new MethodResult()
+            {
+                Success = false,
+                Message = string.Join(Environment.NewLine, messages),
                 Status = status
             };
         }
