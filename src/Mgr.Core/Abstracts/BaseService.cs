@@ -4,9 +4,11 @@
 using System.Linq.Expressions;
 using System.Net;
 using AutoMapper;
+using Azure.Core;
 using EFCore.BulkExtensions;
 using MediatR;
 using Mgr.Core.Entities;
+using Mgr.Core.Helpers;
 using Mgr.Core.Interface;
 using Mgr.Core.Interfaces;
 using Mgr.Core.Interfaces.Data;
@@ -277,8 +279,26 @@ public abstract class BaseService<TDataContext, T, Tkey> : IBaseService<TDataCon
         }
     }
 
-    public Task<IMethodResult<IList<T>>> AllAsync(InputModel paras)
+    public async Task<IMethodResult<IList<T>>> AllAsync(InputModel request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var query =  _repository.AllNoTracking.Where(q => q.IsDeleted != true);
+            if (request != null && request.FilterParams.Any())
+            {
+                query = QueryableHelper<T>.GetQuery(query, request.FilterParams) ?? query;
+            }
+
+            if (request != null && request.SortingParams != null && request.SortingParams.Any())
+            {
+                query = SortingHelper<T>.SortData(query, request.SortingParams) ?? query;
+            }
+            var rs = await query.ToListAsync();
+            return MethodResult<IList<T>>.ResultWithData(rs);
+        }
+        catch (Exception ex)
+        {
+            return MethodResult<IList<T>>.ResultWithError((int)HttpStatusCode.BadRequest, ex.Message);
+        }
     }
 }

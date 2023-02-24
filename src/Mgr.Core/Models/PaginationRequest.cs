@@ -26,6 +26,6 @@ public class PaginationRequest : InputModel
     int pageIndex = 1;
     public int PageIndex { get { return pageIndex; } set { if (value > 1) pageIndex = value; } }
 
-    int pageSize = -1;
-    public int PageSize { get { return pageSize; } set { if (value > 1) pageSize = value; } }
+    int pageSize = 30;
+    public int PageSize { get { return pageSize; } set { if (value > 0) pageSize = value; } }
 }

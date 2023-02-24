@@ -1,7 +1,13 @@
-﻿using MediatR;
+﻿using CleanArchitecture.Blazor.Infrastructure.Persistence;
+using DocumentFormat.OpenXml.Wordprocessing;
+using MediatR;
+using Mgr.Core.Abstracts;
 using Mgr.Core.Constants;
 using Mgr.Core.Entities;
 using Mgr.Core.Entities.Identity;
+using Mgr.Core.Interface;
+using Mgr.Core.Interfaces.Data;
+using Mgr.Core.Interfaces.Services;
 using Mgr.Core.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,14 +36,44 @@ using UnitMgr.Infrastructure.Data;
 
 namespace UnitMgr.API.Extensions;
 
-public static class DependencyInjection
+public static class DependencyInjectionConfig
 {
-    public static void AddApplicationServices<TDbContext>(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplicationCommonServices<TDbContext>(this IServiceCollection services, IConfiguration configuration) 
+        where TDbContext : DbContext
+    {
+
+        services.Scan(scan => scan.FromApplicationDependencies()
+                            .AddClasses(classes => classes.AssignableTo(typeof(IBaseRepository<,>)))
+        .AsImplementedInterfaces()
+        .WithScopedLifetime());
+        services.Scan(scan => scan.FromApplicationDependencies()
+                    .AddClasses(classes => classes.AssignableTo(typeof(IBaseService)))
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime());
+        services.Scan(scan => scan.FromApplicationDependencies()
+                            .AddClasses(classes => classes.AssignableTo(typeof(IBaseService<,,>)))
+        .AsImplementedInterfaces()
+        .WithScopedLifetime());
+
+        services.Scan(scan => scan.FromApplicationDependencies()
+                            .AddClasses(classes => classes.AssignableTo(typeof(IBaseCommand<>)))
+        .AsImplementedInterfaces()
+        .WithScopedLifetime());
+
+        services.Scan(scan => scan.FromApplicationDependencies()
+                           .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<,>)))
+        .AsImplementedInterfaces()
+        .WithScopedLifetime());
+        return services;
+    }
+    public static IServiceCollection AddInfrastructureServices<TDbContext>(this IServiceCollection services, IConfiguration configuration)
            where TDbContext : DbContext
     {
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-
+        //Add configs
+        services.Configure<AppConfigurationSettings>(configuration.GetSection(AppConfigurationSettings.SectionName));
+        //Add automapper
+        services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+        services.AddHealthChecks();
         // Database
         if (configuration.GetValue<bool>("UseInMemoryDatabase"))
         {
@@ -49,22 +85,17 @@ public static class DependencyInjection
         }
         else
         {
+            //Inject DbContext
             services.AddDbContext<TDbContext>(options =>
-            {
-                options.UseSqlServer(
-                      configuration.GetConnectionString("UnitMgrDb"),
-                      builder =>
-                      {
-                          builder.MigrationsAssembly(typeof(TDbContext).Assembly.FullName);
-                          builder.EnableRetryOnFailure(maxRetryCount: 5,
-                                                       maxRetryDelay: TimeSpan.FromSeconds(10),
-                                                       errorNumbersToAdd: null);
-                          builder.CommandTimeout(15);
-                      });
-                options.EnableDetailedErrors(detailedErrorsEnabled: true);
-                options.EnableSensitiveDataLogging();
-            });
+                options.UseSqlServer(configuration.GetConnectionString("UnitMgrDb")));
         }
+        //Inject UnitofWork
+        services.AddScoped<IDbFactory<TDbContext>, DbFactory<TDbContext>>();
+        services.AddScoped<IUnitOfWork<TDbContext>, UnitOfWork<TDbContext>>();
+
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        //services.AddScoped<ExceptionHandlingMiddleware>();
+        services.AddLazyCache();
 
         //page 
         services.AddControllersWithViews();
@@ -95,11 +126,11 @@ public static class DependencyInjection
                     builder.SetIsOriginAllowed(origin => true);
                 });
         });
- 
-        //Add automapper
-        services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
-        services.AddHealthChecks();
+        services.AddScoped<IdentityDbContextInitialiser>();
+
+        return services;
+
     }
     public static IServiceCollection AddLocalizationServices(this IServiceCollection services)
         => services.AddScoped<LocalizationCookiesMiddleware>()
@@ -171,7 +202,7 @@ public static class DependencyInjection
                     bearer.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("JwtTokenSettings:ValidAudience"))),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("AppConfigurationSettings:Secret"))),
                         ValidateIssuer = false,
                         ValidateAudience = false,
                         RoleClaimType = ClaimTypes.Role,
@@ -240,7 +271,6 @@ public static class DependencyInjection
                      options.AccessDeniedPath = "/";
                  });
 
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.Configure<CookiePolicyOptions>(options =>
         {
             // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -260,8 +290,7 @@ public static class DependencyInjection
         return services;
     }
 
-
-    public static void AddSwaggerPage(this IServiceCollection services) {
+    public static IServiceCollection AddSwaggerPage(this IServiceCollection services) {
         services.AddSwaggerGen(async c =>
         {
             //TODO - Lowercase Swagger Documents
@@ -320,6 +349,9 @@ public static class DependencyInjection
                     },
                 });
         });
+        return services;
     }
+
+
 
 }

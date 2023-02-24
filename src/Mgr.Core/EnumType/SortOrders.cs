@@ -4,7 +4,7 @@ namespace Mgr.Core.EnumType
 {
     public enum SortOrders
     {
-        Asc = 1,
-        Desc = 2
+        asc = 1,
+        desc = 2
     }
 }

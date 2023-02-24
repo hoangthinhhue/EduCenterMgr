@@ -12,7 +12,7 @@ namespace Mgr.Core.Models
        /// <summary>
        /// Asc, Desc
        /// </summary>
-        public string SortOrder { get; set; } = SortOrders.Asc.ToString();
+        public string SortOrder { get; set; } = SortOrders.asc.ToString();
         public string? ColumnName { get; set; }
     }
 }

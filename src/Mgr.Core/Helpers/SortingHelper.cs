@@ -51,15 +51,15 @@ namespace Mgr.Core.Helpers
                 {
                     if (sortedData == null)
                     {
-                        sortedData = sortingParam.SortOrder == SortOrder.Ascending.ToString() ? data.OrderBy(x => col.GetValue(x, null)) : data.OrderByDescending(x => col.GetValue(x, null));
+                        sortedData = sortingParam.SortOrder == Mgr.Core.EnumType.SortOrders.asc.ToString() ? data.OrderBy(x => col.GetValue(x, null)) : data.OrderByDescending(x => col.GetValue(x, null));
                     }
                     else
                     {
-                        sortedData = sortingParam.SortOrder == SortOrder.Ascending.ToString() ? sortedData.ThenBy(x => col.GetValue(x, null)) : sortedData.ThenByDescending(x => col.GetValue(x, null));
+                        sortedData = sortingParam.SortOrder == Mgr.Core.EnumType.SortOrders.asc.ToString() ? sortedData.ThenBy(x => col.GetValue(x, null)) : sortedData.ThenByDescending(x => col.GetValue(x, null));
                     }
                 }
             }
-            return sortedData ?? data;
+            return sortedData!=null?sortedData.AsQueryable() : data;
         }
     }
 }

@@ -17,7 +17,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
                   where T :class
 {
     protected TDataContext _dataContext { get; set; }
-    private DbSet<T> _DbSet { get; set; }
+    private DbSet<T> _DbSet { get; set; } = null;
     private readonly ICurrentUserService _currentUserService;
 
     /// <summary>
@@ -35,9 +35,8 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
     {
         get
         {
-            if (DbSet == null)
+            if (_DbSet == null)
                 _DbSet = _dataContext.Set<T>();
-
             return _DbSet;
         }
     }
@@ -356,7 +355,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
         return Task.CompletedTask;
     }
     public Task DeleteForeverAsync(T entity) {
-        _DbSet.Remove(entity);
+        DbSet.Remove(entity);
         return Task.CompletedTask;
     }
     /// <summary>
@@ -364,7 +363,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
     /// </summary>
     /// <param name="entity">List entities need to delete forever</param>
     public Task DeleteRangeForeverAsync(IList<T> entities) {
-        _DbSet.RemoveRange(entities);
+        DbSet.RemoveRange(entities);
         return Task.CompletedTask;
     }
     /// <summary>
@@ -372,7 +371,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
     /// </summary>
     /// <param name="entity">New Entity</param>
     public async Task<T> InsertAsync(T entity) {
-        await _DbSet.AddAsync(entity);
+        await DbSet.AddAsync(entity);
         return entity;
     }
 

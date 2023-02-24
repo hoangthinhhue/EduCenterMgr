@@ -13,7 +13,7 @@ public static class ApplicationConfigure
 {
     public static void UseApplicationConfigure(this WebApplication app, IConfiguration configuration)
     {
-        app.UseHttpsRedirection();
+        //app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseExceptionHandler("/Error");
         if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), @"Files")))
@@ -30,18 +30,23 @@ public static class ApplicationConfigure
                   .AddSupportedCultures(LocalizationConstants.SupportedLanguages.Select(x => x.Code).ToArray())
                   .AddSupportedUICultures(LocalizationConstants.SupportedLanguages.Select(x => x.Code).ToArray());
 
+        HttpContextInfo.Configure(app.Services.GetRequiredService<IHttpContextAccessor>());
+
         app.UseRequestLocalization(localizationOptions);
-        app.UseMiddleware<LocalizationCookiesMiddleware>();
-        app.UseMiddleware<ExceptionHandlingMiddleware>();
+        //app.UseMiddlewares();
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
-
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapRazorPages();
-            endpoints.MapControllers();
+            endpoints.MapDefaultControllerRoute();
         });
+    }
+    public static void UseMiddlewares(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<LocalizationCookiesMiddleware>();
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
     }
     public static void UseConfigureSwagger(this WebApplication app)
     {

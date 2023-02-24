@@ -74,15 +74,17 @@ public static class PredicateBuilder
         var props = TypeDescriptor.GetProperties(typeof(T));
         var prop = GetProperty(props, fieldName, true);
         var parameter = Expression.Parameter(typeof(T));
+        object convertfiledValue;
         var expressionParameter = GetMemberExpression<T>(parameter, fieldName);
         if (prop != null && fieldValue != null)
         {
+            var propertyFieldType = prop.PropertyType;
             BinaryExpression body = null;
-            if (prop.PropertyType.IsEnum)
+            if (propertyFieldType.IsEnum)
             {
-                if (Enum.IsDefined(prop.PropertyType, fieldValue))
+                if (Enum.IsDefined(propertyFieldType, fieldValue))
                 {
-                    object value = Enum.Parse(prop.PropertyType, fieldValue.ToString(), true);
+                    object value = Enum.Parse(propertyFieldType, fieldValue.ToString(), true);
                     body = Expression.Equal(expressionParameter, Expression.Constant(value));
                     return Expression.Lambda<Func<T, bool>>(body, parameter);
                 }
@@ -91,42 +93,50 @@ public static class PredicateBuilder
                     return x => false;
                 }
             }
+            if (propertyFieldType == typeof(Guid) || propertyFieldType == typeof(Guid?))
+            {
+                convertfiledValue = (Guid)TypeDescriptor.GetConverter(typeof(Guid)).ConvertFromInvariantString(fieldValue.ToString());
+            }
+            else
+            {
+                convertfiledValue = Convert.ChangeType(fieldValue.ToString() == "null" ? null : fieldValue, Nullable.GetUnderlyingType(propertyFieldType) ?? propertyFieldType);
+            }
             switch (selectedOperator)
             {
                 case OperationExpression.equal:
-                    body = Expression.Equal(expressionParameter, Expression.Constant(Convert.ChangeType(fieldValue.ToString() == "null" ? null : fieldValue, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType), prop.PropertyType));
+                    body = Expression.Equal(expressionParameter, Expression.Constant(convertfiledValue, propertyFieldType));
                     return Expression.Lambda<Func<T, bool>>(body, parameter);
                 case OperationExpression.notequal:
-                    body = Expression.NotEqual(expressionParameter, Expression.Constant(Convert.ChangeType(fieldValue.ToString() == "null" ? null : fieldValue, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType), prop.PropertyType));
+                    body = Expression.NotEqual(expressionParameter, Expression.Constant(convertfiledValue, propertyFieldType));
                     return Expression.Lambda<Func<T, bool>>(body, parameter);
                 case OperationExpression.less:
-                    body = Expression.LessThan(expressionParameter, Expression.Constant(Convert.ChangeType(fieldValue, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType), prop.PropertyType));
+                    body = Expression.LessThan(expressionParameter, Expression.Constant(convertfiledValue, propertyFieldType));
                     return Expression.Lambda<Func<T, bool>>(body, parameter);
                 case OperationExpression.lessorequal:
-                    body = Expression.LessThanOrEqual(expressionParameter, Expression.Constant(Convert.ChangeType(fieldValue, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType), prop.PropertyType));
+                    body = Expression.LessThanOrEqual(expressionParameter, Expression.Constant(convertfiledValue, propertyFieldType));
                     return Expression.Lambda<Func<T, bool>>(body, parameter);
                 case OperationExpression.greater:
-                    body = Expression.GreaterThan(expressionParameter, Expression.Constant(Convert.ChangeType(fieldValue, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType), prop.PropertyType));
+                    body = Expression.GreaterThan(expressionParameter, Expression.Constant(convertfiledValue, propertyFieldType));
                     return Expression.Lambda<Func<T, bool>>(body, parameter);
                 case OperationExpression.greaterorequal:
-                    body = Expression.GreaterThanOrEqual(expressionParameter, Expression.Constant(Convert.ChangeType(fieldValue, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType), prop.PropertyType));
+                    body = Expression.GreaterThanOrEqual(expressionParameter, Expression.Constant(convertfiledValue, propertyFieldType));
                     return Expression.Lambda<Func<T, bool>>(body, parameter);
                 case OperationExpression.contains:
                     var contains = typeof(string).GetMethod("Contains", new[] { typeof(string) });
-                    var bodyLike = Expression.Call(expressionParameter, contains, Expression.Constant(Convert.ChangeType(fieldValue, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType), prop.PropertyType));
+                    var bodyLike = Expression.Call(expressionParameter, contains, Expression.Constant(convertfiledValue, propertyFieldType));
                     return Expression.Lambda<Func<T, bool>>(bodyLike, parameter);
                 case OperationExpression.endwith:
                     var endswith = typeof(string).GetMethod("EndsWith", new[] { typeof(string) });
-                    var bodyendwith = Expression.Call(expressionParameter, endswith, Expression.Constant(Convert.ChangeType(fieldValue, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType), prop.PropertyType));
+                    var bodyendwith = Expression.Call(expressionParameter, endswith, Expression.Constant(convertfiledValue, propertyFieldType));
                     return Expression.Lambda<Func<T, bool>>(bodyendwith, parameter);
                 case OperationExpression.beginwith:
                     var startswith = typeof(string).GetMethod("StartsWith", new[] { typeof(string) });
-                    var bodystartswith = Expression.Call(expressionParameter, startswith, Expression.Constant(Convert.ChangeType(fieldValue, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType), prop.PropertyType));
+                    var bodystartswith = Expression.Call(expressionParameter, startswith, Expression.Constant(convertfiledValue, propertyFieldType));
                     return Expression.Lambda<Func<T, bool>>(bodystartswith, parameter);
                 case OperationExpression.includes:
-                    return Includes<T>(fieldValue, parameter, expressionParameter, prop.PropertyType);
+                    return Includes<T>(fieldValue, parameter, expressionParameter, propertyFieldType);
                 case OperationExpression.between:
-                    return Between<T>(fieldValue, parameter, expressionParameter, prop.PropertyType);
+                    return Between<T>(fieldValue, parameter, expressionParameter, propertyFieldType);
                 default:
                     throw new ArgumentException("OperationExpression");
             }

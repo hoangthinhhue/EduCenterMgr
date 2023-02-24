@@ -28,7 +28,6 @@ namespace Mgr.Core.Extensions
         }
         public static async Task<IMethodResult<IList<T>>> ToMethodReuslt<T>(this IQueryable<T> source,PaginationRequest request)
         {
-            source = QueryableHelper<T>.GetQuery(source, request.FilterParams);
             return await GetPagingFilterHelper<T>.GetDataAsync(source, request);
         }
         /// <summary>

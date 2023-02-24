@@ -32,9 +32,7 @@ namespace Uni.Core.Commands
 
         public async Task<IMethodResult<IList<T>>> Handle(GetFilterPaginationCommand<T, Tkey> request, CancellationToken cancellationToken)
         {
-            Expression<Func<T, bool>> expression;
-            expression = x => x.IsDeleted != true;
-            var query = _repository.List(expression);
+            var query = _repository.List(x => x.IsDeleted != true);
             return await query.ToMethodReuslt(request.PagingParams);
         }
     }

@@ -5,7 +5,7 @@ namespace Mgr.Core.Constants;
 
 public static class UserNameConstants
 {
-    public const string Administrator = "Administrator";
+    public const string Administrator = "Admin";
     public const string Demo = "Demo";
-    public const string DefaultPassword = "123456a@A!";
+    public const string DefaultPassword = "123456a@A";
 }

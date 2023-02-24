@@ -42,7 +42,7 @@ namespace Mgr.Core.Models
         {
             FilterParams.Add(new FilterParams() { ColumnName = name, FilterValue = value.ToString(), FilterOption = filterOption.ToString()});
         }
-        public void AddSort(string name, SortOrders sortOrders = SortOrders.Asc)
+        public void AddSort(string name, SortOrders sortOrders = SortOrders.asc)
         {
             SortingParams.Add(new SortingParams { ColumnName = name, SortOrder = sortOrders.ToString() });
         }
