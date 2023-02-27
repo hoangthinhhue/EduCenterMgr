@@ -6,5 +6,22 @@
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.JSInterop
+@using Microsoft.EntityFrameworkCore;
+
+@using MudBlazor
+@using MudExtensions
+
+@using Mgr.Core.Entities.Identity;
+
+
+@using UnitMgr.Admin.Services;
+@using UnitMgr.Admin.Components.Common;
 @using UnitMgr.Admin
 @using UnitMgr.Admin.Shared
+@using UnitMgr.Domain.AggregatesModel.IdentityDTOs;
+@using UnitMgr.Domain.Constants;
+
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject IConfiguration Config
+@inject IAuthorizationService AuthService 

@@ -12,8 +12,8 @@ public class PaginatedData<T>
     public int TotalPages { get; private set; }
     public bool HasPreviousPage => CurrentPage > 1;
     public bool HasNextPage => CurrentPage < TotalPages;
-    public IList<T> Data { get; set; }
-    public PaginatedData(IList<T> items, int total, int pageIndex, int pageSize)
+    public List<T> Data { get; set; }
+    public PaginatedData(List<T> items, int total, int pageIndex, int pageSize)
     {
         Data = items;
         TotalItems = total;

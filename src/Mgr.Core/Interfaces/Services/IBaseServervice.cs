@@ -22,13 +22,13 @@ public interface IBaseService<TDataContext, T, Tkey> : IBaseService
     Task<IMethodResult<int>> DeleteAsync(Tkey id);
     Task<IMethodResult<int>> DeleteManyAsync(List<Tkey> ids);
     Task<IMethodResult<T>> GetByIdAsync(Tkey Id);
-    Task<IMethodResult<IList<T>>> AllAsync(InputModel paras);
-    Task<IMethodResult<IList<T>>> GetData(PaginationRequest pagingParams);
-    Task<IMethodResult> BulkInsertAsync(IList<T> entities, BulkConfig? config = null);
-    Task<IMethodResult> BulkInsertOrUpdateAsync(IList<T> entities, BulkConfig? config = null);
-    Task<IMethodResult> BulkInsertOrUpdateOrDeleteAsync(IList<T> entities, BulkConfig? config = null);
-    Task<IMethodResult> BulkUpdateAsync(IList<T> entities, BulkConfig? config = null);
-    Task<IMethodResult> BulkDeleteAsync(IList<T> entities, BulkConfig? config = null);
+    Task<IMethodResult<List<T>>> AllAsync(InputModel paras);
+    Task<IMethodResult<List<T>>> GetData(PaginationRequest pagingParams);
+    Task<IMethodResult> BulkInsertAsync(List<T> entities, BulkConfig? config = null);
+    Task<IMethodResult> BulkInsertOrUpdateAsync(List<T> entities, BulkConfig? config = null);
+    Task<IMethodResult> BulkInsertOrUpdateOrDeleteAsync(List<T> entities, BulkConfig? config = null);
+    Task<IMethodResult> BulkUpdateAsync(List<T> entities, BulkConfig? config = null);
+    Task<IMethodResult> BulkDeleteAsync(List<T> entities, BulkConfig? config = null);
     Task<IMethodResult<int>> DeleteForeverAsync(Tkey id);
     Task<IMethodResult<int>> DeleteManyForeverAsync(IList<Tkey> ids);
 }

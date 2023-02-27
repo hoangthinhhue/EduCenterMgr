@@ -20,14 +20,14 @@ public  static class  QueryExtensions
     {
         return PaginatedData<T>.CreateAsync(source, pageNo, pageSize);
     }
-    public static async Task<IMethodResult<IList<T>>> ToAll<T>(this IQueryable<T> source, InputModel request)
+    public static async Task<IMethodResult<List<T>>> ToAll<T>(this IQueryable<T> source, InputModel request)
     {
         source = QueryableHelper<T>.GetQuery(source, request.FilterParams);
         source = SortingHelper<T>.SortData(source,request.SortingParams);
         var rs =  await source.ToListAsync();
-        return MethodResult<IList<T>>.ResultWithData(rs);
+        return MethodResult<List<T>>.ResultWithData(rs);
     }
-    public static async Task<IMethodResult<IList<T>>> ToMethodReuslt<T>(this IQueryable<T> source,PaginationRequest request)
+    public static async Task<IMethodResult<List<T>>> ToMethodReuslt<T>(this IQueryable<T> source,PaginationRequest request)
     {
         return await GetPagingFilterHelper<T>.GetDataAsync(source, request);
     }

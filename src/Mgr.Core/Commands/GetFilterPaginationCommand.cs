@@ -10,7 +10,7 @@ using Uni.Core.Helper;
 
 namespace Uni.Core.Commands
 {
-    public class GetFilterPaginationCommand<T, Tkey> : IRequest<IMethodResult<IList<T>>>
+    public class GetFilterPaginationCommand<T, Tkey> : IRequest<IMethodResult<List<T>>>
        where T : BaseEntity<Tkey>
         where Tkey : struct
     {
@@ -18,7 +18,7 @@ namespace Uni.Core.Commands
     }
 
     public class GetFilterPaginationCommandHandler<TDataContext, T, Tkey>
-       : BaseCommand<TDataContext, T>, IRequestHandler<GetFilterPaginationCommand<T, Tkey>, IMethodResult<IList<T>>>
+       : BaseCommand<TDataContext, T>, IRequestHandler<GetFilterPaginationCommand<T, Tkey>, IMethodResult<List<T>>>
        where TDataContext : DbContext
        where T : BaseEntity<Tkey>
        where Tkey : struct
@@ -30,7 +30,7 @@ namespace Uni.Core.Commands
             _repository = HttpContextInfo.GetRequestService<IBaseRepository<TDataContext, T>>();
         }
 
-        public async Task<IMethodResult<IList<T>>> Handle(GetFilterPaginationCommand<T, Tkey> request, CancellationToken cancellationToken)
+        public async Task<IMethodResult<List<T>>> Handle(GetFilterPaginationCommand<T, Tkey> request, CancellationToken cancellationToken)
         {
             var query = _repository.List(x => x.IsDeleted != true);
             return await query.ToMethodReuslt(request.PagingParams);

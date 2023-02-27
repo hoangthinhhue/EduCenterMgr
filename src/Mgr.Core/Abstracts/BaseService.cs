@@ -190,7 +190,7 @@ public abstract class BaseService<TDataContext, T, Tkey> : IBaseService<TDataCon
         }
     }
 
-    public virtual async Task<IMethodResult<IList<T>>> GetData(PaginationRequest pagingParams)
+    public virtual async Task<IMethodResult<List<T>>> GetData(PaginationRequest pagingParams)
     {
         try
         {
@@ -203,7 +203,7 @@ public abstract class BaseService<TDataContext, T, Tkey> : IBaseService<TDataCon
         }
         catch (Exception ex)
         {
-            return MethodResult<IList<T>>.ResultWithError((int)HttpStatusCode.BadRequest, ex.Message);
+            return MethodResult<List<T>>.ResultWithError((int)HttpStatusCode.BadRequest, ex.Message);
         }
     }
     public IQueryable<T> GetTable<T>(bool asNoTracking = true) where T : class
@@ -213,7 +213,7 @@ public abstract class BaseService<TDataContext, T, Tkey> : IBaseService<TDataCon
         return _uniOfWork.CreateDbContext().Set<T>().AsTracking();
     }
 
-    public virtual async Task<IMethodResult> BulkInsertAsync(IList<T> entities, BulkConfig config = null)
+    public virtual async Task<IMethodResult> BulkInsertAsync(List<T> entities, BulkConfig config = null)
     {
         try
         {
@@ -226,7 +226,7 @@ public abstract class BaseService<TDataContext, T, Tkey> : IBaseService<TDataCon
         }
     }
 
-    public virtual async Task<IMethodResult> BulkInsertOrUpdateAsync(IList<T> entities, BulkConfig config = null)
+    public virtual async Task<IMethodResult> BulkInsertOrUpdateAsync(List<T> entities, BulkConfig config = null)
     {
         try
         {
@@ -239,7 +239,7 @@ public abstract class BaseService<TDataContext, T, Tkey> : IBaseService<TDataCon
         }
     }
 
-    public virtual async Task<IMethodResult> BulkInsertOrUpdateOrDeleteAsync(IList<T> entities, BulkConfig config = null)
+    public virtual async Task<IMethodResult> BulkInsertOrUpdateOrDeleteAsync(List<T> entities, BulkConfig config = null)
     {
         try
         {
@@ -252,7 +252,7 @@ public abstract class BaseService<TDataContext, T, Tkey> : IBaseService<TDataCon
         }
     }
 
-    public virtual async Task<IMethodResult> BulkUpdateAsync(IList<T> entities, BulkConfig config = null)
+    public virtual async Task<IMethodResult> BulkUpdateAsync(List<T> entities, BulkConfig config = null)
     {
         try
         {
@@ -265,7 +265,7 @@ public abstract class BaseService<TDataContext, T, Tkey> : IBaseService<TDataCon
         }
     }
 
-    public virtual async Task<IMethodResult> BulkDeleteAsync(IList<T> entities, BulkConfig config = null)
+    public virtual async Task<IMethodResult> BulkDeleteAsync(List<T> entities, BulkConfig config = null)
     {
         try
         {
@@ -279,7 +279,7 @@ public abstract class BaseService<TDataContext, T, Tkey> : IBaseService<TDataCon
         }
     }
 
-    public async Task<IMethodResult<IList<T>>> AllAsync(InputModel request)
+    public async Task<IMethodResult<List<T>>> AllAsync(InputModel request)
     {
         try
         {
@@ -294,11 +294,11 @@ public abstract class BaseService<TDataContext, T, Tkey> : IBaseService<TDataCon
                 query = SortingHelper<T>.SortData(query, request.SortingParams) ?? query;
             }
             var rs = await query.ToListAsync();
-            return MethodResult<IList<T>>.ResultWithData(rs);
+            return MethodResult<List<T>>.ResultWithData(rs);
         }
         catch (Exception ex)
         {
-            return MethodResult<IList<T>>.ResultWithError((int)HttpStatusCode.BadRequest, ex.Message);
+            return MethodResult<List<T>>.ResultWithError((int)HttpStatusCode.BadRequest, ex.Message);
         }
     }
 }

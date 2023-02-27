@@ -16,7 +16,7 @@ using Uni.Core.Helper;
 
 namespace Mgr.Core.Commands
 {
-    public class AllBaseCommand<T, Tkey> : IRequest<IMethodResult<IList<T>>>
+    public class AllBaseCommand<T, Tkey> : IRequest<IMethodResult<List<T>>>
         where T : BaseEntity<Tkey>
         where Tkey : struct
     {
@@ -24,7 +24,7 @@ namespace Mgr.Core.Commands
 
     }
     public class AllBaseCommandHandler<TDataContext, T, Tkey>
-       : BaseCommand<TDataContext, T>, IRequestHandler<AllBaseCommand<T, Tkey>, IMethodResult<IList<T>>>
+       : BaseCommand<TDataContext, T>, IRequestHandler<AllBaseCommand<T, Tkey>, IMethodResult<List<T>>>
        where TDataContext : DbContext
        where T : BaseEntity<Tkey>
        where Tkey : struct
@@ -36,7 +36,7 @@ namespace Mgr.Core.Commands
             _repository = HttpContextInfo.GetRequestService<IBaseRepository<TDataContext, T>>();
         }
 
-        public async Task<IMethodResult<IList<T>>> Handle(AllBaseCommand<T, Tkey> request, CancellationToken cancellationToken)
+        public async Task<IMethodResult<List<T>>> Handle(AllBaseCommand<T, Tkey> request, CancellationToken cancellationToken)
         {
             Expression<Func<T, bool>> expression;
             // Filter non-deleted records

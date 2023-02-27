@@ -46,7 +46,7 @@ public interface IBaseRepository<TDataContext, T>
     /// Update a list of Entities
     /// </summary>
     /// <param name="entities">Entities need to update</param>
-    void UpdateRange(IList<T> entities);
+    void UpdateRange(List<T> entities);
 
     /// <summary>
     /// Delete an Entity
@@ -58,13 +58,13 @@ public interface IBaseRepository<TDataContext, T>
     /// </summary>
     /// <param name="entity"></param>
     public void DeleteForever(T entity);
-    public void DeleteRangeForever(IList<T> entity);
+    public void DeleteRangeForever(List<T> entity);
 
     /// <summary>
     /// Delete a list of Entities
     /// </summary>
     /// <param name="entities">List entities need to Delete</param>
-    void DeleteRange(IList<T> entities);
+    void DeleteRange(List<T> entities);
     /// <summary>
     /// Add new Entity
     /// </summary>
@@ -75,7 +75,7 @@ public interface IBaseRepository<TDataContext, T>
     /// Add a list of Entities
     /// </summary>
     /// <param name="entities">New Entities</param>
-    void InsertRange(IList<T> entities);
+    void InsertRange(List<T> entities);
 
     /// <summary>
     /// Execute SqlCommand
@@ -96,7 +96,7 @@ public interface IBaseRepository<TDataContext, T>
     /// Update a list of Entities
     /// </summary>
     /// <param name="entities">Entities need to update</param>
-    Task UpdateRangeAsync(IList<T> entities);
+    Task UpdateRangeAsync(List<T> entities);
 
     /// <summary>
     /// Delete an Entity
@@ -112,12 +112,12 @@ public interface IBaseRepository<TDataContext, T>
     /// Delete a list of Entities
     /// </summary>
     /// <param name="entity">List entities need to delete forever</param>
-    Task DeleteRangeForeverAsync(IList<T> entities);
+    Task DeleteRangeForeverAsync(List<T> entities);
     /// <summary>
     /// Delete a list of Entities
     /// </summary>
     /// <param name="entities">List entities need to Delete</param>
-    Task DeleteRangeAsync(IList<T> entities);
+    Task DeleteRangeAsync(List<T> entities);
 
 
 
@@ -131,7 +131,7 @@ public interface IBaseRepository<TDataContext, T>
     /// Add a list of Entities
     /// </summary>
     /// <param name="entities">New Entities</param>
-    Task<IList<T>> InsertRangeAsync(IList<T> entities);
+    Task<List<T>> InsertRangeAsync(List<T> entities);
 
     /// <summary>
     /// Execute SqlCommand
@@ -182,9 +182,9 @@ public interface IBaseRepository<TDataContext, T>
     /// <param name="entities"></param>
     /// <param name="config"></param>
     /// <returns></returns>
-    Task BulkInsertAsync(IList<T> entities, BulkConfig? config = null);
-    Task BulkInsertOrUpdateAsync(IList<T> entities, BulkConfig? config = null);
-    Task BulkInsertOrUpdateOrDeleteAsync(IList<T> entities, BulkConfig? config = null);
-    Task BulkUpdateAsync(IList<T> entities, BulkConfig? config = null);
-    Task BulkDeleteAsync(IList<T> entities, BulkConfig? config = null);
+    Task BulkInsertAsync(List<T> entities, BulkConfig? config = null);
+    Task BulkInsertOrUpdateAsync(List<T> entities, BulkConfig? config = null);
+    Task BulkInsertOrUpdateOrDeleteAsync(List<T> entities, BulkConfig? config = null);
+    Task BulkUpdateAsync(List<T> entities, BulkConfig? config = null);
+    Task BulkDeleteAsync(List<T> entities, BulkConfig? config = null);
 }

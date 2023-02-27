@@ -1,15 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
-using System;
 using Mgr.Core.Abstracts;
-using UnitMgr.Infrastructure.Data;
-using Mgr.Core.Entities;
-using UnitMgr.Application.Services;
 using Microsoft.AspNetCore.Authorization;
-using UnitMgr.Application.Services.Identity;
-using Mgr.Core.Interfaces.Services;
 using UnitMgr.Domain.AggregatesModel.IdentityDTOs;
+using UnitMgr.Application.Services.Identity;
 
 namespace UnitMgr.API.Controllers;
 

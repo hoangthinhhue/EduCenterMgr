@@ -38,7 +38,7 @@ namespace Mgr.Core.Helpers
             var data = query.ToList();
             return MethodResult<List<T>>.ResultWithData(data, "Get data successfully", data.Count);
         }
-        public static async Task<IMethodResult<IList<T>>> GetDataAsync(IQueryable<T> query, PaginationRequest request)
+        public static async Task<IMethodResult<List<T>>> GetDataAsync(IQueryable<T> query, PaginationRequest request)
         {
             #region [Filter]  
             if (request != null && request.FilterParams.Any())
@@ -71,7 +71,7 @@ namespace Mgr.Core.Helpers
                 data = await PaginatedData<T>.CreateAsync(query, 1, 20);
             }
 
-            return MethodResult<IList<T>>.ResultWithData(data.Data, "Get data successfully", data.TotalItems);
+            return MethodResult<List<T>>.ResultWithData(data.Data, "Get data successfully", data.TotalItems);
         }
         public static async Task<PaginatedData<T>> GetPaginatedData(IQueryable<T> query, PaginationRequest request)
         {
@@ -108,7 +108,7 @@ namespace Mgr.Core.Helpers
 
             return data;
         }
-        public static IMethodResult<IList<T>> GetData(IQueryable<T> query, PaginationRequest request)
+        public static IMethodResult<List<T>> GetData(IQueryable<T> query, PaginationRequest request)
         {
             #region [Filter]  
             if (request != null && request.FilterParams.Any())
@@ -141,7 +141,7 @@ namespace Mgr.Core.Helpers
                 rs = PaginatedData<T>.Create(query, 1, 20);
             }
 
-            return MethodResult<IList<T>>.ResultWithData(rs.Data, "Get data successfully", rs.TotalItems);
+            return MethodResult<List<T>>.ResultWithData(rs.Data, "Get data successfully", rs.TotalItems);
         }
     }
 }

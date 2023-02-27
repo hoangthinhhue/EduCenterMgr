@@ -1,7 +1,6 @@
 ﻿using System.Data;
 using System.Linq.Expressions;
 using EFCore.BulkExtensions;
-using MediatR;
 using Mgr.Core.Entities;
 using Mgr.Core.Extensions;
 using Mgr.Core.Interface;
@@ -65,7 +64,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
             DbSet.Remove(entity);
         }
     }
-    public void DeleteRange(IList<T> entities)
+    public void DeleteRange(List<T> entities)
     {
         if (typeof(T).GetInterface(nameof(IAuditEntity)) != null)
         {
@@ -91,7 +90,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
     {
         DbSet.Remove(entity);
     }
-    public void DeleteRangeForever(IList<T> entity)
+    public void DeleteRangeForever(List<T> entity)
     {
         DbSet.RemoveRange(entity);
     }
@@ -121,7 +120,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
         DbSet.Add(entity);
     }
 
-    public void InsertRange(IList<T> entities)
+    public void InsertRange(List<T> entities)
     {
         if (typeof(T).GetInterface(nameof(IAuditEntity)) != null)
         {
@@ -166,7 +165,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
         }
         DbSet.Update(entity);
     }
-    public void UpdateRange(IList<T> entities)
+    public void UpdateRange(List<T> entities)
     {
 
         if (typeof(T).GetInterface(nameof(IAuditEntity)) != null)
@@ -230,7 +229,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
 
         return dtTable.ToObjects<TResult>();
     }
-    public async Task BulkInsertAsync(IList<T> entities, BulkConfig? config = null)
+    public async Task BulkInsertAsync(List<T> entities, BulkConfig? config = null)
     {
         if (config == null)
         {
@@ -253,7 +252,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
         }
         await _dataContext.BulkInsertAsync(entities, config);
     }
-    public async Task BulkInsertOrUpdateAsync(IList<T> entities, BulkConfig? config = null)
+    public async Task BulkInsertOrUpdateAsync(List<T> entities, BulkConfig? config = null)
     {
         if (config == null)
         {
@@ -278,7 +277,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
         }
         await _dataContext.BulkInsertOrUpdateAsync(entities, config);
     }
-    public async Task BulkInsertOrUpdateOrDeleteAsync(IList<T> entities, BulkConfig? config = null)
+    public async Task BulkInsertOrUpdateOrDeleteAsync(List<T> entities, BulkConfig? config = null)
     {
         if (config == null)
         {
@@ -287,7 +286,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
         }
         await _dataContext.BulkInsertOrUpdateOrDeleteAsync(entities, config);
     }
-    public async Task BulkUpdateAsync(IList<T> entities, BulkConfig? config = null)
+    public async Task BulkUpdateAsync(List<T> entities, BulkConfig? config = null)
     {
         if (config == null)
         {
@@ -310,7 +309,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
         }
         await _dataContext.BulkUpdateAsync(entities, config);
     }
-    public async Task BulkDeleteAsync(IList<T> entities, BulkConfig? config = null)
+    public async Task BulkDeleteAsync(List<T> entities, BulkConfig? config = null)
     {
         if (config == null)
         {
@@ -333,7 +332,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
     /// Update a list of Entities
     /// </summary>
     /// <param name="entities">Entities need to update</param>
-    public Task UpdateRangeAsync(IList<T> entities) {
+    public Task UpdateRangeAsync(List<T> entities) {
         UpdateRange(entities);
         return Task.CompletedTask;
     }
@@ -350,7 +349,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
     /// Delete a list of Entities
     /// </summary>
     /// <param name="entities">List entities need to Delete</param>
-    public Task DeleteRangeAsync(IList<T> entities) {
+    public Task DeleteRangeAsync(List<T> entities) {
         DeleteRange(entities);
         return Task.CompletedTask;
     }
@@ -362,7 +361,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
     /// Delete a list of Entities
     /// </summary>
     /// <param name="entity">List entities need to delete forever</param>
-    public Task DeleteRangeForeverAsync(IList<T> entities) {
+    public Task DeleteRangeForeverAsync(List<T> entities) {
         DbSet.RemoveRange(entities);
         return Task.CompletedTask;
     }
@@ -379,7 +378,7 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
     /// Add a list of Entities
     /// </summary>
     /// <param name="entities">New Entities</param>
-    public async Task<IList<T>> InsertRangeAsync(IList<T> entities) {
+    public async Task<List<T>> InsertRangeAsync(List<T> entities) {
         if (typeof(T).GetInterface(nameof(IAuditEntity)) != null)
         {
             for (int i = 0; i < entities.Count(); i++)

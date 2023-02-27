@@ -9,45 +9,54 @@ using UnitMgr.Admin.Data;
 using UnitMgr.Infrastructure.Data;
 using Mgr.Core.Entities.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+using Serilog.Events;
+using UnitMgr.Admin.Extensions;
+using CleanArchitecture.Blazor.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<UnitMgrDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddIdentity<ApplicationUser,ApplicationRole>()
-    .AddEntityFrameworkStores<UnitMgrDbContext>();
-builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
-builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Host.UseSerilog((context, configuration) =>
+            configuration.ReadFrom.Configuration(context.Configuration)
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+                .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Error)
+                .MinimumLevel.Override("Serilog", LogEventLevel.Error)
+                .MinimumLevel.Override("BlazorState.Store", LogEventLevel.Error)
+                .MinimumLevel.Override("BlazorState.Subscriptions", LogEventLevel.Error)
+                .MinimumLevel.Override("BlazorState.Pipeline.State.CloneStateBehavior", LogEventLevel.Error)
+                .MinimumLevel.Override("BlazorState.Pipeline.RenderSubscriptions.RenderSubscriptionsPostProcessor", LogEventLevel.Error)
+          .Enrich.FromLogContext()
+          .Enrich.WithClientIp()
+          .Enrich.WithClientAgent()
+          .WriteTo.Console()
+    );
 
+builder.Services.AddBlazorUIServices();
+builder.Services.AddInfrastructureServices<UnitMgrDbContext>(builder.Configuration)
+                 .AddInfrastructureServices<UnitMgrDbContext>(builder.Configuration)
+                       .AddLocalizationServices()
+                       .AddAuthenticationService<UnitMgrDbContext>(builder.Configuration)
+                       .AddApplicationCommonServices<UnitMgrDbContext>(builder.Configuration);
 var app = builder.Build();
+app.MapBlazorHub();
+app.MapHealthChecks("/health");
+app.UseExceptionHandler("/Error");
+app.MapFallbackToPage("/_Host");
+app.UseApplicationConfigure(builder.Configuration);
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
+    // Initialise and seed database
+    using (var scope = app.Services.CreateScope())
+    {
+        var initialiser = scope.ServiceProvider.GetRequiredService<IdentityDbContextInitialiser>();
+        await initialiser.InitialiseAsync();
+        await initialiser.SeedAsync();
+    }
 }
 else
 {
-    app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
-app.UseHttpsRedirection();
-
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapControllers();
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
-
-app.Run();
+await app.RunAsync();
