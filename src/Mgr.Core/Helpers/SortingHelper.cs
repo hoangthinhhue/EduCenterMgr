@@ -1,5 +1,7 @@
 ﻿using Mgr.Core.Models;
 using Microsoft.Data.SqlClient;
+using System.ComponentModel;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Mgr.Core.Helpers
@@ -43,23 +45,35 @@ namespace Mgr.Core.Helpers
         /// <returns></returns>  
         public static IQueryable<T> SortData(IQueryable<T> data, IEnumerable<SortingParams> sortingParams)
         {
-            IOrderedQueryable<T> sortedData = null;
+            IQueryable<T> sortQueryale = null;
             foreach (var sortingParam in sortingParams.Where(x => !String.IsNullOrEmpty(x.ColumnName)))
             {
                 var col = typeof(T).GetProperty(sortingParam.ColumnName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public);
                 if (col != null)
                 {
-                    if (sortedData == null)
+                    if (sortQueryale == null)
                     {
-                        sortedData = sortingParam.SortOrder == Mgr.Core.EnumType.SortOrders.asc.ToString() ? data.OrderBy(x => col.GetValue(x, null)) : data.OrderByDescending(x => col.GetValue(x, null));
+                        sortQueryale = CreataeOrderBy(data, col.Name, sortingParam.SortOrder==EnumType.SortOrders.asc.ToString()?ListSortDirection.Ascending:ListSortDirection.Descending);
                     }
                     else
                     {
-                        sortedData = sortingParam.SortOrder == Mgr.Core.EnumType.SortOrders.asc.ToString() ? sortedData.ThenBy(x => col.GetValue(x, null)) : sortedData.ThenByDescending(x => col.GetValue(x, null));
+                        sortQueryale = sortingParam.SortOrder == Mgr.Core.EnumType.SortOrders.asc.ToString() ? sortQueryale.OrderBy(p => 0).ThenBy(x => col.GetValue(x, null)) : sortQueryale.OrderBy(p => 0).ThenByDescending(x => col.GetValue(x, null));
                     }
                 }
             }
-            return sortedData!=null?sortedData.AsQueryable() : data;
+            return sortQueryale??data;
+        }
+        public static IQueryable<T> CreataeOrderBy(IQueryable<T> source, string sortProperty, ListSortDirection sortOrder)
+        {
+            var type = typeof(T);
+            var property = type.GetProperty(sortProperty);
+            var parameter = Expression.Parameter(type, "p");
+            var propertyAccess = Expression.MakeMemberAccess(parameter, property);
+            var orderByExp = Expression.Lambda(propertyAccess, parameter);
+            var typeArguments = new Type[] { type, property.PropertyType };
+            var methodName = sortOrder == ListSortDirection.Ascending ? "OrderBy" : "OrderByDescending";
+            var resultExp = Expression.Call(typeof(Queryable), methodName, typeArguments, source.Expression, Expression.Quote(orderByExp));
+            return source.Provider.CreateQuery<T>(resultExp);
         }
     }
 }
