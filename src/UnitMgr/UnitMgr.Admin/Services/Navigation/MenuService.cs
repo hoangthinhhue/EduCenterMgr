@@ -81,8 +81,8 @@ public class MenuService : IMenuService
                     {
                         new()
                         {
-                            Title = "Multi-Tenant",
-                            Href = "/system/tenants",
+                            Title = "Tenant",
+                            Href = "/tenants",
                             PageStatus = PageStatus.Completed
                         },
                         new()

@@ -1,4 +1,7 @@
+using DocumentFormat.OpenXml.Office.Word;
 using MudBlazor;
+using static MudBlazor.CategoryTypes;
+using Button = MudBlazor.Button;
 
 namespace UnitMgr.Admin.UI;
 
@@ -9,21 +12,24 @@ public class Theme
         var theme = new MudTheme()
         {
 
-            Palette = new Palette
+            Palette = new Palette()
             {
-                Primary = "#2d4275",
-                Black = "#0A0E19",
-                Success = "#64A70B",
-                Secondary = "#ff4081ff",
-                AppbarBackground = "rgba(255,255,255,0.8)",
-                AppbarText = "#424242",
-                BackgroundGrey = "#F9FAFC",
-                TextSecondary = "#425466",
-                Dark = "#110E2D",
-                DarkLighten = "#1A1643",
-                GrayDefault = "#4B5563",
-                GrayLight = "#9CA3AF",
-                GrayLighter = "#adbdccff"
+                Primary = "#373740",
+                Success = "#007E33",
+                Black = "#27272f",
+                Background = "#373740",
+                BackgroundGrey = "#27272f",
+                Surface = "#373740",
+                DrawerBackground = "#27272f",
+                DrawerText = "rgba(255,255,255, 0.50)",
+                AppbarBackground = "#373740",
+                AppbarText = "rgba(255,255,255, 0.70)",
+                TextPrimary = "rgba(255,255,255, 0.70)",
+                TextSecondary = "rgba(255,255,255, 0.50)",
+                ActionDefault = "#adadb1",
+                ActionDisabled = "rgba(255,255,255, 0.26)",
+                ActionDisabledBackground = "rgba(255,255,255, 0.12)",
+                DrawerIcon = "rgba(255,255,255, 0.50)"
             },
             PaletteDark = new Palette
             {
@@ -63,109 +69,103 @@ public class Theme
                 AppbarHeight = "80px",
                 DefaultBorderRadius = "6px",
             },
-            Typography = new Typography
+            Typography = new Typography()
             {
-                Default = new Default
+                Default = new Default()
                 {
-                    FontSize = ".8125rem",
+                    FontFamily = new[] { "Arial" },
+                    FontSize = ".875rem",
                     FontWeight = 400,
                     LineHeight = 1.43,
-                    LetterSpacing = "normal",
-                    FontFamily = new string[] { "Public Sans", "Roboto", "Arial", "sans-serif" }
+                    LetterSpacing = ".01071em"
                 },
-                H1 = new H1
+                H1 = new H1()
                 {
-                    FontSize = "4rem",
-                    FontWeight = 700,
+                    FontFamily = new[] { "Arial" },
+                    FontSize = "6rem",
+                    FontWeight = 300,
                     LineHeight = 1.167,
                     LetterSpacing = "-.01562em"
                 },
-                H2 = new H2
+                H2 = new H2()
                 {
+                    FontFamily = new[] { "Arial" },
                     FontSize = "3.75rem",
                     FontWeight = 300,
                     LineHeight = 1.2,
                     LetterSpacing = "-.00833em"
                 },
-                H3 = new H3
+                H3 = new H3()
                 {
+                    FontFamily = new[] { "Arial" },
                     FontSize = "3rem",
-                    FontWeight = 600,
+                    FontWeight = 400,
                     LineHeight = 1.167,
                     LetterSpacing = "0"
                 },
-                H4 = new H4
+                H4 = new H4()
                 {
-                    FontSize = "1.8rem",
+                    FontFamily = new[] { "Arial" },
+                    FontSize = "2.125rem",
                     FontWeight = 400,
                     LineHeight = 1.235,
                     LetterSpacing = ".00735em"
                 },
-                H5 = new H5
+                H5 = new H5()
                 {
+                    FontFamily = new[] { "Arial" },
                     FontSize = "1.5rem",
                     FontWeight = 400,
                     LineHeight = 1.334,
                     LetterSpacing = "0"
                 },
-                H6 = new H6
+                H6 = new H6()
                 {
-                    FontSize = "1.125rem",
-                    FontWeight = 600,
+                    FontFamily = new[] { "Arial" },
+                    FontSize = "1.25rem",
+                    FontWeight = 400,
                     LineHeight = 1.6,
                     LetterSpacing = ".0075em"
                 },
-                Button = new Button
+                Button = new Button()
                 {
-                    FontSize = ".8125rem",
-                    FontWeight = 500,
-                    LineHeight = 1.75,
-                    LetterSpacing = ".02857em",
-                    TextTransform = "uppercase"
-
-
-                },
-                Subtitle1 = new Subtitle1
-                {
-                    FontSize = "1rem",
-                    FontWeight = 400,
-                    LineHeight = 1.75,
-                    LetterSpacing = ".00938em"
-                },
-                Subtitle2 = new Subtitle2
-                {
+                    FontFamily = new[] { "Arial" },
                     FontSize = ".875rem",
                     FontWeight = 500,
-                    LineHeight = 1.57,
-                    LetterSpacing = ".00714em"
+                    LineHeight = 1.75,
+                    LetterSpacing = ".02857em"
                 },
-                Body1 = new Body1
+                Body1 = new Body1()
                 {
-                    FontSize = "0.875rem",
+                    FontFamily = new[] { "Arial" },
+                    FontSize = "1rem",
                     FontWeight = 400,
                     LineHeight = 1.5,
                     LetterSpacing = ".00938em"
                 },
-                Body2 = new Body2
+                Body2 = new Body2()
                 {
-                    FontSize = ".8125rem",
+                    FontFamily = new[] { "Arial" },
+                    FontSize = ".875rem",
                     FontWeight = 400,
                     LineHeight = 1.43,
                     LetterSpacing = ".01071em"
                 },
-                Caption = new Caption
+                Caption = new Caption()
                 {
+                    FontFamily = new[] { "Arial" },
                     FontSize = ".75rem",
                     FontWeight = 400,
                     LineHeight = 1.66,
                     LetterSpacing = ".03333em"
                 },
-                Overline = new Overline
+                Subtitle2 = new Subtitle2()
                 {
-                    FontSize = ".75rem",
-                    FontWeight = 400,
-                    LineHeight = 2.66,
-                    LetterSpacing = ".08333em"
+                    FontFamily = new[] { "Arial" },
+                    FontSize = ".875rem",
+                    FontWeight = 500,
+                    LineHeight = 1.57,
+                    LetterSpacing = ".00714em"
                 }
             },
             Shadows = new()

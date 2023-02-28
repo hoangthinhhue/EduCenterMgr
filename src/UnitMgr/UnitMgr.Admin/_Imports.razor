@@ -11,6 +11,8 @@
 @using MudBlazor
 @using MudExtensions
 
+
+@using Mgr.Core.Entities;
 @using Mgr.Core.Entities.Identity;
 
 
@@ -25,3 +27,5 @@
 @inject IDialogService DialogService
 @inject IConfiguration Config
 @inject IAuthorizationService AuthService 
+
+@attribute [Authorize]

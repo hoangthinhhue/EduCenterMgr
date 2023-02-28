@@ -1,22 +1,22 @@
 @using UnitMgr.Admin.Components.Localization
-<MudAppBar Class=""
+<MudAppBar Class="blue darken-1 shades-text text-white"
            Elevation="0"
-           Style="background: --mud-palette-appbar-background">
+          >
     <MudTooltip Arrow="true" Text="Toggle menu">
         <MudToggleIconButton Class="mr-3"
-                             Color="@Color.Default"
+                             Color="@Color.Inherit"
                              Icon="@Icons.Material.Filled.MenuOpen"
                              Size="Size.Medium"
                              Toggled="SideMenuDrawerOpen"
                              ToggledChanged="ToggleSideMenuDrawer"
-                             ToggledColor="@Color.Default"
-                             ToggledIcon="@Icons.Material.Filled.Close" />
+                             ToggledColor="@Color.Inherit"
+                             ToggledIcon="@Icons.Material.Filled.Menu" />
 
     </MudTooltip>
     <MudHidden Breakpoint="Breakpoint.SmAndDown">
         <MudTooltip Arrow="true"
                     Text="Search (Cmd + K)">
-            <MudIconButton Color="Color.Default"
+            <MudIconButton Color="Color.Inherit"
                            Edge="Edge.Start"
                            Icon="@Icons.Material.Filled.Search"
                            OnClick="OpenCommandPalette" />
@@ -25,7 +25,7 @@
         <MudTooltip Arrow="true"
                     Text="Navigate to GitHub">
             <MudIconButton Class="mx-1"
-                           Color="Color.Default"
+                           Color="Color.Inherit"
                            Icon="@Icons.Custom.Brands.GitHub"
                            Link="https://github.com/neozhu/CleanArchitectureWithBlazorServer"
                            Target="_blank" />
@@ -35,14 +35,14 @@
         <MudTooltip Text="@(RightToLeft?"Toggle right-to-left":"Toggle left-to-right")">
             <MudIconButton Class="mx-1"
                            Icon="@(RightToLeft?Icons.Material.Filled.FormatTextdirectionLToR:Icons.Material.Filled.FormatTextdirectionRToL)"
-                           Color="Color.Default"
+                           Color="Color.Inherit"
                            OnClick="@((e) => RightToLeftToggle.InvokeAsync())" />
         </MudTooltip>
     </MudHidden>
     <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
         <MudTooltip Arrow="true"
                     Text="Search (Cmd + K)">
-            <MudIconButton Color="Color.Default"
+            <MudIconButton Color="Color.Inherit"
                            Edge="Edge.Start"
                            Icon="@Icons.Material.Filled.Search"
                            OnClick="OpenCommandPalette" />
@@ -52,5 +52,4 @@
     </MudHidden>
     <UserMenu OnSettingClick="OnSettingClick" />
     <MudDivider Class="mx-3 my-5" DividerType="DividerType.Middle" Vertical="true" FlexItem="true"></MudDivider>
-    <MudText Color="@Color.Primary" Typo="Typo.h6"><b>BrightFuture</b></MudText>
 </MudAppBar>

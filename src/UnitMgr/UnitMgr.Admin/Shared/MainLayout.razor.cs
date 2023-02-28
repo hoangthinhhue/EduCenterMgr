@@ -12,6 +12,7 @@ namespace UnitMgr.Admin.Shared;
 
 public partial class MainLayout: LayoutComponentBase,IDisposable, IBlazorStateComponent
 {
+    private bool _drawerOpen = true;
     private bool _commandPaletteOpen;
     private HotKeysContext? _hotKeysContext;
     private bool _sideMenuDrawerOpen = true;
@@ -44,10 +45,14 @@ public partial class MainLayout: LayoutComponentBase,IDisposable, IBlazorStateCo
         }
        
     }
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
     private async Task ApplyUserPreferences()
     {
-            var defaultDarkMode = await _mudThemeProvider!.GetSystemPreference();
-            UserPreferences = await _layoutService.ApplyUserPreferences(defaultDarkMode);
+        var defaultDarkMode = await _mudThemeProvider.GetSystemPreference();
+        UserPreferences = await _layoutService.ApplyUserPreferences(defaultDarkMode);
     }
     protected override async Task OnInitializedAsync()
     {
@@ -57,9 +62,6 @@ public partial class MainLayout: LayoutComponentBase,IDisposable, IBlazorStateCo
        await base.OnInitializedAsync();
 
     }
-
-
-
     private void LayoutServiceOnMajorUpdateOccured(object? sender, EventArgs e) => StateHasChanged();
    
 

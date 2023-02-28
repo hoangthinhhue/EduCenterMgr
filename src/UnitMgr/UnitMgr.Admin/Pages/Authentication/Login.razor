@@ -15,9 +15,8 @@
 <AuthorizeView>
     <NotAuthorized Context="Auth">
         <MudForm Model="@_model" @ref="@_form" @bind-IsValid="@_success" ValidationDelay="0" Validation="@(_loginValidator.ValidateValue)">
-            <MudText Typo="Typo.h4" GutterBottom="true">Sign In"]</MudText>
-
-            <MudText>Bạn không có tài khoản<MudLink Href="/pages/authentication/register">Đăng ký</MudLink></MudText>
+            <MudText Typo="Typo.h4" GutterBottom="true">Đăng nhập</MudText>
+            <MudText>Bạn không có tài khoản <MudLink Href="/pages/authentication/register"> Đăng ký</MudLink></MudText>
 
             <MudTextField @bind-Value="_model.UserName" For="@(() => _model.UserName)"
                           Label="Tên tài khoản"

@@ -49,6 +49,8 @@ public class AuthController : Controller
             identityUser.IsLive= true;
             await _userManager.UpdateAsync(identityUser);
             _logger.LogInformation("{@UserName} login successful.", identityUser.UserName);
+            if (string.IsNullOrEmpty(returnUrl))
+                return Redirect("/");
             return Redirect($"/{returnUrl}");
         }
 

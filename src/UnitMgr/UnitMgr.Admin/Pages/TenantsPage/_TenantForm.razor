@@ -1,0 +1,50 @@
+﻿@using SixLabors.ImageSharp
+@using SixLabors.ImageSharp.Formats
+@using SixLabors.ImageSharp.Processing
+@using UnitMgr.Domain.AggregatesModel.TenantDTOs;
+@inherits MudComponentBase
+<MudDialog>
+    <DialogContent>
+        <MudForm Model="model" @ref="_form" Validation="@(modelValidator.ValidateValue)">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField Label="Tên" @bind-Value="model.Name"
+                                  For="@(() => model.Name)"
+                                  Required="true"
+                                  RequiredError="Tenant name is required!"
+                                  AutoFocus=true>
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField Label="Mô tả" @bind-Value="model.Description"
+                                  For="@(() => model.Description)">
+                    </MudTextField>
+                </MudItem>
+
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">@ConstantString.CANCEL</MudButton>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="Submit">@ConstantString.OK</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    MudForm? _form = default!;
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = default!;
+    TenantValidator modelValidator = new TenantValidator();
+    [EditorRequired][Parameter] public Tenant model { get; set; } = default!;
+
+    async Task Submit()
+    {
+        await _form!.Validate();
+        if (_form!.IsValid)
+        {
+            MudDialog.Close(DialogResult.Ok(model));
+        }
+
+    }
+    void Cancel() => MudDialog.Cancel();
+}

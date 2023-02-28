@@ -39,6 +39,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitMgr.API", "src\UnitMgr\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitMgr.Application", "src\UnitMgr\UnitMgr.Application\UnitMgr.Application.csproj", "{EE5D509D-6369-4850-B5A9-8BE3EF1D9C4B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "blazorserverIdentity", "blazorserverIdentity", "{9655EB91-0FEE-456D-B5DC-FE658F1CCAEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServerApp", "tests\BlazorServerApp\BlazorServerApp.csproj", "{D8242FB7-85C1-4C50-BB7D-A6B931C528C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +89,10 @@ Global
 		{EE5D509D-6369-4850-B5A9-8BE3EF1D9C4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE5D509D-6369-4850-B5A9-8BE3EF1D9C4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE5D509D-6369-4850-B5A9-8BE3EF1D9C4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8242FB7-85C1-4C50-BB7D-A6B931C528C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8242FB7-85C1-4C50-BB7D-A6B931C528C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8242FB7-85C1-4C50-BB7D-A6B931C528C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8242FB7-85C1-4C50-BB7D-A6B931C528C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +108,8 @@ Global
 		{C0E05C63-FF62-447B-B790-D80B0C486326} = {F917B725-EFAA-49ED-B7E6-2A70B06B1667}
 		{7A837593-B157-48A7-B4CA-8376EE4B6ABD} = {D7616733-B380-413D-BBFE-A5CA6C8BBC48}
 		{EE5D509D-6369-4850-B5A9-8BE3EF1D9C4B} = {D7616733-B380-413D-BBFE-A5CA6C8BBC48}
+		{9655EB91-0FEE-456D-B5DC-FE658F1CCAEF} = {E5DE00AF-3C91-41CE-B37C-2C46F97739F3}
+		{D8242FB7-85C1-4C50-BB7D-A6B931C528C3} = {9655EB91-0FEE-456D-B5DC-FE658F1CCAEF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {384CDE06-46A5-4FC5-AED4-7B23339EA56F}

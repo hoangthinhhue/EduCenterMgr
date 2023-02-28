@@ -13,6 +13,7 @@ using Serilog;
 using Serilog.Events;
 using UnitMgr.Admin.Extensions;
 using CleanArchitecture.Blazor.Infrastructure.Persistence;
+using UnitMgr.Infrastructure.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,12 +32,16 @@ builder.Host.UseSerilog((context, configuration) =>
           .WriteTo.Console()
     );
 
-builder.Services.AddBlazorUIServices();
 builder.Services.AddInfrastructureServices<UnitMgrDbContext>(builder.Configuration)
-                 .AddInfrastructureServices<UnitMgrDbContext>(builder.Configuration)
-                       .AddLocalizationServices()
-                       .AddAuthenticationService<UnitMgrDbContext>(builder.Configuration)
-                       .AddApplicationCommonServices<UnitMgrDbContext>(builder.Configuration);
+                 .AddLocalizationServices()
+                 .AddAuthenticationService<UnitMgrDbContext>(builder.Configuration)
+                 .AddApplicationCommonServices<UnitMgrDbContext>(builder.Configuration)
+                 .AddSignalRServices();
+builder.Services.AddBlazorUIServices();
+
+
+
+
 var app = builder.Build();
 app.MapBlazorHub();
 app.MapHealthChecks("/health");

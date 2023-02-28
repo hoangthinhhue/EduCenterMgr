@@ -40,6 +40,7 @@ using UnitMgr.Admin.Services.Notifications;
 using UnitMgr.Application.Features;
 using UnitMgr.Application.Features.Identity.Profile;
 using UnitMgr.Application.Services.Identity;
+using UnitMgr.Domain.AggregatesModel.IdentityDTOs;
 using UnitMgr.Domain.Configs;
 using UnitMgr.Domain.Constants;
 using UnitMgr.Infrastructure.Configs.Middlewares;
@@ -49,8 +50,6 @@ namespace UnitMgr.Admin.Extensions;
 
 public static class DependencyInjectionConfig
 {
-
-
     public static IServiceCollection AddBlazorUIServices(this IServiceCollection services)
     {
         services.AddRazorPages();
@@ -88,25 +87,24 @@ public static class DependencyInjectionConfig
             config.SnackbarConfiguration.ShowTransitionDuration = 500;
             config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
         });
-
-
-
+        services.AddMudExtensions();
         services.AddScoped<LayoutService>();
         services.AddBlazorDownloadFile();
         services.AddScoped<IUserPreferencesService, UserPreferencesService>();
         services.AddScoped<IMenuService, MenuService>();
         services.AddScoped<INotificationService, InMemoryNotificationService>();
         services.AddHealthChecks();
-
+        services.AddScoped<ExceptionHandlingMiddleware>();
 
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
         services.AddBlazorState((options) => options.Assemblies = new Assembly[] {
             Assembly.GetExecutingAssembly(),
         });
 
         services.AddScoped<UserProfileState>();
 
+        services.AddValidatorsFromAssembly(Assembly.Load("UnitMgr.Domain"));
 
         return services;
     }
@@ -114,6 +112,7 @@ public static class DependencyInjectionConfig
     public static IServiceCollection AddApplicationCommonServices<TDbContext>(this IServiceCollection services, IConfiguration configuration) 
         where TDbContext : DbContext
     {
+
 
         services.Scan(scan => scan.FromApplicationDependencies()
                             .AddClasses(classes => classes.AssignableTo(typeof(IBaseRepository<,>)))
@@ -137,6 +136,8 @@ public static class DependencyInjectionConfig
                            .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<,>)))
         .AsImplementedInterfaces()
         .WithScopedLifetime());
+    
+
         return services;
     }
     public static IServiceCollection AddInfrastructureServices<TDbContext>(this IServiceCollection services, IConfiguration configuration)
@@ -263,86 +264,15 @@ public static class DependencyInjectionConfig
                          }
                      }
                  })
-                .AddAuthentication(authentication =>
-                  {
-                      authentication.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                      authentication.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                  })
-                .AddJwtBearer(async bearer =>
-                {
-                    bearer.RequireHttpsMetadata = false;
-                    bearer.SaveToken = true;
-                    bearer.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("AppConfigurationSettings:Secret"))),
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        RoleClaimType = ClaimTypes.Role,
-                        ClockSkew = TimeSpan.Zero,
-                        ValidateLifetime = true,
-                    };
-                    bearer.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
-                        {
-                            var accessToken = context.Request.Query["Authorization"];
-
-                            // If the request is for our hub...
-                            var path = context.HttpContext.Request.Path;
-                            if (!string.IsNullOrEmpty(accessToken))
-                            {
-                                // Read the token out of the query string
-                                context.Token = accessToken;
-                            }
-                            return Task.CompletedTask;
-                        },
-                        OnAuthenticationFailed = c =>
-                        {
-                            if (c.Exception is SecurityTokenExpiredException)
-                            {
-                                c.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                                c.Response.ContentType = "application/json";
-                                var result = JsonConvert.SerializeObject(MethodResult.ResultWithError("Token fail"));
-                                return c.Response.WriteAsync(result);
-                            }
-                            else
-                            {
-                                c.NoResult();
-                                c.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                                c.Response.ContentType = "text/plain";
-                                return c.Response.WriteAsync(c.Exception.ToString());
-
-                            }
-                        },
-                        OnChallenge = context =>
-                        {
-                            context.HandleResponse();
-                            if (!context.Response.HasStarted)
-                            {
-                                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                                context.Response.ContentType = "application/json";
-                                var result = JsonConvert.SerializeObject(MethodResult.ResultWithError("Not Authorize", (int)HttpStatusCode.Unauthorized));
-                                return context.Response.WriteAsync(result);
-                            }
-
-                            return Task.CompletedTask;
-                        },
-                        OnForbidden = context =>
-                        {
-                            context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-                            context.Response.ContentType = "application/json";
-                            var result = JsonConvert.SerializeObject(MethodResult.ResultWithError("Not Authorize to access Resource", (int)HttpStatusCode.Forbidden));
-                            return context.Response.WriteAsync(result);
-                        },
-                    };
-                })
+                 .AddAuthentication()
                  .AddCookie(options =>
                  {
                      options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                      options.SlidingExpiration = true;
                      options.AccessDeniedPath = "/";
                  });
+
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         services.Configure<CookiePolicyOptions>(options =>
         {

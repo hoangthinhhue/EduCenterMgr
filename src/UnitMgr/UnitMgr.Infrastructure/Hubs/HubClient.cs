@@ -1,5 +1,4 @@
 
-
 using Mgr.Core.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http.Connections;
@@ -23,6 +22,9 @@ public class HubClient : IAsyncDisposable
         _currentUserService = currentUserService;
         _userId = _currentUserService.UserId;
         _hubUrl = _navigationManager.BaseUri.TrimEnd('/') + SignalR.HubUrl;
+        _hubConnection = new HubConnectionBuilder()
+              .WithUrl(_hubUrl, options => options.Transports = HttpTransportType.WebSockets)
+              .Build();
         _hubConnection.ServerTimeout = TimeSpan.FromSeconds(30);
         _hubConnection.On<string>(SignalR.OnConnect, (userId) =>
         {

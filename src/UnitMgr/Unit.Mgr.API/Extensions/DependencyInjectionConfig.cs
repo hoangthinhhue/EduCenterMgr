@@ -102,7 +102,7 @@ public static class DependencyInjectionConfig
         services.AddRazorPages();
         //Add application services
         services.AddMvc();
-        services.AddMediatR(Assembly.GetExecutingAssembly());
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
         services.AddCors(options =>
         {
             options.AddDefaultPolicy(
