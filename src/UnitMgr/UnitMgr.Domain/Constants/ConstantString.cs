@@ -9,28 +9,28 @@ public static class ConstantString
 {
     //==========================================================//
     //for button text
-    public static string REFRESH => "Refresh";
-    public static string EDIT => "Edit";
-    public static string DELETE => "Delete";
-    public static string ADD => "Add";
-    public static string CREATE => "Create";
+    public static string REFRESH => "Làm mới";
+    public static string EDIT => "Cập nhật";
+    public static string DELETE => "Xóa";
+    public static string ADD => "Thêm";
+    public static string CREATE => "Tạo";
     public static string EXPORT => "Export to Excel";
     public static string EXPORTPDF => "Export to PDF";
     public static string IMPORT => "Import from Excel";
-    public static string ACTIONS => "Actions";
-    public static string SAVE => "Save";
-    public static string SAVECHANGES => "Save Changes";
-    public static string CANCEL => "Cancel";
-    public static string CLOSE => "Close";
-    public static string SEARCH => "Search";
+    public static string ACTIONS => "Thao tác";
+    public static string SAVE => "Lưu";
+    public static string SAVECHANGES => "Lưu thay đổi";
+    public static string CANCEL => "Thoát";
+    public static string CLOSE => "Đóng";
+    public static string SEARCH => "Tìm kiếm";
     public static string CLEAR => "Clear";
-    public static string RESET => "Reset";
+    public static string RESET => "Làm mới";
     public static string OK => "OK";
-    public static string CONFIRM => "Confirm";
+    public static string CONFIRM => "Xác nhận";
     public static string YES => "Yes";
     public static string NO => "No";
-    public static string NEXT => "Next";
-    public static string PREVIOUS => "Previous";
+    public static string NEXT => "Tiếp";
+    public static string PREVIOUS => "Trước";
     public static string UPLOAD => "Upload";
     public static string DOWNLOAD => "Download";
     public static string UPLOADING => "Uploading...";
@@ -68,8 +68,10 @@ public static class ConstantString
     public static string EDITTHEITEM => "Edit the {0}";
     public static string DELETETHEITEM => "Delete the {0}";
     public static string DELETEITEMS => "Delete selected items: {0}";
-    public static string DELETECONFIRMATION => "Are you sure you want to delete this item: {0}?";
-    public static string DELETECONFIRMATIONWITHID => "Are you sure you want to delete this item with Id: {0}?";
+    public static string DELETECONFIRMATION => "Bạn có chắc chắn muốn xóa {0} đối tượng?";
+    public static string DELETECONFIRMATIONWITHID => "Bạn có chắc chắn muốn xóa Id: {0}?";
+    public static string DELETECONFIRMATIONWITHNAME => "Bạn có chắc chắn muốn xóa Tên : {0}?";
+
     public static string DELETECONFIRMWITHSELECTED => "Are you sure you want to delete the selected items: {0}?";
     public static string NOMACHING => "No matching records found";
     public static string LOADING => "Loading...";

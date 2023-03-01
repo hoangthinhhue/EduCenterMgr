@@ -25,7 +25,8 @@
                   SortLabel="@ConstantString.ORDERBY"
                   MultiSelection="true"
                   @bind-SelectedItems="_selectedItems"
-                  Hover="true" @ref="_table">
+                  Hover="true" 
+                  @ref="_table">
             <ToolBarContent>
                 <div class="justify-start pt-3">
                     <MudText Typo="Typo.h6">Tenants</MudText>
@@ -60,7 +61,7 @@
                     </MudHidden>
                     <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
                         <MudMenu AnchorOrigin="Origin.BottomLeft" StartIcon="@Icons.Material.Filled.KeyboardCommandKey" EndIcon="@Icons.Material.Filled.KeyboardArrowDown" 
-                        Label="Chức năng" Color="Color.Primary" Variant="Variant.Filled">
+                        Label="" Color="Color.Primary" Variant="Variant.Filled">
                             <MudMenuItem Disabled="@_loading" OnClick="@(()=>OnRefresh())">@ConstantString.REFRESH</MudMenuItem>
                             @if (_canCreate)
                             {
@@ -80,14 +81,12 @@
             </ToolBarContent>
             <ColGroup>
                 <MudHidden Breakpoint="Breakpoint.SmAndDown">
-                    <col style="width:50px;" />
-                    <col style="width:120px;" />
-                    <col style="width:320px;" />
+                    <col style="width:60px;" />
                 </MudHidden>
             </ColGroup>
             <HeaderContent>
-                <MudTh Style="width:80px">@ConstantString.ACTIONS</MudTh>
-                <MudTh><MudTableSortLabel SortLabel="Id" T="Tenant">Tên</MudTableSortLabel></MudTh>
+                <MudTh Style="width:150px">@ConstantString.ACTIONS</MudTh>
+                <MudTh Style="width:350px"><MudTableSortLabel SortLabel="Id" T="Tenant">Tên</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Name" T="Tenant">Ghi chú</MudTableSortLabel></MudTh>
             </HeaderContent>
             <RowTemplate>
@@ -95,6 +94,7 @@
                     @if (_canEdit || _canDelete)
                     {
                         <MudMenu Label="@ConstantString.ACTIONS" Variant="Variant.Filled" DisableElevation="true" Size="Size.Small"
+                             FullWidth = "true"
                              Dense="true"
                              EndIcon="@Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Info" Direction="Direction.Left"
                              OffsetX="true">
@@ -131,7 +131,9 @@
                 <MudText>@ConstantString.LOADING</MudText>
             </LoadingContent>
             <PagerContent>
-                <MudTablePager />
+                <MudTablePager PageSizeOptions="@AppSettingConstants.PageSizeOptions" 
+                               RowsPerPageString="Số dòng/Trang" 
+                               InfoFormat="@($"{infoFormat}")" />
             </PagerContent>
         </MudTable>
     </ChildContent>
@@ -140,16 +142,15 @@
     </ErrorContent>
 </ErrorBoundary>
 @code {
+    private string infoFormat = "{first_item}-{last_item}/{all_items}";
     public string? Title { get; private set; }
-    private int _defaultPageSize = 15;
+    private int _defaultPageSize =  AppSettingConstants.DefaultPageSize;
     private HashSet<Tenant> _selectedItems = new HashSet<Tenant>();
     private MudTable<Tenant> _table = default!;
     private string _searchString = string.Empty;
     private bool _loading;
     [Inject]
     private ITenantService _TenantService { get; set; } = default!;
-    [Inject]
-    private IMapper _mapper { get; set; } = default!;
     [CascadingParameter]
     private Task<AuthenticationState> _authState { get; set; } = default!;
 
@@ -184,7 +185,7 @@
             _request.PageIndex = state.Page + 1;
             _request.PageSize = state.PageSize;
             var result = await _TenantService.GetData(_request);
-            return new TableData<Tenant>() { TotalItems = result.TotalRecord, Items = result.Data };
+            return new TableData<Tenant>() { TotalItems = result.TotalRecord, Items = result.Data};
         }
         finally
         {
@@ -246,10 +247,10 @@
 
     private async Task OnDelete(Tenant model)
     {
-        var deleteContent = ConstantString.DELETECONFIRMATIONWITHID;
+        var deleteContent = ConstantString.DELETECONFIRMATIONWITHNAME;
         var parameters = new DialogParameters
                     {
-                { nameof(DeleteConfirmation.ContentText), string.Format(deleteContent, model.Id) }
+                { nameof(DeleteConfirmation.ContentText), string.Format(deleteContent, model.Name) }
                     };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true };
         var dialog = DialogService.Show<DeleteConfirmation>

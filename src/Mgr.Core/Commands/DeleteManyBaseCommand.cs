@@ -31,7 +31,7 @@ namespace Uni.Core.Commands
 
         public async Task<MethodResult<int>> Handle(DeleteManyBaseCommand<TkeyKey> request, CancellationToken cancellationToken)
         {
-            var deletetedList= await _repository.AllNoTracking.Where(q => request.Ids.Contains(q.Id)).ToListAsync();
+            var deletetedList= await _repository.All.Where(q => request.Ids.Contains(q.Id)).ToListAsync();
             if (deletetedList == null)
                 return MethodResult<int>.ErrorNotFoundData();
             foreach (var item in deletetedList)

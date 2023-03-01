@@ -66,20 +66,18 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
     }
     public void DeleteRange(List<T> entities)
     {
-        if (typeof(T).GetInterface(nameof(IAuditEntity)) != null)
+        if (typeof(T).GetInterface(nameof(ISoftDelete)) != null)
         {
-            var list = entities.ToList();
-            for (int i = 0; i < list.Count(); i++)
+            for (int i = 0; i < entities.Count(); i++)
             {
-                var auditEntity = list[i] as IAuditEntity;
-                if (auditEntity != null)
+                var entity = entities[i] as IBaseEntity;
+                if (entity != null)
                 {
-                    auditEntity.CreatedBy = Guid.Parse(_currentUserService.UserId);
-                    auditEntity.CreatedDate = DateTime.Now;
-                    list[i] = (T)auditEntity;
+                    entity.IsDeleted = true;
+                    entities[i] = (T)entity;
                 }
             }
-            UpdateRange(list);
+            UpdateRange(entities);
         }
         else
         {
@@ -167,23 +165,8 @@ public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
     }
     public void UpdateRange(List<T> entities)
     {
-
-        if (typeof(T).GetInterface(nameof(IAuditEntity)) != null)
-        {
-            for (int i = 0; i < entities.Count(); i++)
-            {
-                var auditEntity = entities[i] as IAuditEntity;
-                if (auditEntity != null)
-                {
-                    auditEntity.UpdatedBy = Guid.Parse(_currentUserService.UserId);
-                    auditEntity.UpdatedDate = DateTime.Now;
-                    entities[i] = (T)auditEntity;
-                }
-            }
-        }
-        entities.ToList().ForEach(q => Update(q));
+        entities.ForEach(q => Update(q));
     }
-
     public int ExcecuteCommand(string sql, params object[] parameters)
     {
         return _dataContext.Database.ExecuteSqlRaw(sql, parameters);
