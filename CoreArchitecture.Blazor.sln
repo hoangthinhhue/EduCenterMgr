@@ -41,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitMgr.Application", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "blazorserverIdentity", "blazorserverIdentity", "{9655EB91-0FEE-456D-B5DC-FE658F1CCAEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServerApp", "tests\BlazorServerApp\BlazorServerApp.csproj", "{D8242FB7-85C1-4C50-BB7D-A6B931C528C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorServerApp", "tests\BlazorServerApp\BlazorServerApp.csproj", "{D8242FB7-85C1-4C50-BB7D-A6B931C528C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
