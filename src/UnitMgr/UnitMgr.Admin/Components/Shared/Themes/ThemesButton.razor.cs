@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using UnitMgr.Admin.Services;
+using UnitMgr.Admin.UIServices;
 
 namespace UnitMgr.Admin.Components.Shared.Themes;
 

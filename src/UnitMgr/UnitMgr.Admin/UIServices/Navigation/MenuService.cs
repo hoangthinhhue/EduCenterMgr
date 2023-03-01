@@ -2,7 +2,7 @@ using Mgr.Core.Constants;
 using MudBlazor;
 using UnitMgr.Admin.Models.SideMenu;
 
-namespace UnitMgr.Admin.Services.Navigation;
+namespace UnitMgr.Admin.UIServices;
 
 public class MenuService : IMenuService
 {
@@ -82,7 +82,7 @@ public class MenuService : IMenuService
                         new()
                         {
                             Title = "Tenant",
-                            Href = "/tenants",
+                            Href = "/admin/tenants",
                             PageStatus = PageStatus.Completed
                         },
                         new()

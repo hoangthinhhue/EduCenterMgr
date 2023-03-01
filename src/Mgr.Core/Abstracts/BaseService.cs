@@ -23,7 +23,7 @@ namespace Mgr.Core.Abstracts;
 #nullable disable
 public abstract class BaseService<TDataContext, T, Tkey> : IBaseService<TDataContext, T, Tkey>
         where TDataContext : DbContext
-        where T : BaseEntity<Tkey>
+        where T : IBaseEntity<Tkey>
         where Tkey : struct
 {
     public readonly IMediator _mediator;

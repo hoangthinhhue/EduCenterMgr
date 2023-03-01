@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Mgr.Core.Entities;
 using Mgr.Core.Extensions;
+using Mgr.Core.Interface;
 using Mgr.Core.Interfaces;
 using Mgr.Core.Interfaces.Data;
 using Mgr.Core.Models;
@@ -11,16 +12,16 @@ using Uni.Core.Helper;
 namespace Uni.Core.Commands
 {
     public class GetFilterPaginationCommand<T, Tkey> : IRequest<IMethodResult<List<T>>>
-       where T : BaseEntity<Tkey>
+       where T : IBaseEntity<Tkey>
         where Tkey : struct
     {
         public PaginationRequest PagingParams { get; set; }
     }
 
     public class GetFilterPaginationCommandHandler<TDataContext, T, Tkey>
-       : BaseCommand<TDataContext, T>, IRequestHandler<GetFilterPaginationCommand<T, Tkey>, IMethodResult<List<T>>>
+       : BaseCommand<TDataContext, T,Tkey>, IRequestHandler<GetFilterPaginationCommand<T, Tkey>, IMethodResult<List<T>>>
        where TDataContext : DbContext
-       where T : BaseEntity<Tkey>
+       where T : IBaseEntity<Tkey>
        where Tkey : struct
     {
         private readonly IBaseRepository<TDataContext, T> _repository;

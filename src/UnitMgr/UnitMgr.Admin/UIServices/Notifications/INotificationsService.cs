@@ -1,4 +1,4 @@
-namespace UnitMgr.Admin.Services.Notifications;
+namespace UnitMgr.Admin.UIServices;
 
 public interface INotificationService
 {

@@ -12,13 +12,12 @@ public class ChangePasswordModelValidator : AbstractValidator<ChangePasswordMode
 {
     public ChangePasswordModelValidator()
     {
-        RuleFor(p => p.NewPassword).NotEmpty().WithMessage("Your password cannot be empty")
-            .MinimumLength(6).WithMessage("Your password length must be at least 6.")
-            .MaximumLength(16).WithMessage("Your password length must not exceed 16.")
-            .Matches(@"[A-Z]+").WithMessage("Your password must contain at least one uppercase letter.")
-            .Matches(@"[a-z]+").WithMessage("Your password must contain at least one lowercase letter.")
-            .Matches(@"[0-9]+").WithMessage("Your password must contain at least one number.")
-            .Matches(@"[\!\?\*\.]+").WithMessage("Your password must contain at least one (!? *.).");
+        RuleFor(p => p.NewPassword).NotEmpty().WithMessage("Mật khẩu không thể trống")
+            .MinimumLength(6).WithMessage("Mật khẩu phải có ít nhất 6 ký tự.")
+            .MaximumLength(16).WithMessage("Mật khẩu không thể quá 16 kýtự.")
+            .Matches(@"[A-Z]+").WithMessage("Mật khẩu phải có ít nhật 1 ký tự hoa.")
+            .Matches(@"[a-z]+").WithMessage("Mật khẩu phải có ít nhật 1 ký thường.")
+            .Matches(@"[0-9]+").WithMessage("Mật khẩu phải có ít nhật 1 ký tự số.");
         RuleFor(x => x.ConfirmPassword)
              .Equal(x => x.NewPassword);
 

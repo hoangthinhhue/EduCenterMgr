@@ -1,6 +1,7 @@
 ﻿using EFCore.BulkExtensions;
 using Mgr.Core.Entities;
 using Mgr.Core.Interface;
+using Mgr.Core.Interfaces.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Data;
@@ -9,8 +10,6 @@ using System.Linq.Expressions;
 namespace Mgr.Core.Interfaces.Data;
 
 public interface IBaseRepository<TDataContext, T> 
-    where TDataContext : DbContext
-    where T: class
 {
     IQueryable<T> All { get; }
     IQueryable<T> AllNoTracking { get; }

@@ -6,35 +6,35 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mgr.Core.Entities;
 using Uni.Core.Helper;
+using Mgr.Core.Interface;
 
-namespace Uni.Core.Commands
+namespace Uni.Core.Commands;
+
+public class GetBaseCommand<T, Tkey> : IRequest<MethodResult<T>>
+   where T : IBaseEntity<Tkey>
+    where Tkey : struct
 {
-    public class GetBaseCommand<T, Tkey> : IRequest<MethodResult<T>>
-        where T : BaseEntity<Tkey>
-        where Tkey : struct
+    public Tkey Id { get; set; }
+}
+
+public class GetBaseCommandHandler<TDbContext, T, Tkey>
+   : BaseCommand<TDbContext, T, Tkey>, IRequestHandler<GetBaseCommand<T, Tkey>, MethodResult<T>>
+   where TDbContext : DbContext
+   where T : IBaseEntity<Tkey>
+   where Tkey : struct
+{
+    private readonly IBaseRepository<TDbContext, T> _repository;
+
+    public GetBaseCommandHandler()
     {
-        public Tkey Id { get; set; }
+        _repository = HttpContextInfo.GetRequestService<IBaseRepository<TDbContext, T>>();
     }
 
-    public class GetBaseCommandHandler<TDataContext, T, Tkey>
-       : BaseCommand<TDataContext,T>, IRequestHandler<GetBaseCommand<T, Tkey>, MethodResult<T>>
-       where TDataContext : DbContext
-       where T : BaseEntity<Tkey>
-       where Tkey : struct
+    public async Task<MethodResult<T>> Handle(GetBaseCommand<T, Tkey> request, CancellationToken cancellationToken)
     {
-        private readonly IBaseRepository<TDataContext, T> _repository;
-
-        public GetBaseCommandHandler()
-        {
-            _repository = HttpContextInfo.GetRequestService<IBaseRepository<TDataContext, T>>();
-        }
-
-        public async Task<MethodResult<T>> Handle(GetBaseCommand<T, Tkey> request, CancellationToken cancellationToken)
-        {
-            var model = await _repository.FindAsync(q => q.Id.Equals(request.Id));
-            if (model == null)
-                return MethodResult<T>.ResultWithError(status: (int)HttpStatusCode.NotFound, "No have content");
-            return MethodResult<T>.ResultWithData(model);
-        }
+        var model = await _repository.FindAsync(q => q.Id.Equals(request.Id));
+        if (model == null)
+            return MethodResult<T>.ResultWithError(status: (int)HttpStatusCode.NotFound, "No have content");
+        return MethodResult<T>.ResultWithData(model);
     }
 }

@@ -12,9 +12,6 @@ public interface IBaseService
 {
 }
 public interface IBaseService<TDataContext, T, Tkey> : IBaseService
-        where T : BaseEntity<Tkey>
-        where Tkey : struct
-        where TDataContext : DbContext
 {
     IQueryable<T> GetTable<T>(bool asNoTracking = true) where T : class;
     Task<IMethodResult<Tkey>> InsertAsync(T model);

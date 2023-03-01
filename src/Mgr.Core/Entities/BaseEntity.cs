@@ -7,14 +7,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mgr.Core.Entities;
-public abstract class BaseEntity<Tkey> : BaseEntity
+public abstract class BaseEntity<Tkey> : BaseEntity, IBaseEntity<Tkey>
     where Tkey : struct
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public Tkey Id { get; set; }
-
-
-    private readonly List<DomainEvent> _domainEvents = new();
 }
 public abstract class BaseEntity: IBaseEntity
 {

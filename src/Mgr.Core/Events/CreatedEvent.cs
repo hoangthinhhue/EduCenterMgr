@@ -4,9 +4,10 @@
 
 using Mgr.Core.Abstracts;
 using Mgr.Core.Entities;
+using Mgr.Core.Interface;
 
 namespace Mgr.Core.Events;
-public class CreatedEvent<T> : DomainEvent where T : BaseEntity
+public class CreatedEvent<T> : DomainEvent where T : IBaseEntity
 {
     public CreatedEvent(T entity)
     {

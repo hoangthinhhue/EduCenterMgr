@@ -11,9 +11,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Mgr.Core.Abstracts;
 
 
-public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext,T>
-                  where TDataContext : DbContext
-                  where T :class
+public class BaseRepository<TDataContext, T> : IBaseRepository<TDataContext, T>
+              where TDataContext : DbContext
+              where T : class
 {
     protected TDataContext _dataContext { get; set; }
     private DbSet<T> _DbSet { get; set; } = null;

@@ -34,9 +34,7 @@ using System.Security.Claims;
 using System.Text;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 using Uni.Core.Helper;
-using UnitMgr.Admin.Services;
-using UnitMgr.Admin.Services.Navigation;
-using UnitMgr.Admin.Services.Notifications;
+using UnitMgr.Admin.UIServices;
 using UnitMgr.Application.Features;
 using UnitMgr.Application.Features.Identity.Profile;
 using UnitMgr.Application.Services.Identity;
@@ -128,7 +126,7 @@ public static class DependencyInjectionConfig
         .WithScopedLifetime());
 
         services.Scan(scan => scan.FromApplicationDependencies()
-                            .AddClasses(classes => classes.AssignableTo(typeof(IBaseCommand<>)))
+                            .AddClasses(classes => classes.AssignableTo(typeof(IBaseCommand<,,>)))
         .AsImplementedInterfaces()
         .WithScopedLifetime());
 

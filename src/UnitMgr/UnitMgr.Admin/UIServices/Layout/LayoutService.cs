@@ -1,6 +1,6 @@
 using MudBlazor;
 
-namespace UnitMgr.Admin.Services;
+namespace UnitMgr.Admin.UIServices;
 
 public class LayoutService
 {

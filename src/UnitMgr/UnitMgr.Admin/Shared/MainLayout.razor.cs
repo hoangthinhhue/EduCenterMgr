@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Toolbelt.Blazor.HotKeys2;
 using UnitMgr.Admin.Components.Shared;
-using UnitMgr.Admin.Services;
+using UnitMgr.Admin.UIServices;
 using UnitMgr.Admin.UI;
 using UnitMgr.Application.Features.Identity.Profile;
 

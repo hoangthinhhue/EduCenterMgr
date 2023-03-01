@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
-using UnitMgr.Admin.Areas.Identity;
 using UnitMgr.Admin.Data;
 using UnitMgr.Infrastructure.Data;
 using Mgr.Core.Entities.Identity;

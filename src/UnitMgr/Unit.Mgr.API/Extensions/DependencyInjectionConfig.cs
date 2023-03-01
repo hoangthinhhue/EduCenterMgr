@@ -56,7 +56,7 @@ public static class DependencyInjectionConfig
         .WithScopedLifetime());
 
         services.Scan(scan => scan.FromApplicationDependencies()
-                            .AddClasses(classes => classes.AssignableTo(typeof(IBaseCommand<>)))
+                            .AddClasses(classes => classes.AssignableTo(typeof(IBaseCommand<,,>)))
         .AsImplementedInterfaces()
         .WithScopedLifetime());
 

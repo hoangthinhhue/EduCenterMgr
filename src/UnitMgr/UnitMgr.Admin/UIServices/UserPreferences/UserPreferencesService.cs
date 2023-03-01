@@ -4,7 +4,7 @@
 
 using Blazored.LocalStorage;
 
-namespace UnitMgr.Admin.Services;
+namespace UnitMgr.Admin.UIServices;
 
 public interface IUserPreferencesService
     {

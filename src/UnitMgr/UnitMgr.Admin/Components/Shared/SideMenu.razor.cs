@@ -4,8 +4,7 @@ using BlazorState;
 using Mgr.Core.Models;
 using Microsoft.AspNetCore.Components;
 using UnitMgr.Admin.Models.SideMenu;
-using UnitMgr.Admin.Services;
-using UnitMgr.Admin.Services.Navigation;
+using UnitMgr.Admin.UIServices;
 using UnitMgr.Application.Features.Identity.Profile;
 
 namespace UnitMgr.Admin.Components.Shared;

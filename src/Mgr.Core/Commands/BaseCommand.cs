@@ -9,18 +9,19 @@ using Uni.Core.Helper;
 
 namespace Uni.Core.Commands;
 
-public abstract class BaseCommand<TDataContext,T> : IBaseCommand<TDataContext>
+public abstract class BaseCommand<TDataContext,T,Tkey> : IBaseCommand<TDataContext,T,Tkey>
     where TDataContext : DbContext
-    where T : class
+    where T : IBaseEntity<Tkey>
+    where Tkey : struct
 {
     protected readonly IMapper _Mapper;
-    protected readonly ILogger<IBaseCommand<TDataContext>> _AppLogger;
+    protected readonly ILogger<IBaseCommand<TDataContext,T,Tkey>> _AppLogger;
     protected readonly IUnitOfWork<TDataContext> _UnitOfWork;
     protected readonly IBaseRepository<TDataContext, T> _Repos;
     protected BaseCommand()
     {
         _Mapper = HttpContextInfo.GetRequestService<IMapper>();
-        _AppLogger = HttpContextInfo.GetRequestService<ILogger<IBaseCommand<TDataContext>>>();
+        _AppLogger = HttpContextInfo.GetRequestService<ILogger<IBaseCommand<TDataContext,T,Tkey>>>();
         _UnitOfWork = HttpContextInfo.GetRequestService<IUnitOfWork<TDataContext>>();
         _Repos = HttpContextInfo.GetRequestService<IBaseRepository<TDataContext, T>>();
     }

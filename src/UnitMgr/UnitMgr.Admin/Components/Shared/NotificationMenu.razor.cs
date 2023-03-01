@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using UnitMgr.Admin.Services.Notifications;
+using UnitMgr.Admin.UIServices;
 
 namespace UnitMgr.Admin.Components.Shared;
 

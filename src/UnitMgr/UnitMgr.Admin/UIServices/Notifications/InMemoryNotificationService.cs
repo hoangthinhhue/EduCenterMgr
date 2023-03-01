@@ -1,6 +1,6 @@
 using Blazored.LocalStorage;
 
-namespace UnitMgr.Admin.Services.Notifications;
+namespace UnitMgr.Admin.UIServices;
 
 public class InMemoryNotificationService : INotificationService
 {

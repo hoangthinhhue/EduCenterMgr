@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Mgr.Core.Entities;
 using Mgr.Core.Events;
+using Mgr.Core.Interface;
 using Mgr.Core.Interfaces.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -9,41 +10,40 @@ using System.Threading;
 using System.Threading.Tasks;
 using Uni.Core.Helper;
 
-namespace Uni.Core.Commands
+namespace Uni.Core.Commands;
+
+public class DeleteManyBaseCommand<Tkey> : IRequest<MethodResult<int>> where Tkey : struct
 {
-    public class DeleteManyBaseCommand<TkeyKey> : IRequest<MethodResult<int>> where TkeyKey : struct
+    public List<Tkey> Ids { get; set; }
+}
+
+public class DeleteManyBaseCommandHandler<TDbContext, T, Tkey>
+   : BaseCommand<TDbContext, T, Tkey>, IRequestHandler<DeleteManyBaseCommand<Tkey>, MethodResult<int>>
+     where TDbContext : DbContext
+     where T : IBaseEntity<Tkey>
+     where Tkey : struct
+{
+    private readonly IBaseRepository<TDbContext, T> _repository;
+
+    public DeleteManyBaseCommandHandler()
     {
-        public List<TkeyKey> Ids { get; set; }
+        _repository = HttpContextInfo.GetRequestService<IBaseRepository<TDbContext, T>>();
     }
 
-    public class DeleteManyBaseCommandHandler<TDbContext, T, TkeyKey>
-       : BaseCommand<TDbContext, T>, IRequestHandler<DeleteManyBaseCommand<TkeyKey>, MethodResult<int>>
-         where TDbContext : DbContext
-         where T : BaseEntity<TkeyKey>
-         where TkeyKey : struct
+    public async Task<MethodResult<int>> Handle(DeleteManyBaseCommand<Tkey> request, CancellationToken cancellationToken)
     {
-        private readonly IBaseRepository<TDbContext, T> _repository;
-
-        public DeleteManyBaseCommandHandler()
+        var deletetedList= await _repository.All.Where(q => request.Ids.Contains(q.Id)).ToListAsync();
+        if (deletetedList == null)
+            return MethodResult<int>.ErrorNotFoundData();
+        foreach (var item in deletetedList)
         {
-            _repository = HttpContextInfo.GetRequestService<IBaseRepository<TDbContext, T>>();
+            item.AddDomainEvent(new DeletedEvent<T>(item));
         }
-
-        public async Task<MethodResult<int>> Handle(DeleteManyBaseCommand<TkeyKey> request, CancellationToken cancellationToken)
-        {
-            var deletetedList= await _repository.All.Where(q => request.Ids.Contains(q.Id)).ToListAsync();
-            if (deletetedList == null)
-                return MethodResult<int>.ErrorNotFoundData();
-            foreach (var item in deletetedList)
-            {
-                item.AddDomainEvent(new DeletedEvent<T>(item));
-            }
-            await _repository.DeleteRangeAsync(deletetedList);
-            var saved = await _UnitOfWork.SaveChangesAsync();
-            if (saved > 0)
-                return MethodResult<int>.ResultWithData(saved);
-            else
-                return MethodResult<int>.ErrorBussiness();
-        }
+        await _repository.DeleteRangeAsync(deletetedList);
+        var saved = await _UnitOfWork.SaveChangesAsync();
+        if (saved > 0)
+            return MethodResult<int>.ResultWithData(saved);
+        else
+            return MethodResult<int>.ErrorBussiness();
     }
 }

@@ -91,7 +91,10 @@
                 </MudForm>
             </MudTabPanel>
             <MudTabPanel Text="Change Password">
-                <MudForm Model="@_changepassword" @ref="@_passwordform" Validation="@(_passwordValidator.ValidateValue)" Style="display: flex; align-content: center;  align-items: center; flex-direction: column;">
+                <MudForm Model="@_changepassword" 
+                           @ref="@_passwordform" 
+                           Validation="@(_passwordValidator.ValidateValue)" 
+                           Style="display: flex; align-content: center;  align-items: center; flex-direction: column;">
                     <MudGrid Justify="Justify.Center" Style="max-width:300px">
                         <MudItem sm="12" xs="12">
                             <MudPasswordField Immediate="true"

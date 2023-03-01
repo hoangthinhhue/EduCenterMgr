@@ -4,9 +4,10 @@
 
 using Mgr.Core.Abstracts;
 using Mgr.Core.Entities;
+using Mgr.Core.Interface;
 
 namespace Mgr.Core.Events;
-public class DeletedEvent<T> : DomainEvent where T : BaseEntity
+public class DeletedEvent<T> : DomainEvent where T : IBaseEntity
 {
     public DeletedEvent(T entity)
     {

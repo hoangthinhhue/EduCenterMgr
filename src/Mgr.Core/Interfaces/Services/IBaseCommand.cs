@@ -2,8 +2,10 @@
 using System.Linq;
 
 namespace Mgr.Core.Interface;
-public interface IBaseCommand<TDataContext>
-     where TDataContext : DbContext
+public interface IBaseCommand<TDataContext,T,Tkey>
+    where TDataContext : DbContext
+    where T : IBaseEntity<Tkey>
+    where Tkey : struct
 {
-    IQueryable<T> GetTable<T>(bool asNoTracking = true) where T : class;
+    IQueryable<TTable> GetTable<TTable>(bool asNoTracking = true) where TTable : class;
 }

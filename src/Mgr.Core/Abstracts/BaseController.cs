@@ -39,7 +39,7 @@ public class BaseController : ControllerBase
 public abstract class BaseController<TService, TDataContext, TModel, TPrimary> : BaseController
     where TDataContext : DbContext
     where TService : IBaseService<TDataContext, TModel, TPrimary>
-    where TModel : BaseEntity<TPrimary>
+    where TModel : IBaseEntity<TPrimary>
     where TPrimary : struct
 {
     public readonly ILogger<BaseController<TService, TDataContext, TModel, TPrimary>> _logger;
