@@ -60,6 +60,9 @@ public static class ConstantString
     public static string EXPORTFAIL => "Export fail";
     public static string UPLOADSUCCESS => "Upload successfully";
 
+    public static string ERROR => "Bad Request";
+
+
     //========================================================
 
     public static string ADVANCEDSEARCH => "Advanced Search";

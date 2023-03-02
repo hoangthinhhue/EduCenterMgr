@@ -13,7 +13,7 @@ public static class ClaimsPrincipalExtensions
 
 
     public static string GetPhoneNumber(this ClaimsPrincipal claimsPrincipal)
-        => claimsPrincipal.FindFirst(ClaimTypes.MobilePhone)?.Value.ToString() ?? "";
+        => claimsPrincipal.FindFirst(ApplicationClaimTypes.PhoneNumber)?.Value.ToString() ?? "";
 
     public static string GetUserId(this ClaimsPrincipal claimsPrincipal)
        => claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value.ToString() ?? "";

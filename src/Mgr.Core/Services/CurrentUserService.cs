@@ -24,6 +24,7 @@ public class CurrentUserService : ICurrentUserService
     public string TenantId => _httpContextAccessor.HttpContext?.User.GetTenantId() ?? string.Empty;
     public string TenantName => _httpContextAccessor.HttpContext?.User.GetTenantName() ?? string.Empty;
     public string DisplayName => _httpContextAccessor.HttpContext?.User.GetDisplayName() ?? string.Empty;
+    public string PhoneNumber => _httpContextAccessor.HttpContext?.User.GetPhoneNumber() ?? string.Empty;
     public string ProfilePictureDataUrl => _httpContextAccessor.HttpContext?.User.GetProfilePictureDataUrl() ?? string.Empty;
     public string[] AssignRoles
     {

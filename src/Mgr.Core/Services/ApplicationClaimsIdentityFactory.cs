@@ -47,6 +47,12 @@ public class ApplicationClaimsIdentityFactory : UserClaimsPrincipalFactory<Appli
                 new Claim(ApplicationClaimTypes.ProfilePictureDataUrl, user.ProfilePictureDataUrl)
             });
         }
+        if (!string.IsNullOrEmpty(user.PhoneNumber))
+        {
+            ((ClaimsIdentity)principal.Identity)?.AddClaims(new[] {
+                new Claim(ApplicationClaimTypes.PhoneNumber, user.PhoneNumber)
+            });
+        }
         var appuser = await _userManager.FindByIdAsync(user.Id.ToString());
         var roles = await _userManager.GetRolesAsync(appuser);
         if (roles != null && roles.Count > 0)

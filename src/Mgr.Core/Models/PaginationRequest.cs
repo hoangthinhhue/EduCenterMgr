@@ -20,6 +20,7 @@ namespace Mgr.Core.Models;
 [MessagePackObject(keyAsPropertyName: true)]
 public class PaginationRequest : InputModel
 {
+    public string SearchValue { get; set; } = "";
     public PaginationRequest() : base()
     {
     }

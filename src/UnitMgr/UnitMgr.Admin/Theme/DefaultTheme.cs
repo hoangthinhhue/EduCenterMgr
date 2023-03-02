@@ -14,7 +14,7 @@ public class Theme
 
             Palette = new Palette()
             {
-                Primary = Colors.Blue.Default,
+                Primary = "#2d4275",
                 Success = "#007E33",
                 Black = "#27272f",
                 Background = "#373740",
@@ -33,8 +33,8 @@ public class Theme
             },
             PaletteDark = new Palette
             {
-                Primary = "#3d85c6",
-                Dark= "#343a40",
+                Primary = "#2d4275",
+                Dark = "#343a40",
                 PrimaryContrastText = "#c3cbe4",
                 Info= "#47bce8",
                 Error= "#f56e50",

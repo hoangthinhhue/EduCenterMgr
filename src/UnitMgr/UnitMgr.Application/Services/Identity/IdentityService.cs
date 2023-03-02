@@ -234,7 +234,7 @@ public class IdentityService : IIdentityService
             TenantName = x.TenantName,
             LockoutEnd = x.LockoutEnd,
             Role = x.UserRoles.Select(x => x.Role.Name).FirstOrDefault(),
-            AssignRoles = x.UserRoles.Select(x => x.Role.Name!).ToArray(),
+            AssignedRoles = x.UserRoles.Select(x => x.Role.Name!).ToArray(),
         };
         return userDto!;
     }
@@ -258,7 +258,7 @@ public class IdentityService : IIdentityService
             TenantName = x.TenantName,
             LockoutEnd = x.LockoutEnd,
             Role = x.UserRoles.Select(x => x.Role.Name).FirstOrDefault(),
-            AssignRoles = x.UserRoles.Select(x => x.Role.Name!).ToArray(),
+            AssignedRoles = x.UserRoles.Select(x => x.Role.Name!).ToArray(),
            }).ToListAsync(), _options);
         
         return result;

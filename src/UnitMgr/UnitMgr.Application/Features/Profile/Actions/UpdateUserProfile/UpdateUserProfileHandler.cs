@@ -45,7 +45,7 @@ public partial class UserProfileState
                 IsActive = dto.IsActive,
                 TenantId = dto.TenantId.ToString(),
                 TenantName = dto.TenantName,
-                AssignRoles = dto.AssignRoles,
+                AssignRoles = dto.AssignedRoles,
                 Role = dto.Role
             };
             return Unit.Task;

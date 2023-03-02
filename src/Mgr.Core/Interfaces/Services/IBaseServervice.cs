@@ -19,6 +19,7 @@ public interface IBaseService<TDataContext, T, Tkey> : IBaseService
     Task<IMethodResult<int>> DeleteAsync(Tkey id);
     Task<IMethodResult<int>> DeleteManyAsync(List<Tkey> ids);
     Task<IMethodResult<T>> GetByIdAsync(Tkey Id);
+    Task<IMethodResult<List<T>>> AllAsync();
     Task<IMethodResult<List<T>>> AllAsync(InputModel paras);
     Task<IMethodResult<List<T>>> GetData(PaginationRequest pagingParams);
     Task<IMethodResult> BulkInsertAsync(List<T> entities, BulkConfig? config = null);

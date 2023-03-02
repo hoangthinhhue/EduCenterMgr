@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace UnitMgr.Admin.Pages.Identity.Users;
+namespace UnitMgr.Domain.AggregatesModel.IdentityDTOs;
 
 public class ChangePasswordModel
 {

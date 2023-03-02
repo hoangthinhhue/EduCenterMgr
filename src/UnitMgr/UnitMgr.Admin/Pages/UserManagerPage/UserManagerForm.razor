@@ -1,0 +1,92 @@
+﻿
+@using UnitMgr.Application.Services;
+@inherits MudComponentBase
+<MudDialog>
+    <DialogContent>
+        <MudForm Model="model" @ref="_form" Validation="@(modelValidator.ValidateValue)">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField Label="Tên tài khoản"
+                                  @bind-Value="model.UserName"
+                                  For="@(() => model.UserName)"
+                                  Required="true"
+                                  RequiredError="UserName is required!"
+                                  AutoFocus=true>
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField Label="Họ tên"
+                                  @bind-Value="model.DisplayName"
+                                  For="@(() => model.DisplayName)"
+                                  Required="true"
+                                  RequiredError="UserName is required!">
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField Label="Email"
+                                  @bind-Value="model.Email"
+                                  For="@(() => model.Email)"
+                                  Required="true"
+                                  RequiredError="UserName is required!">
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField Label="Điện thoại"
+                                  @bind-Value="model.PhoneNumber"
+                                  For="@(() => model.PhoneNumber)"
+                                  Required="true"
+                                  RequiredError="PhoneNumber is required!">
+                    </MudTextField>
+                </MudItem>
+                <MudItem sm="6" xs="12">
+                    <MudSelect T="string" Label="Vai trò" MultiSelection="true" @bind-Value="value" @bind-SelectedValues="selectedItems">
+                        @foreach (var role in roles)
+                        {
+                            <MudSelectItem T="string" Value="@role">@role</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudSwitch @bind-Checked="model.IsActive" Label="Đang mở" Color="Color.Info" />
+                    <MudSwitch @bind-Checked="model.IsLive" Label="Đang online" Color="Color.Success" />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">@ConstantString.CANCEL</MudButton>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="Submit">@ConstantString.OK</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    MudForm? _form = default!;
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = default!;
+    UserDtoValidator modelValidator = new UserDtoValidator();
+    [EditorRequired][Parameter] public UserDto model { get; set; } = default!;
+    private string value { get; set; } = "== Chọn quyền==";
+    private IEnumerable<string> roles { get; set; } = new HashSet<string>() {};
+    private IEnumerable<string> selectedItems { get; set; } = new HashSet<string>() { };
+    [Inject]
+    private IApplicationRoleService _RoleService { get; set; } = default!;
+    protected async override Task OnInitializedAsync()
+    {
+
+        roles = (await _RoleService.AllAsync()).Data.Select(q => q.Name).ToHashSet();
+        if (model.AssignedRoles != null)
+            selectedItems = model.AssignedRoles.ToList();
+        await  base.OnInitializedAsync();
+    }
+    async Task Submit()
+    {
+        await _form!.Validate();
+        if (_form!.IsValid)
+        {
+            model.AssignedRoles = selectedItems.ToArray();
+            MudDialog.Close(DialogResult.Ok(model));
+        }
+
+    }
+    void Cancel() => MudDialog.Cancel();
+}

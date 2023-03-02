@@ -15,4 +15,5 @@ public interface ICurrentUserService : IBaseService
     string TenantName { get; }
     string ProfilePictureDataUrl { get; }
     string[] AssignRoles { get; }
+    string PhoneNumber { get; }
 }

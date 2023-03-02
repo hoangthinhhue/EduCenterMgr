@@ -4,7 +4,7 @@
 @using Microsoft.AspNetCore.DataProtection
 @using Microsoft.AspNetCore.Identity
 @using System.Security.Claims
-@using UnitMgr.Admin.Pages.Identity.Users;
+@using UnitMgr.Admin.Pages.UserPage;
 @using UnitMgr.Domain.AggregatesModel.IdentityDTOs;
 @using MudExtensions
 
@@ -159,7 +159,7 @@
             { Id = item.Id.ToString(), DisplayName = item.DisplayName, UserName = item.UserName, ProfilePictureDataUrl = item.ProfilePictureDataUrl };
         var parameters = new DialogParameters { ["model"] = model };
         var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraSmall };
-        var dialog = DialogService.Show<_ResetPasswordDialog>("Set new password", parameters, options);
+        var dialog = DialogService.Show<ResetPasswordDialog>("Set new password", parameters, options);
         var result = await dialog.Result;
         if (!result.Canceled)
         {

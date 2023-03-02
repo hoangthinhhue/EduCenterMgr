@@ -278,7 +278,19 @@ public abstract class BaseService<TDataContext, T, Tkey> : IBaseService<TDataCon
             return MethodResult.ResultWithError(ex.Message, (int)HttpStatusCode.BadRequest);
         }
     }
-
+    public async Task<IMethodResult<List<T>>> AllAsync()
+    {
+        try
+        {
+            var query = _repository.AllNoTracking.Where(q => q.IsDeleted != true);
+            var rs = await query.ToListAsync();
+            return MethodResult<List<T>>.ResultWithData(rs);
+        }
+        catch (Exception ex)
+        {
+            return MethodResult<List<T>>.ResultWithError((int)HttpStatusCode.BadRequest, ex.Message);
+        }
+    }
     public async Task<IMethodResult<List<T>>> AllAsync(InputModel request)
     {
         try

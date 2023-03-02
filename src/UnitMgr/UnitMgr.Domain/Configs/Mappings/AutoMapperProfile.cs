@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 
-namespace UnitMgr.Domain.Configs;
+namespace UnitMgr.Domain.Configs.Mappings;
 public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()

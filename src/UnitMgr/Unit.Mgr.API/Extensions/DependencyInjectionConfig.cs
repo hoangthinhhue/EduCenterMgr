@@ -30,6 +30,7 @@ using Uni.Core.Helper;
 using UnitMgr.Application.Features;
 using UnitMgr.Application.Services.Identity;
 using UnitMgr.Domain.Configs;
+using UnitMgr.Domain.Configs.Mappings;
 using UnitMgr.Domain.Constants;
 using UnitMgr.Infrastructure.Configs.Middlewares;
 using UnitMgr.Infrastructure.Data;

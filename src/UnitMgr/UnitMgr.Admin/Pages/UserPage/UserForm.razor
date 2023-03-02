@@ -139,7 +139,7 @@
         var array = await _roleManager.Roles.Select(x => x.Name).ToListAsync();
         foreach (var role in array)
         {
-            if (model.AssignRoles != null && model.AssignRoles.Contains(role))
+            if (model.AssignedRoles != null && model.AssignedRoles.Contains(role))
             {
                 _roles.Add(new() { key = role!, value = true });
             }
@@ -182,7 +182,7 @@
             await form.Validate();
             if (form.IsValid)
             {
-                model.AssignRoles = _roles.Where(x => x.value).Select(x => x.key).ToArray();
+                model.AssignedRoles = _roles.Where(x => x.value).Select(x => x.key).ToArray();
                 await OnFormSubmit.InvokeAsync(model);
             }
         }

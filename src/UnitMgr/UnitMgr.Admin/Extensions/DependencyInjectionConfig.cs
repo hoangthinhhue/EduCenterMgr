@@ -93,9 +93,6 @@ public static class DependencyInjectionConfig
         services.AddScoped<INotificationService, InMemoryNotificationService>();
         services.AddHealthChecks();
         services.AddScoped<ExceptionHandlingMiddleware>();
-
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
         services.AddBlazorState((options) => options.Assemblies = new Assembly[] {
             Assembly.GetExecutingAssembly(),
         });
@@ -141,10 +138,11 @@ public static class DependencyInjectionConfig
     public static IServiceCollection AddInfrastructureServices<TDbContext>(this IServiceCollection services, IConfiguration configuration)
            where TDbContext : DbContext
     {
+
         //Add configs
         services.Configure<AppConfigurationSettings>(configuration.GetSection(AppConfigurationSettings.SectionName));
-        //Add automapper
-        services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddHealthChecks();
         // Database
         if (configuration.GetValue<bool>("UseInMemoryDatabase"))

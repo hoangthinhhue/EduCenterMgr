@@ -19,6 +19,7 @@ public partial class UserProfileState : State<UserProfileState>
     {
         UserProfile = new UserProfile()
         {
+            PhoneNumber = _currentUserService.PhoneNumber,
             DisplayName= _currentUserService.DisplayName,
             UserName = _currentUserService.UserName,
             Email = _currentUserService.Email,
