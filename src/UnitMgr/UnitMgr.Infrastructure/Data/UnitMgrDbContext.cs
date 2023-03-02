@@ -13,24 +13,12 @@ using UnitMgr.Domain.Interface.Data;
 
 namespace UnitMgr.Infrastructure.Data;
 
-public class UnitMgrDbContext  :IdentityDbContext
-                    <ApplicationUser,ApplicationRole,Guid,ApplicationUserClaim,
-                    ApplicationUserRole,ApplicationUserLogin,ApplicationRoleClaim,ApplicationUserToken>,
-                    IUnitMgrDbContext
+public partial class UnitMgrDbContext 
 {
     public UnitMgrDbContext(
         DbContextOptions<UnitMgrDbContext> options
         ) : base(options)
     {
-    }
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        return base.SaveChangesAsync(cancellationToken);
-    }
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-        base.OnModelCreating(builder);
-        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<Logger> Loggers { get; set; }
