@@ -3,6 +3,7 @@
 @using MediatR;
 @using Mgr.Core.Entities;
 @using Mgr.Core.EnumType;
+@using Mgr.Core.Extensions;
 @using Mgr.Core.Models;
 @using UnitMgr.Admin.Components.Dialogs;
 @using UnitMgr.Application.Services;
@@ -227,9 +228,10 @@
     }
     private async Task OnEdit(Tenant model)
     {
+        var updateModel = (await _TenantService.GetByIdAsync(model.Id)).Data;
         var parameters = new DialogParameters
                 {
-            { nameof(_TenantForm.model),model },
+            { nameof(_TenantForm.model),updateModel },
                 };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true };
         var dialog = DialogService.Show<_TenantForm>

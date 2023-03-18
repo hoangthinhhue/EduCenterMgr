@@ -3,6 +3,7 @@
 
 using Mgr.Core.Abstracts;
 using Mgr.Core.Interface;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,9 +22,11 @@ public abstract class BaseEntity: IBaseEntity
     public Guid? UpdatedBy { get; set; }
     public bool? IsDeleted { get; set; } = false;
     [NotMapped]
+    [JsonIgnore]
     private readonly List<DomainEvent> _domainEvents = new();
 
     [NotMapped]
+    [JsonIgnore]
     public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
     public void AddDomainEvent(DomainEvent domainEvent)
