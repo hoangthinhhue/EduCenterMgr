@@ -11,6 +11,11 @@ public static class LocalizationConstants
     {
         new()
         {
+            Code = "vi-VN",
+            DisplayName = "Tiếng Việt (Việt Nam)"
+        },
+        new()
+        {
             Code = "en-US",
             DisplayName = "English (United States)"
         },

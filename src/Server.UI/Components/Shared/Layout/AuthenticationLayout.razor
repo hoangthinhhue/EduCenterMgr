@@ -33,7 +33,7 @@
         var user = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
         if (user.Identity?.IsAuthenticated ?? false)
         {
-            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("/admin/home");
         }
 
         await base.OnInitializedAsync();
