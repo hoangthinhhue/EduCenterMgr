@@ -25,6 +25,7 @@ using ZiggyCreatures.Caching.Fusion;
 namespace CleanArchitecture.Blazor.Infrastructure;
 public static class DependencyInjection
 {
+    private const string JWTTOKEN_SETTINGS_KEY = "JwtTokenSettings";
     private const string IDENTITY_SETTINGS_KEY = "IdentitySettings";
     private const string APP_CONFIGURATION_SETTINGS_KEY = "AppConfigurationSettings";
     private const string DATABASE_SETTINGS_KEY = "DatabaseSettings";
@@ -72,6 +73,10 @@ public static class DependencyInjection
 
         services.Configure<DatabaseSettings>(configuration.GetSection(DATABASE_SETTINGS_KEY))
             .AddSingleton(s => s.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+
+        services.Configure<JwtTokenSettings>(configuration.GetSection(JWTTOKEN_SETTINGS_KEY))
+            .AddSingleton(s => s.GetRequiredService<IOptions<JwtTokenSettings>>().Value);
+
         return services;
     }
 
