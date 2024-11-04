@@ -10,4 +10,5 @@ public interface IApplicationSettings
     string Company { get; set; }
     string Copyright { get; set; }
     string Version { get; set; }
+    string DefaultCulture{ get; set; }
 }

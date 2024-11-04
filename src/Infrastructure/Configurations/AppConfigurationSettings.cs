@@ -74,4 +74,6 @@ public class AppConfigurationSettings : IApplicationSettings
     ///     The application name / title
     /// </summary>
     public string AppName { get; set; } = "Blazor Dashboard";
+
+    public string DefaultCulture { get; set; } = "vi-VN";
 }

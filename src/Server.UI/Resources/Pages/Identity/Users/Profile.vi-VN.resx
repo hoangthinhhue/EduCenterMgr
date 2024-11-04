@@ -117,40 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Japanese" xml:space="preserve">
-    <value>Japanese</value>
+  <data name="Change Password" xml:space="preserve">
+    <value>Thay Đổi Mật Khẩu</value>
   </data>
-  <data name="English" xml:space="preserve">
-    <value>English</value>
+  <data name="Click upload a image" xml:space="preserve">
+    <value>Nhấn để tải lên hình ảnh</value>
   </data>
-  <data name="French" xml:space="preserve">
-    <value>French</value>
+  <data name="Click upload a photo" xml:space="preserve">
+    <value>Nhấn để tải lên ảnh</value>
   </data>
-  <data name="German" xml:space="preserve">
-    <value>German</value>
+  <data name="Confirm New Password" xml:space="preserve">
+    <value>Xác Nhận Mật Khẩu Mới</value>
   </data>
-  <data name="Khmer" xml:space="preserve">
-    <value>Khmer</value>
+  <data name="Current Password" xml:space="preserve">
+    <value>Mật Khẩu Hiện Tại</value>
   </data>
-  <data name="Russian" xml:space="preserve">
-    <value>Russian</value>
+  <data name="current password is required!" xml:space="preserve">
+    <value>mật khẩu hiện tại là bắt buộc!</value>
   </data>
-  <data name="Simplified Chinese" xml:space="preserve">
-    <value>Simplified Chinese</value>
+  <data name="Display Name" xml:space="preserve">
+    <value>Tên Hiển Thị</value>
   </data>
-  <data name="Spanish" xml:space="preserve">
-    <value>Spanish</value>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="Arabic" xml:space="preserve">
-    <value>Arabic</value>
+  <data name="Full Name" xml:space="preserve">
+    <value>Họ Tên</value>
   </data>
-  <data name="Korean" xml:space="preserve">
-    <value>Korean</value>
+  <data name="New Password" xml:space="preserve">
+    <value>Mật Khẩu Mới</value>
   </data>
-  <data name="Catalan" xml:space="preserve">
-    <value>Catalan</value>
+  <data name="Org Chart" xml:space="preserve">
+    <value>Sơ Đồ Tổ Chức</value>
   </data>
-  <data name="Vietnamese" xml:space="preserve">
-    <value>Vietnamese</value>
+  <data name="Password changed successfully" xml:space="preserve">
+    <value>Đổi mật khẩu thành công</value>
+  </data>
+  <data name="password is required!" xml:space="preserve">
+    <value>mật khẩu là bắt buộc!</value>
+  </data>
+  <data name="Phone Number" xml:space="preserve">
+    <value>Số Điện Thoại</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Hồ Sơ</value>
+  </data>
+  <data name="Save Changes" xml:space="preserve">
+    <value>Lưu Thay Đổi</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Trạng Thái</value>
+  </data>
+  <data name="Superior Name" xml:space="preserve">
+    <value>Tên Cấp Trên</value>
+  </data>
+  <data name="Tenant Name" xml:space="preserve">
+    <value>Tênđơn vị</value>
+  </data>
+  <data name="The avatar has been updated" xml:space="preserve">
+    <value>Ảnh đại diện đã được cập nhật</value>
+  </data>
+  <data name="Update successfully" xml:space="preserve">
+    <value>Cập nhật thành công</value>
+  </data>
+  <data name="User Name" xml:space="preserve">
+    <value>Tên Người Dùng</value>
   </data>
 </root>

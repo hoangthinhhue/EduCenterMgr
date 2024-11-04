@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,40 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Japanese" xml:space="preserve">
-    <value>Japanese</value>
+  <data name="@2024 Copyright" xml:space="preserve">
+    <value>@2024 Bản Quyền</value>
   </data>
-  <data name="English" xml:space="preserve">
-    <value>English</value>
+  <data name="Analytics" xml:space="preserve">
+    <value>Phân Tích</value>
   </data>
-  <data name="French" xml:space="preserve">
-    <value>French</value>
+  <data name="Application" xml:space="preserve">
+    <value>Ứng Dụng</value>
   </data>
-  <data name="German" xml:space="preserve">
-    <value>German</value>
+  <data name="Audit Trails" xml:space="preserve">
+    <value>Lịch sử </value>
   </data>
-  <data name="Khmer" xml:space="preserve">
-    <value>Khmer</value>
+  <data name="Authorization" xml:space="preserve">
+    <value>Phân Quyền</value>
   </data>
-  <data name="Russian" xml:space="preserve">
-    <value>Russian</value>
+  <data name="Banking" xml:space="preserve">
+    <value>Ngân Hàng</value>
   </data>
-  <data name="Simplified Chinese" xml:space="preserve">
-    <value>Simplified Chinese</value>
+  <data name="Blazor" xml:space="preserve">
+    <value>Blazor</value>
   </data>
-  <data name="Spanish" xml:space="preserve">
-    <value>Spanish</value>
+  <data name="Blazor Dashboard" xml:space="preserve">
+    <value>Bảng Điều Khiển Blazor</value>
   </data>
-  <data name="Arabic" xml:space="preserve">
-    <value>Arabic</value>
+  <data name="Booking" xml:space="preserve">
+    <value>Đặt Chỗ</value>
   </data>
-  <data name="Korean" xml:space="preserve">
-    <value>Korean</value>
+  <data name="Coming Soon" xml:space="preserve">
+    <value>Sắp Ra Mắt</value>
   </data>
-  <data name="Catalan" xml:space="preserve">
-    <value>Catalan</value>
+  <data name="Company" xml:space="preserve">
+    <value>Công Ty</value>
   </data>
-  <data name="Vietnamese" xml:space="preserve">
-    <value>Vietnamese</value>
+  <data name="Completed" xml:space="preserve">
+    <value>Đã Hoàn Thành</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Liên Hệ</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Tài Liệu</value>
+  </data>
+  <data name="E-Commerce" xml:space="preserve">
+    <value>Thương Mại Điện Tử</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Trang Chủ</value>
+  </data>
+  <data name="Jobs" xml:space="preserve">
+    <value>Tác vụ </value>
+  </data>
+  <data name="Logs" xml:space="preserve">
+    <value>Nhật Ký</value>
+  </data>
+  <data name="MANAGEMENT" xml:space="preserve">
+    <value>QUẢN LÝ</value>
+  </data>
+  <data name="Multi-Tenant" xml:space="preserve">
+    <value>Phân hệ</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>Mới</value>
+  </data>
+  <data name="Picklist" xml:space="preserve">
+    <value>Danh Sách Chọn</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Sản Phẩm</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Hồ Sơ</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Vai Trò</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>Hệ Thống</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Người Dùng</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>phiên bản</value>
+  </data>
+  <data name="WIP" xml:space="preserve">
+    <value>Đang Thực Hiện</value>
   </data>
 </root>

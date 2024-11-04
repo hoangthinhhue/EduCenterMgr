@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
         Microsoft ResX Schema 
@@ -128,7 +128,7 @@
     <value>Password changed successfully</value>
   </data>
   <data name="Click upload a photo." xml:space="preserve">
-      <value>Click upload a photo.</value>
+    <value>Click upload a photo.</value>
   </data>
   <data name="Confirm New Password" xml:space="preserve">
     <value>Confirm New Password</value>
@@ -137,7 +137,7 @@
     <value>Current Password</value>
   </data>
   <data name="current password is required!" xml:space="preserve">
-      <value>current password is required!</value>
+    <value>current password is required!</value>
   </data>
   <data name="Display Name" xml:space="preserve">
     <value>Display Name</value>
@@ -149,7 +149,7 @@
     <value>New Password</value>
   </data>
   <data name="password is required!" xml:space="preserve">
-      <value>password is required!</value>
+    <value>password is required!</value>
   </data>
   <data name="Phone Number" xml:space="preserve">
     <value>Phone Number</value>
@@ -164,7 +164,7 @@
     <value>Update successfully</value>
   </data>
   <data name="User Name" xml:space="preserve">
-      <value>User Name</value>
+    <value>User Name</value>
   </data>
   <data name="Tenant Name" xml:space="preserve">
     <value>Tenant Name</value>
@@ -175,11 +175,11 @@
   <data name="Superior Name" xml:space="preserve">
     <value>Superior Name</value>
   </data>
-  <data name="Org Chart" xml:space="preserve">
-    <value>Org Chart</value>
-  </data>
   <data name="Click upload a image" xml:space="preserve">
     <value>Click upload a image</value>
+  </data>
+  <data name="Org Chart" xml:space="preserve">
+    <value>Org Chart</value>
   </data>
   <data name="The avatar has been updated" xml:space="preserve">
     <value>The avatar has been updated</value>
