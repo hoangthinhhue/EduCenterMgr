@@ -9,6 +9,29 @@ public class MenuService : IMenuService
     {
         new MenuSectionModel
         {
+            Title = "Quản lý khóa học",
+            SectionItems = new List<MenuSectionItemModel>
+            {
+                new()
+                {
+                    Title = "Danh mục",
+                    Icon = Icons.Material.Filled.Book,
+                    PageStatus = PageStatus.Completed,
+                    IsParent = true,
+                    MenuItems = new List<MenuSectionSubItemModel>
+                    {
+                        new()
+                        {
+                            Title = "Môn học",
+                            Href = "/pages/Subjects",
+                            PageStatus = PageStatus.Completed
+                        }
+                    }
+                }
+            }
+        },
+        new MenuSectionModel
+        {
             Title = "Application",
             SectionItems = new List<MenuSectionItemModel>
             {
@@ -40,30 +63,6 @@ public class MenuService : IMenuService
                             PageStatus = PageStatus.Completed
                         }
                     }
-                },
-                new()
-                {
-                    Title = "Analytics",
-                    Roles = new[] { RoleName.Admin, RoleName.Users },
-                    Icon = Icons.Material.Filled.Analytics,
-                    Href = "/analytics",
-                    PageStatus = PageStatus.ComingSoon
-                },
-                new()
-                {
-                    Title = "Banking",
-                    Roles = new[] { RoleName.Admin, RoleName.Users },
-                    Icon = Icons.Material.Filled.Money,
-                    Href = "/banking",
-                    PageStatus = PageStatus.ComingSoon
-                },
-                new()
-                {
-                    Title = "Booking",
-                    Roles = new[] { RoleName.Admin, RoleName.Users },
-                    Icon = Icons.Material.Filled.CalendarToday,
-                    Href = "/booking",
-                    PageStatus = PageStatus.ComingSoon
                 }
             }
         },

@@ -9,6 +9,7 @@ namespace CleanArchitecture.Blazor.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
+    DbSet<Subject> Subjects { get; set; }
     DbSet<Logger> Loggers { get; set; }
     DbSet<AuditTrail> AuditTrails { get; set; }
     DbSet<Document> Documents { get; set; }
